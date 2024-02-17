@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon --watch . --ext js,jsx,json --ignore build --exec \"npm run build && npm run start\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "bootstrap": "^5.3.2",
+    "bootstrap": "^3.4.1",
     "framer-motion": "^11.0.5",
     "next": "14.1.0",
     "react": "^18",

@@ -19,13 +19,14 @@ export default function RootLayout({ children }) {
   const socials = "/socials";
 
   return (
-    <div className="flex flex-row">
-      {router.pathname.includes(landingPage) ? <LandingPage /> : null}
-      {router.pathname.includes(loginPage) ? <LoginPage /> : null}
+    <div>
+      
+      {router.pathname.includes(landingPage) ? <LandingPage /> : <></>}
+      {/* {router.pathname.includes(loginPage) ? <LoginPage /> : null}
       {router.pathname.includes(myTrips) ? <MyTrips /> : null}
       {router.pathname.includes(profilePages) ? <Profile /> : null}
-      {router.pathname.includes(socials) ? <Socials /> : null}
-      {children}
+      {router.pathname.includes(socials) ? <Socials /> : null}*/}
+      {children} 
     </div>
   );
 }

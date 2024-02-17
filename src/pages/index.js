@@ -1,9 +1,15 @@
 import Image from "next/image";
+import LandingPage from "./LandingPage";
+import LoginPage from "./LoginPage";
+import MyTrips from "./MyTrips";
+import Profile from "./Profile";
+import Socials from "./Socials";
 
 export default function index() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-
-    </main>
+    <div >
+      <LandingPage/>
+      
+    </div>
   );
 }

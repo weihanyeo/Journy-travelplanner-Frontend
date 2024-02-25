@@ -4,10 +4,13 @@ import React from 'react'
 
 const index = () => {
     return (
-        <div class="container">
+        <div class="container mt-5">
             <div class="d-flex flex-row-reverse">
                 <button type="button" class="btn btn-primary btn-sm">
-                Small button
+                    Small button
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Left
                 </button>
             </div>
 

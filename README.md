@@ -6,13 +6,17 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
+
+Please note that if you run:
+
+```bash
+npm run build
+
+```
+
+any changes made will not be updated in localhost unless you run the above command again aka. re-build the app.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

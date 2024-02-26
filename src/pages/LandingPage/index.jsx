@@ -9,8 +9,11 @@ const index = () => {
         <button type="button" class="btn btn-primary btn-sm">
           Small button
         </button>
-        <button type="button" class="btn btn-primary">
-          Left
+        <button type="button" class="btn btn-info">
+          info
+        </button>
+        <button type="button" class="btn btn-danger">
+          Danger
         </button>
       </div>
 

@@ -4,21 +4,21 @@ import React from "react";
 
 const index = () => {
   return (
-    <div class="container mt-5">
-      <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn btn-primary btn-sm">
+    <div className="container mt-5">
+      <div className="d-flex flex-row-reverse">
+        <button type="button" className="btn btn-primary btn-sm">
           Small button
         </button>
-        <button type="button" class="btn btn-info">
+        <button type="button" className="btn btn-info">
           info
         </button>
-        <button type="button" class="btn btn-danger">
+        <button type="button" className="btn btn-danger">
           Danger
         </button>
       </div>
 
-      <div class="mr-6 col-10 p mt-5 container row h-00">
-        <div class="col">
+      <div className="mr-6 col-10 p mt-5 container row h-00">
+        <div className="col">
           <h1>
             Embark on Your Journey of Discovery with <b>Journy</b>
           </h1>
@@ -28,7 +28,7 @@ const index = () => {
         </div>
       </div>
       <br />
-      <div class="container h-12">
+      <div className="container h-12">
         <h4>
           {" "}
           Welcome to Journy, where the world is your playground and every trip

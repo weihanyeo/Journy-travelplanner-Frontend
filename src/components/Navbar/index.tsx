@@ -48,9 +48,8 @@ const index: React.FC = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-
           <div
-            className="collapse navbar-collapse justify-content-center"
+            className="collapse navbar-collapse justify-content-end "
             id="navbarNavAltMarkup"
           >
             <div className="navbar-nav">
@@ -60,18 +59,18 @@ const index: React.FC = () => {
               <a className="nav-link" href="#">
                 Features
               </a>
-              <a className="nav-link" href="#">
+              <a className="nav-link me-3 " href="#">
                 Pricing
               </a>
+              <div className="justify-content-right">
+                <button
+                  className="btn btn-outline-success me-3 justify-content-end"
+                  type="button"
+                >
+                  Let's Explore!
+                </button>
+              </div>
             </div>
-          </div>
-          <div>
-            <button
-              className="btn btn-outline-success me-3 justify-content-end"
-              type="button"
-            >
-              Let's Explore!
-            </button>
           </div>
         </div>
       </nav>

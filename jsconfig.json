@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.js", "**/*.js", "**/*.js", ".next/types/**/*.js", "src/pages/LandingPage/index.jsx"],
+  "include": ["next-env.d.js", "**/*.js", "**/*.js", ".next/types/**/*.js", "src/pages/LandingPage/index.tsx"],
   "exclude": ["node_modules"]
 }

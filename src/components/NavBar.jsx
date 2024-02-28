@@ -72,15 +72,14 @@ const NavBar = () => {
               >
                 Planning
               </button>
-              <div className="justify-content-right">
-                <button
-                  className="nav-link me-3"
-                  type="button"
-                  onClick={() => router.push("/Profile")}
-                >
-                  Profile
-                </button>
-              </div>
+
+              <button
+                className="nav-link me-3"
+                type="button"
+                onClick={() => router.push("/Profile")}
+              >
+                Profile
+              </button>
             </div>
           </div>
         </div>

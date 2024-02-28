@@ -29,7 +29,7 @@ const index: React.FC = () => {
         <div className="container-fluid">
           <a className="navbar-brand" target="_blank" rel="noreferrer">
             <img
-              src={process.env.PUBLIC_URL + `journy.png`}
+              src="journy.png"
               //alt="Logo"
               width="30"
               height="30"

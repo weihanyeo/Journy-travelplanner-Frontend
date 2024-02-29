@@ -80,6 +80,10 @@ const NavBar = () => {
               >
                 Profile
               </button>
+
+              <button type="button" class="btn btn-outline-primary">
+                Lets Explore!
+              </button>
             </div>
           </div>
         </div>

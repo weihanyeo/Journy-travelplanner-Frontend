@@ -1,18 +1,22 @@
 import { motion } from "framer-motion";
 import React from "react";
+import { useRouter } from "next/router";
 //import "./index.scss";
 
-const index: React.FC = () => {
-  const handleScrollTo = (id: string): void => {
-    const targetElement = document.getElementById(id);
+const NavBar = () => {
+  //to be used with footer
+  // const handleScrollTo = (id: string): void => {
+  //   const targetElement = document.getElementById(id);
 
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop - 70, // Adjust the offset as needed
-        behavior: "smooth",
-      });
-    }
-  };
+  //   if (targetElement) {
+  //     window.scrollTo({
+  //       top: targetElement.offsetTop - 70, // Adjust the offset as needed
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // };
+
+  const router = useRouter();
 
   return (
     <motion.div
@@ -53,23 +57,29 @@ const index: React.FC = () => {
             id="navbarNavAltMarkup"
           >
             <div className="navbar-nav">
-              <a className="nav-link" aria-current="page" href="#">
+              <button className="nav-link" onClick={() => router.push("/Home")}>
                 Home
-              </a>
-              <a className="nav-link" href="#">
-                Features
-              </a>
-              <a className="nav-link me-3 " href="#">
-                Pricing
-              </a>
-              <div className="justify-content-right">
-                <button
-                  className="btn btn-outline-success me-3 justify-content-end"
-                  type="button"
-                >
-                  Let's Explore!
-                </button>
-              </div>
+              </button>
+              <button
+                className="nav-link"
+                onClick={() => router.push("/Discover")}
+              >
+                Discover
+              </button>
+              <button
+                className="nav-link me-3 "
+                onClick={() => router.push("/Planning")}
+              >
+                Planning
+              </button>
+
+              <button
+                className="nav-link me-3"
+                type="button"
+                onClick={() => router.push("/Profile")}
+              >
+                Profile
+              </button>
             </div>
           </div>
         </div>
@@ -78,4 +88,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default NavBar;

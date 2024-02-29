@@ -22,7 +22,6 @@
 }
 
 .spacer {
-  position: absolute;
   margin-top: 20rem;
-  height: 40rem;
+  height: 20rem;
 }

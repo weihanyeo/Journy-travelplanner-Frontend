@@ -67,18 +67,22 @@ const NavBar = () => {
                 Discover
               </button>
               <button
-                className="nav-link me-3 "
+                className="nav-link "
                 onClick={() => router.push("/Planning")}
               >
                 Planning
               </button>
 
               <button
-                className="nav-link me-3"
+                className="nav-link "
                 type="button"
                 onClick={() => router.push("/Profile")}
               >
                 Profile
+              </button>
+
+              <button type="button" class="btn btn-outline-primary">
+                Lets Explore!
               </button>
             </div>
           </div>

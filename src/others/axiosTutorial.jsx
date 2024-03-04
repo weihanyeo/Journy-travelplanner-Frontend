@@ -13,15 +13,23 @@ import axios from 'axios';
 
 function MyComponent() {
   
-//here are the different functions we can use
+/**
+ * usually for api integration we will need the 
+ * (1) endpoint aka the api url
+ * (2) request body (more common for POST requests) aka the data we want to send to BE
+ * (3) response body (more common for GET requests) aka the data we want to recieve from BE
+ */
 
 
 //GET REQUEST
 // Make a request for a user with a given ID
+//'/user?ID=12345' is the endpoint we are using
 axios.get('/user?ID=12345')
   .then(function (response) {
-    // usually a function to process the response body
+    // here is where we receive the response body
+    // usually a function to process it
     // maybe transform it into string or a format that can be displayed
+    // or if the data is alr in the correct form then we could just do setState() 
     console.log(response);
   })
   .catch(function (error) {

@@ -1,22 +1,27 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/router";
 
-const index = () => {
+const Index = () => {
+  const router = useRouter();
   return (
     <div
       className="container mt-3 justify-content-center"
       style={{ minHeight: "40rem", maxWidth: "40rem" }}
     >
       <img
-        src="signupPage.png"
+        src="loginpage.png"
         //alt="Logo"
         width="600"
         height="600"
         className="align-middle rounded-3"
       />
       <br />
-      <h1 className="text-center">Register for a magical journey</h1>
+      <h1 className="text-center"> Welcome back to Journy</h1>
+      <h5 className="text-center" style={{ fontWeight: "50" }}>
+        Where enchanted journeys begin. Log in or sign up to continue
+      </h5>
       <br />
       <div className="mb-3">
         <label for="exampleFormControlInput1" className="form-label">
@@ -29,17 +34,6 @@ const index = () => {
           placeholder="name@example.com"
         />
       </div>
-      <div className="mb-3">
-        <label for="exampleFormControlInput1" className="form-label">
-          Username
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="Create a Username"
-        />
-      </div>
       <label for="inputPassword5" className="form-label">
         Password
       </label>
@@ -48,7 +42,6 @@ const index = () => {
         id="inputPassword5"
         className="form-control"
         aria-describedby="passwordHelpBlock"
-        placeholder="Create a Password"
       />
       <div id="passwordHelpBlock m" className="form-text">
         Your password <b>must be</b> 8-20 characters long, contain letters and
@@ -64,10 +57,24 @@ const index = () => {
           fontSize: "0.9rem;",
         }}
       >
-        Join us
+        Log in
       </button>
+      <h6 className="text-center mt-2" style={{ fontWeight: "50" }}>
+        or
+      </h6>
+      <button
+        type="button"
+        className="btn btn-primary rounded-4 mt-2"
+        style={{
+          width: "100%",
+          fontSize: "0.9rem;",
+        }}
+      >
+        Continue with Google
+      </button>
+
       <h6 className="text-center mt-4" style={{ fontWeight: "40" }}>
-        Already with journy?
+        Don't have an account?
       </h6>
       <button
         type="button"
@@ -76,11 +83,12 @@ const index = () => {
           width: "100%",
           fontSize: "0.9rem;",
         }}
+        onClick={() => router.push("/Signup")}
       >
-        Log in
+        Sign up
       </button>
     </div>
   );
 };
 
-export default index;
+export default Index;

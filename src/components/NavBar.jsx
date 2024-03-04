@@ -81,7 +81,11 @@ const NavBar = () => {
                 Profile
               </button>
 
-              <button type="button" class="btn btn-outline-primary">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                onClick={() => router.push("/Login")}
+              >
                 Lets Explore!
               </button>
             </div>

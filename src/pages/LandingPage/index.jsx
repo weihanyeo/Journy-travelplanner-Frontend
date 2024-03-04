@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import React from "react";
 
-const index = () => {
+const Index = () => {
   return (
     <div className="container mt-5">
       <br />
@@ -55,4 +55,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

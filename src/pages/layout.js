@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
     <div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
       <NavBar />
-      {children}
+      <div style={{ paddingBottom: "15%" }}>{children}</div>
       <Footer />
     </div>
   );

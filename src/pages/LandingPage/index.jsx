@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import React from "react";
+import Card from "../../components/Card";
 
 const Index = () => {
   return (
@@ -51,6 +52,7 @@ const Index = () => {
         unforgettable journeys. Let every trip be a canvas for inspiring
         memories.
       </h5>
+      <Card />
     </div>
   );
 };

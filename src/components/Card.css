@@ -1,0 +1,7 @@
+.square-picture {
+  max-height: 300px;
+  max-width: 300px;
+  min-height: 210px;
+  min-width: 210px;
+  object-fit: cover;
+}

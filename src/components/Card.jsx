@@ -19,6 +19,7 @@ const Card = () => {
     <>
       <motion.div id="Adventure" className="adventure-head">
         <p className="sectionSubText">Featured Destinations</p>
+        <h2 className="sectionHeadText">OUTDOORS</h2>
       </motion.div>
 
       <div className="app-profiles">
@@ -32,7 +33,11 @@ const Card = () => {
             onClick={() => openAdventureInNewTab(adventure.imgNewTab)}
             style={{ cursor: "pointer" }}
           >
-            <img src={adventure.imgUrl} alt={adventure.title} />
+            <img
+              className="square-picture rounded-5"
+              src={adventure.imgUrl}
+              alt={adventure.title}
+            />
             <h2 className="bold-text" style={{ marginTop: 20 }}>
               {adventure.title}
             </h2>

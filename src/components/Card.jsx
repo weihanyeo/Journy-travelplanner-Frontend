@@ -8,6 +8,24 @@ const adventures = [
     imgUrl: "loginpage.png", //
     imgNewTab: "https://www.google.com/", // taget link
   },
+  {
+    title: "Title example",
+    description: "Description example",
+    imgUrl: "loginpage.png", //
+    imgNewTab: "https://www.google.com/", // taget link
+  },
+  {
+    title: "Title example",
+    description: "Description example",
+    imgUrl: "loginpage.png", //
+    imgNewTab: "https://www.google.com/", // taget link
+  },
+  {
+    title: "Title example",
+    description: "Description example",
+    imgUrl: "loginpage.png", //
+    imgNewTab: "https://www.google.com/", // taget link
+  },
 ];
 
 const Card = () => {
@@ -22,13 +40,13 @@ const Card = () => {
         <h2 className="sectionHeadText">OUTDOORS</h2>
       </motion.div>
 
-      <div className="app-profiles">
+      <div className="app-travel">
         {adventures.map((adventure, index) => (
           <motion.div
             whileInView={{ opacity: [0, 1] }}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.8, type: "tween" }}
-            className="app-profile-item"
+            className="app-travel-item"
             key={adventure.title + index}
             onClick={() => openAdventureInNewTab(adventure.imgNewTab)}
             style={{ cursor: "pointer" }}

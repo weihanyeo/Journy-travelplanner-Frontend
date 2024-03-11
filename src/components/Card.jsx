@@ -12,6 +12,28 @@ const adventures = [
     location: "Chiang Mai",
     price: "From $500 USD / person",
   },
+  {
+    title: "Title example",
+    description: "Description example",
+    imgUrl: "loginpage.png", //
+    imgNewTab: "https://www.google.com/", // taget link
+  },
+  {
+    title: "Title example",
+    description: "Description example",
+    imgUrl: "loginpage.png", //
+    imgNewTab: "https://www.google.com/", // taget link
+  },
+  {
+    title: "Title example",
+    description: "Description example",
+    imgUrl: "/loginpage.png",
+    imgNewTab: "https://www.google.com/", // Target link
+    rating: "3.8",
+    reviewCount: "(24)",
+    location: "Chiang Mai",
+    price: "From $500 USD / person",
+  },
 ];
 
 const Card = () => {

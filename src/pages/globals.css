@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "./LandingPage/index.css";
+@import "../components/Card.css";
 
 :root {
   --foreground-rgb: 0, 0, 0;

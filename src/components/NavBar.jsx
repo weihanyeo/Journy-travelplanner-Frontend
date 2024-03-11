@@ -57,7 +57,7 @@ const NavBar = () => {
             id="navbarNavAltMarkup"
           >
             <div className="navbar-nav">
-              <button className="nav-link" onClick={() => router.push("/Home")}>
+              <button className="nav-link" onClick={() => router.push("/")}>
                 Home
               </button>
               <button

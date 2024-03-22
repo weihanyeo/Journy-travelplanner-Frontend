@@ -1,5 +1,4 @@
-//import { options } from "./api/auth/[...nextauth]/options"
-import { getServerSession } from "next-auth/next"
+//import { getServerSession } from "next-auth/next"
 import { useSession } from "next-auth/react"
 import LandingPage from "./LandingPage";
 

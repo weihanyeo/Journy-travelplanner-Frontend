@@ -5,7 +5,8 @@ import { SessionProvider } from "next-auth/react";
 import "bootstrap/dist/css/bootstrap.min.css"; // bootstrap stylesheet
 
 export default function App({ Component, pageProps }) {
-  return (
+
+  /* return (
     <SessionProvider session={pageProps.session}>
       {Component.auth ? (
         <Auth>
@@ -19,6 +20,14 @@ export default function App({ Component, pageProps }) {
           <Component {...pageProps.session} />
         </RootLayout>
       )}
+    </SessionProvider>
+  ); */
+
+  return (
+    <SessionProvider session={pageProps.session}>
+      <RootLayout>
+        <Component {...pageProps.session} />
+      </RootLayout>
     </SessionProvider>
   );
 }

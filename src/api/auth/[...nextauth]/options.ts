@@ -44,9 +44,11 @@ export const options: NextAuthOptions = {
           // Any object returned will be saved in `user` property of the JWT
           return user;
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
+          // If you return null then an error will be displayed advising
+          // the user to check their details.
           return null;
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          // You can also Reject this callback with an Error thus the user will be
+          // sent to the error page with the error message as a query parameter
         }
       },
     }),
@@ -55,7 +57,10 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),*/
   ], // put more authProviders here
-  /* pages: {
+
+  pages: {
+    // for this is the customer signin pages or login pages.
     signIn: "/Login", // route to sign in pages
-  }, */
+    newUser: "/Signup", // route to Sign-up pages
+  },
 };

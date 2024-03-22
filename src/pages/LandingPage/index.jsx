@@ -1,7 +1,7 @@
 "use client";
 
-import { options } from "./api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth/next";
+/* import { options } from "./api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth/next"; */
 import { motion } from "framer-motion";
 import React from "react";
 import Card from "../../components/Card";

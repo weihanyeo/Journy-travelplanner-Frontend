@@ -1,5 +1,10 @@
-import type { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
+/* import { options } from "./options";
+
+const handler = NextAuth(options);
+export { handler as GET, handler as POST }; */
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options: NextAuthOptions = {
@@ -28,7 +33,7 @@ export const options: NextAuthOptions = {
         const user = {
           id: "1",
           name: "Yoko-Yoko",
-          email: "jsmith@example.com",
+          email: "yoko@example.com",
           password: "password",
         };
 
@@ -41,13 +46,16 @@ export const options: NextAuthOptions = {
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null;
-
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       },
     }),
+    /* GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),*/
   ], // put more authProviders here
-  //pages: {
-  //  signIn: "/signin", // route to sign in pages
-  //},
+  /* pages: {
+    signIn: "/Login", // route to sign in pages
+  }, */
 };

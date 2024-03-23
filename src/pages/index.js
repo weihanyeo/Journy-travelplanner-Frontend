@@ -3,10 +3,10 @@ import { useSession } from "next-auth/react"
 import LandingPage from "./LandingPage";
 
 export default function Component() {
-  const { data: session, status } = useSession();
+  /* const { data: session, status } = useSession(); */
 
   return (
-    <div>
+    /* <div>
       {status === "authenticated" ? (
         <p>Welcome back, {session.user.name}!</p>
       ) : (
@@ -14,6 +14,9 @@ export default function Component() {
           <LandingPage />
         </div>
       )}
+    </div > */
+    < div >
+      <LandingPage />
     </div >
   );
 }

@@ -24,10 +24,15 @@ export default function App({ Component, pageProps }) {
   ); */
 
   return (
-    <SessionProvider session={pageProps.session}>
+
+    /* <SessionProvider session={pageProps.session}>
       <RootLayout>
         <Component {...pageProps.session} />
       </RootLayout>
-    </SessionProvider>
-  );
+    </SessionProvider> */
+
+    < RootLayout >
+      <Component {...pageProps} />
+    </RootLayout >
+  )
 }

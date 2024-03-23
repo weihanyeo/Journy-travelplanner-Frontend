@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-import Card from '../../components/Card';
-import Timetable from '../../components/Timetable';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import Card from "../../components/Card";
+import Timetable from "../../components/Timetable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const Index = () => {
   const [nearbyPlaces, setNearbyPlaces] = useState(new Array(4).fill(0));
@@ -19,8 +19,8 @@ const Index = () => {
       activities: [
         { time: "9:30am", name: "Activity Name" },
         { time: "11:30am", name: "Activity Name" },
-      ]
-    }
+      ],
+    },
   ];
 
   return (
@@ -32,7 +32,10 @@ const Index = () => {
           <Timetable data={timetableData} />
         </div>
         <div className="col-md-6">
-          <div className="map-placeholder" style={{ height: '200px', backgroundColor: '#ddd' }} />
+          <div
+            className="map-placeholder"
+            style={{ height: "200px", backgroundColor: "#ddd" }}
+          />
         </div>
       </div>
 
@@ -46,7 +49,12 @@ const Index = () => {
             <span className="input-group-text" id="basic-addon1">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </span>
-            <input type="text" className="form-control" placeholder="Search Place/Activities" aria-label="Search" />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search Place/Activities"
+              aria-label="Search"
+            />
           </div>
         </div>
       </div>
@@ -54,7 +62,11 @@ const Index = () => {
       {/*Cards*/}
       <div className="row mt-3">
         {nearbyPlaces.map((_, index) => (
-          <div className="col-6 col-md-3 mb-4" key={index} style={{ padding: '0 8px' }}>
+          <div
+            className="col-6 col-md-3 mb-4"
+            key={index}
+            style={{ padding: "0 8px" }}
+          >
             <Card />
           </div>
         ))}
@@ -73,4 +85,3 @@ const Index = () => {
 };
 
 export default Index;
-

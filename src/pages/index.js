@@ -1,9 +1,19 @@
+//import { getServerSession } from "next-auth/next"
+import { useSession } from "next-auth/react"
 import LandingPage from "./LandingPage";
 
-export default function index() {
+export default function Component() {
+  const { data: session, status } = useSession();
+
   return (
     <div>
-      <LandingPage />
-    </div>
+      {status === "authenticated" ? (
+        <p>Welcome back, {session.user.name}!</p>
+      ) : (
+        <div>
+          <LandingPage />
+        </div>
+      )}
+    </div >
   );
 }

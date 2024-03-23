@@ -1,10 +1,17 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 const Index = () => {
   const router = useRouter();
+  const [formDetails, setFormDetails] = useState({
+    username: "",
+    password: "",
+    name: "",
+    email: "",
+  });
+  const onSignUp = () => {};
   return (
     <div
       className="container mt-3 justify-content-center"

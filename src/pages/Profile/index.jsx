@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,53 +10,57 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
+const userData = {
+  name: "Enrico Lim",
+  contact: "91234567",
+  email: "EnricoLim@gmail.com",
+  location: "Singapore",
+  about: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+  followers: 123,
+  following: 456,
+  itineraries: 12,
+  totalLikes: 789,
+};
+
 const Index = () => {
   return (
     <div className="container my-5">
       <div className="row">
         <div className="col-md-6">
-          <h1 className="mb-4">Enrico Lim</h1>
+        <h1 className="mb-4">{userData.name}</h1>
           <p className="mb-2">
-            <strong>Contact:</strong> 91234567
+            <strong>Contact:</strong> {userData.contact}
           </p>
           <p className="mb-2">
-            <strong>Email address:</strong> EnricoLim@gmail.com
+            <strong>Email address:</strong> {userData.email}
           </p>
           <p className="mb-4">
-            <strong>Location:</strong> Singapore
+            <strong>Location:</strong> {userData.location}
           </p>
           <h3 className="mb-3">About Me:</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+          <p>{userData.about}</p>
 
           <div className="mt-4">
             <div className="row text-center">
               <div className="col">
-                <FontAwesomeIcon icon={faUserGroup} size="lg" />
+                <FontAwesomeIcon icon={faUserGroup}/>
                 <h4 className="mt-2">Followers</h4>
-                <p>123</p>
+                <p>{userData.followers}</p>
               </div>
               <div className="col">
-                <FontAwesomeIcon icon={faUserPlus} size="lg" />
+                <FontAwesomeIcon icon={faUserPlus}/>
                 <h4 className="mt-2">Following</h4>
-                <p>456</p>
+                <p>{userData.following}</p>
               </div>
               <div className="col">
-                <FontAwesomeIcon icon={faClipboardList} size="lg" />
+                <FontAwesomeIcon icon={faClipboardList}/>
                 <h4 className="mt-2">Itineraries</h4>
-                <p>12</p>
+                <p>{userData.itineraries}</p>
               </div>
               <div className="col">
-                <FontAwesomeIcon icon={faHeart} size="lg" />
+                <FontAwesomeIcon icon={faHeart}/>
                 <h4 className="mt-2">Total Likes</h4>
-                <p>789</p>
+                <p>{userData.totalLikes}</p>
               </div>
             </div>
           </div>

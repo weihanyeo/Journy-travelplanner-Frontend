@@ -1,10 +1,76 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
+import axiosClient from "../../others/network/axiosClient";
 
 const Index = () => {
   const router = useRouter();
+  const [formDetails, setFormDetails] = useState({
+    username: "",
+    password: "",
+    name: "",
+    email: "",
+  });
+  const [errorMsgs, setErrorMsgs] = useState("");
+
+  const onChangeField = (field) => (e) => {
+    setFormDetails({
+      ...formDetails,
+      [field]: e.target.value,
+    });
+  };
+
+  const validateFields = () => {
+    let hasError = false;
+    const { username, password, name, email } = formDetails;
+    let newErrorMsg = "";
+    if (username.length < 1) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Username, ";
+    }
+
+    if (name.length < 1) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Name, ";
+    }
+
+    if (email.length < 1 || !email.includes("@")) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Email, ";
+    }
+
+    const pattern = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+    if (
+      password.length < 8 ||
+      password.length > 20 ||
+      !pattern.test(password)
+    ) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Password, ";
+    }
+    setErrorMsgs(newErrorMsg);
+    console.log("data validated");
+    return hasError;
+  };
+
+  const onSignUp = async () => {
+    const hasError = validateFields();
+    if (!hasError) {
+      //all fields are ok, we send data to BE
+      //redirect to another page
+      try {
+        await axiosClient.post(
+          "/customers/register",
+          //request body below
+          formDetails
+        );
+        router.push("/Discover");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
   return (
     <div
       className="container mt-3 justify-content-center"
@@ -19,7 +85,31 @@ const Index = () => {
       />
       <br />
       <h1 className="text-center">Register for a magical journey</h1>
+      {errorMsgs.length > 0 && (
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          <div>
+            Holy guacamole! You should check on these fields:
+            <strong> {errorMsgs.substring(0, errorMsgs.length - 2)}</strong>
+          </div>
+        </div>
+      )}
       <br />
+      <div className="mb-3">
+        <label for="exampleFormControlInput1" className="form-label">
+          Name
+        </label>
+        <input
+          type="name"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Enter Your Name"
+          value={formDetails.name}
+          onChange={onChangeField("name")}
+        />
+      </div>
       <div className="mb-3">
         <label for="exampleFormControlInput1" className="form-label">
           Email address
@@ -29,6 +119,8 @@ const Index = () => {
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="name@example.com"
+          value={formDetails.email}
+          onChange={onChangeField("email")}
         />
       </div>
       <div className="mb-3">
@@ -40,6 +132,8 @@ const Index = () => {
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="Create a Username"
+          value={formDetails.username}
+          onChange={onChangeField("username")}
         />
       </div>
       <label for="inputPassword5" className="form-label">
@@ -51,6 +145,8 @@ const Index = () => {
         className="form-control"
         aria-describedby="passwordHelpBlock"
         placeholder="Create a Password"
+        value={formDetails.password}
+        onChange={onChangeField("password")}
       />
       <div id="passwordHelpBlock m" className="form-text">
         Your password <b>must be</b> 8-20 characters long, contain letters and
@@ -65,6 +161,7 @@ const Index = () => {
           width: "100%",
           fontSize: "0.9rem;",
         }}
+        onClick={onSignUp}
       >
         Join us
       </button>

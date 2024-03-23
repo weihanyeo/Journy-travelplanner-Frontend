@@ -1,10 +1,60 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
+import axiosClient from "../../others/network/axiosClient";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Index = () => {
   const router = useRouter();
+  const [formDetails, setFormDetails] = useState({
+    username: "",
+    password: "",
+  });
+  const [errorMsgs, setErrorMsgs] = useState("");
+  const onChangeField = (field) => (e) => {
+    setFormDetails({
+      ...formDetails,
+      [field]: e.target.value,
+    });
+  };
+
+  const validateFields = () => {
+    let hasError = false;
+    const { username, password } = formDetails;
+    let newErrorMsg = "";
+    if (username.length < 1) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Username is missing. ";
+    }
+
+    if (password.length < 1) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Password is missing. ";
+    }
+    setErrorMsgs(newErrorMsg);
+    console.log("data validated");
+    return hasError;
+  };
+
+  const onLogin = async () => {
+    const hasError = validateFields();
+    if (!hasError) {
+      //all fields are ok, we send data to BE
+      //redirect to another page
+      try {
+        await axiosClient.post(
+          "/customers/login",
+          //request body below
+          formDetails
+        );
+        router.push("/Discover");
+      } catch (error) {
+        setErrorMsgs("Account not found! Try signing up.  ");
+      }
+    }
+  };
+
   return (
     <div
       className="container mt-3 justify-content-center"
@@ -22,16 +72,29 @@ const Index = () => {
       <h5 className="text-center" style={{ fontWeight: "50" }}>
         Where enchanted journeys begin. Log in or sign up to continue
       </h5>
+      {errorMsgs.length > 0 && (
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          <div>
+            Holy guacamole!
+            <strong> {errorMsgs.substring(0, errorMsgs.length - 2)}</strong>
+          </div>
+        </div>
+      )}
       <br />
       <div className="mb-3">
         <label for="exampleFormControlInput1" className="form-label">
-          Email address
+          Username
         </label>
         <input
-          type="email"
+          type="username"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="name@example.com"
+          placeholder="Username"
+          value={formDetails.username}
+          onChange={onChangeField("username")}
         />
       </div>
       <label for="inputPassword5" className="form-label">
@@ -42,6 +105,8 @@ const Index = () => {
         id="inputPassword5"
         className="form-control"
         aria-describedby="passwordHelpBlock"
+        value={formDetails.password}
+        onChange={onChangeField("password")}
       />
       <div id="passwordHelpBlock m" className="form-text">
         Your password <b>must be</b> 8-20 characters long, contain letters and
@@ -56,6 +121,7 @@ const Index = () => {
           width: "100%",
           fontSize: "0.9rem;",
         }}
+        onClick={onLogin}
       >
         Log in
       </button>

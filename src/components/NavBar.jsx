@@ -87,7 +87,7 @@ const NavBar = () => {
 
               <button
                 type="button"
-                class="btn btn-outline-primary"
+                className="btn btn-outline-primary"
                 onClick={() => router.push("/Login")}
               >
                 Lets Explore!

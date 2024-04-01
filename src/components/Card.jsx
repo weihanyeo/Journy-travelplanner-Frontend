@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const adventures = [
   {
@@ -72,7 +74,7 @@ const Card = () => {
           </div>
           <div style={{ padding: '20px', textAlign: 'center' }}>
             <p className="p-text" style={{ fontSize: '0.9rem', color: '#888' }}>
-              {adventure.rating} {adventure.reviewCount} • {adventure.location}
+              <FontAwesomeIcon icon={faStar} style={{color: "#ffb83d",}} /> {adventure.rating} {adventure.reviewCount} • {adventure.location}
             </p>
             <h2 className="bold-text" style={{ fontSize: '1.1rem' }}>
               {adventure.title}

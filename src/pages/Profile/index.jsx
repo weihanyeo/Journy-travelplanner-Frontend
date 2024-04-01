@@ -25,10 +25,11 @@ const userData = {
 };
 
 const Index = async () => {
-  const session = await getServerSession(authOptions);
+/*   const session = await getServerSession(authOptions);
+  console.log(session);
   if (session == null) {
     return redirect("/Signup");
-  } else {
+  } else { */
     return (
       <div className="container my-5">
         <div className="row">

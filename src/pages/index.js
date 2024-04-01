@@ -4,8 +4,8 @@ import LandingPage from "./LandingPage";
 export default function Component() {
 
   return (
-    < div >
+    <div>
       <LandingPage />
-    </div >
+    </div>
   );
 }

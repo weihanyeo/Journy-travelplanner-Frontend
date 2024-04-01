@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const options = {
+const options = {
   providers: [
     GitHubProvider({
       profile(profile) {
@@ -82,11 +82,11 @@ export const options = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/Signup', // Set the signIn page to /Signup
-    newUser: '/Signup' // Set the newUser page to /Signup as well
+    signIn: './Signup', // Set the signIn page to /Signup
+    newUser: './Signup' // Set the newUser page to /Signup as well
   }
 };
 
-const handler = NextAuth(options);
+export default NextAuth(options)
 
 export { handler as GET, handler as POST };

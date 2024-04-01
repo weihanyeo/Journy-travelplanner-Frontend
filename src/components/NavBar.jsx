@@ -5,19 +5,27 @@ import { useRouter } from "next/router";
 //import "./index.scss";
 
 const NavBar = () => {
-  //to be used with footer
-  // const handleScrollTo = (id: string): void => {
-  //   const targetElement = document.getElementById(id);
-
-  //   if (targetElement) {
-  //     window.scrollTo({
-  //       top: targetElement.offsetTop - 70, // Adjust the offset as needed
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // };
-
   const router = useRouter();
+  const { data: session } = useSession();
+
+  const handleProfileClick = () => {
+    // If user is not authenticated, redirect to the signup page
+    if (!session) {
+      router.push("/Signup");
+    } else {
+      // Otherwise, handle profile click as usual
+      router.push("/Profile");
+    }
+  };
+  const handlePlanningClick = () => {
+    // If user is not authenticated, redirect to the signup page
+    if (!session) {
+      router.push("/Signup");
+    } else {
+      // Otherwise, handle profile click as usual
+      router.push("/Planning");
+    }
+  };
 
   return (
     <motion.div
@@ -70,17 +78,14 @@ const NavBar = () => {
               >
                 Discover
               </button>
-              <button
-                className="nav-link "
-                onClick={() => router.push("/Planning")}
-              >
+              <button className="nav-link " onClick={handlePlanningClick}>
                 Planning
               </button>
 
               <button
                 className="nav-link "
                 type="button"
-                onClick={() => router.push("/Profile")}
+                onClick={handleProfileClick}
               >
                 Profile
               </button>

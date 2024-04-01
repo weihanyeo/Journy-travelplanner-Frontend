@@ -57,7 +57,10 @@ const NavBar = () => {
             id="navbarNavAltMarkup"
           >
             <div className="navbar-nav">
-              <button className="nav-link" onClick={() => router.push("/Home")}>
+              <button
+                className="nav-link"
+                onClick={() => router.push("/LandingPage")}
+              >
                 Home
               </button>
               <button
@@ -83,7 +86,7 @@ const NavBar = () => {
 
               <button
                 type="button"
-                class="btn btn-outline-primary"
+                className="btn btn-outline-primary"
                 onClick={() => router.push("/Login")}
               >
                 Lets Explore!

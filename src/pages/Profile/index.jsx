@@ -1,8 +1,10 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getServerSession } from "next-auth/next";
+import authOptions from "../../api/auth/[...nextauth]";
+import { redirect } from "next/navigation";
+
 import {
   faHeart,
   faClipboardList,
@@ -22,64 +24,69 @@ const userData = {
   totalLikes: 789,
 };
 
-const Index = () => {
-  return (
-    <div className="container my-5">
-      <div className="row">
-        <div className="col-md-6">
-        <h1 className="mb-4">{userData.name}</h1>
-          <p className="mb-2">
-            <strong>Contact:</strong> {userData.contact}
-          </p>
-          <p className="mb-2">
-            <strong>Email address:</strong> {userData.email}
-          </p>
-          <p className="mb-4">
-            <strong>Location:</strong> {userData.location}
-          </p>
-          <h3 className="mb-3">About Me:</h3>
-          <p>{userData.about}</p>
+const Index = async () => {
+  const session = await getServerSession(authOptions);
+  if (session == null) {
+    return redirect("/Signup");
+  } else {
+    return (
+      <div className="container my-5">
+        <div className="row">
+          <div className="col-md-6">
+            <h1 className="mb-4">{userData.name}</h1>
+            <p className="mb-2">
+              <strong>Contact:</strong> {userData.contact}
+            </p>
+            <p className="mb-2">
+              <strong>Email address:</strong> {userData.email}
+            </p>
+            <p className="mb-4">
+              <strong>Location:</strong> {userData.location}
+            </p>
+            <h3 className="mb-3">About Me:</h3>
+            <p>{userData.about}</p>
 
-          <div className="mt-4">
-            <div className="row text-center">
-              <div className="col">
-                <FontAwesomeIcon icon={faUserGroup}/>
-                <h4 className="mt-2">Followers</h4>
-                <p>{userData.followers}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faUserPlus}/>
-                <h4 className="mt-2">Following</h4>
-                <p>{userData.following}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faClipboardList}/>
-                <h4 className="mt-2">Itineraries</h4>
-                <p>{userData.itineraries}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faHeart}/>
-                <h4 className="mt-2">Total Likes</h4>
-                <p>{userData.totalLikes}</p>
+            <div className="mt-4">
+              <div className="row text-center">
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserGroup} />
+                  <h4 className="mt-2">Followers</h4>
+                  <p>{userData.followers}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserPlus} />
+                  <h4 className="mt-2">Following</h4>
+                  <p>{userData.following}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faClipboardList} />
+                  <h4 className="mt-2">Itineraries</h4>
+                  <p>{userData.itineraries}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faHeart} />
+                  <h4 className="mt-2">Total Likes</h4>
+                  <p>{userData.totalLikes}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="col-md-6 d-flex justify-content-center align-items-center">
-          <div style={{ maxWidth: "400px" }}>
-            <Image
-              src="/profileimg.jpg"
-              alt="Profile Picture"
-              width={300}
-              height={400}
-              layout="responsive"
-            />
+          <div className="col-md-6 d-flex justify-content-center align-items-center">
+            <div style={{ maxWidth: "400px" }}>
+              <Image
+                src="/profileimg.jpg"
+                alt="Profile Picture"
+                width={300}
+                height={400}
+                layout="responsive"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Index;

@@ -124,7 +124,7 @@ const Index = () => {
 
   return (
     <div className="container my-5">
-      <h2>Trending this week</h2>
+      {/* <h2>Trending this week</h2>
       <div style={{ position: "relative" }}>
         <Slider {...settings}>
           {authors.map((author, index) => (
@@ -136,12 +136,58 @@ const Index = () => {
             </div>
           ))}
         </Slider>
-      </div>
+      </div> */}
 
       {/* Search Bar */}
       <div className="search-filters my-4 mt-5 mb-5">
         <form onSubmit={handleSearch} className="input-group">
-          {/* Search inputs and filters */}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search Keywords"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select
+            className="form-control"
+            value={countryFilter}
+            onChange={(e) => setCountryFilter(e.target.value)}
+          >
+            <option value="">Select Country</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Singapore">Singapore</option>
+            <option value="USA">USA</option>
+          </select>
+
+          <select
+            className="form-control"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+          >
+            <option value="">Rating</option>
+            {[5, 4, 3, 2, 1].map((star) => (
+              <option key={star} value={star}>{`${star} stars & up`}</option>
+            ))}
+          </select>
+
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Min price"
+            value={budget.min}
+            onChange={(e) => handleBudgetChange("min", e.target.value)}
+          />
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Max price"
+            value={budget.max}
+            onChange={(e) => handleBudgetChange("max", e.target.value)}
+          />
+
+          <button type="submit" className="btn btn-primary">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
         </form>
       </div>
 

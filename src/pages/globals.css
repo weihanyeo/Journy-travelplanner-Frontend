@@ -4,6 +4,7 @@
 
 @import "./LandingPage/index.css";
 @import "../components/Card.css";
+@import "../components/Footer.css";
 
 :root {
   --foreground-rgb: 0, 0, 0;

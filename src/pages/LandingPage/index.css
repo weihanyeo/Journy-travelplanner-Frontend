@@ -80,7 +80,7 @@ body {
 }
 
 .cta-section {
-  background-image: url("../../../../widget8.png");
+  background-image: url("../../../public/widget8.png");
   color: #ffffff;
   padding: 100px 0;
 }

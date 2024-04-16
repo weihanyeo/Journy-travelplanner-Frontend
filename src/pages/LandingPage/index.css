@@ -17,7 +17,7 @@ body {
 }
 
 .full-screen-section {
-  height: 60vh; /* Set the height to 100% of the viewport height */
+  height: 70vh; /* Set the height to 100% of the viewport height */
   padding: 0; /* Remove any padding */
   margin: 0; /* Remove any margin */
   /* Optionally, you can also set other styles like background color or background image */
@@ -37,6 +37,17 @@ body {
   height: auto;
 }
 
+.card-section {
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
 .features-section {
   padding: 50px 0;
 }
@@ -52,7 +63,7 @@ body {
 
 .testimonials-section {
   background-color: #f8f9fa;
-  padding: 50px 0;
+  padding: 100px 0;
 }
 
 .testimonial {
@@ -69,7 +80,7 @@ body {
 }
 
 .cta-section {
-  background-color: #007bff;
+  background-image: url("../../../../widget8.png");
   color: #ffffff;
   padding: 100px 0;
 }
@@ -77,6 +88,12 @@ body {
 .cta-section h2,
 .cta-section p {
   text-align: center;
+}
+
+.outlined-text {
+  color: white; /* Set text color */
+  text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333,
+    1px 1px 0 #333; /* Black outline */
 }
 
 .cta-section button.btn-primary {
@@ -105,4 +122,9 @@ body {
     width: 100%;
     text-align: center;
   }
+}
+
+.custom-pad {
+  height: 30vh;
+  margin-bottom: 100px;
 }

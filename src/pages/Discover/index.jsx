@@ -124,20 +124,6 @@ const Index = () => {
 
   return (
     <div className="container my-5">
-      {/* <h2>Trending this week</h2>
-      <div style={{ position: "relative" }}>
-        <Slider {...settings}>
-          {authors.map((author, index) => (
-            <div key={index} style={{ padding: "0 20px" }}>
-              <AuthorCard
-                authorName={author.authorName}
-                rating={author.rating}
-              />
-            </div>
-          ))}
-        </Slider>
-      </div> */}
-
       {/* Search Bar */}
       <div className="search-filters my-4 mt-5 mb-5">
         <form onSubmit={handleSearch} className="input-group">

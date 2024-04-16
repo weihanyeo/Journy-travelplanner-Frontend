@@ -6,8 +6,10 @@ import {
   faStar,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
 
 const Post = () => {
+  const router = useRouter();
   const [expandedComments, setExpandedComments] = useState(false);
   const [expandedCommentIndex, setExpandedCommentIndex] = useState(-1);
   const MAX_COMMENTS_SHOWN = 5;
@@ -86,6 +88,8 @@ const Post = () => {
       <div
         className="card mx-auto shadow-sm mw-90"
         style={{ maxWidth: "720px" }}
+        //onClick={() => router.push(`/Post/${id}`)}
+        onClick={() => router.push("/Post")}
       >
         <div className="card-header d-flex align-items-center mw-90">
           <img
@@ -119,139 +123,6 @@ const Post = () => {
             alt={postTitle}
           />
         </div>
-
-        {/* these for scripts + link is for the bootstrap carousel */}
-        {/*       <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous"
-      />
-
-      <script
-        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"
-      ></script> */}
-        {/* these for scripts + link is for the bootstrap carousel */}
-
-        {/* <div
-        id="carouselExampleIndicators"
-        className="carousel slide"
-        data-ride="carousel"
-      >
-        <ol className="carousel-indicators">
-          <li
-            data-target="#carouselExampleIndicators"
-            data-slide-to="0"
-            className="active"
-          ></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <div
-              style={{
-                width: "100%", // Set width to 100% to match parent div
-                height: "720px", // Set height as desired
-                overflow: "hidden",
-                position: "relative",
-              }}
-            >
-              <img
-                src={postImageUrl}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                  objectPosition: "center",
-                  backgroundColor: "black",
-                }}
-                alt={postTitle}
-              />
-            </div>
-          </div>
-          <div className="carousel-item">
-            <div
-              style={{
-                width: "100%", // Set width to 100% to match parent div
-                height: "720px", // Set height as desired
-                overflow: "hidden",
-                position: "relative",
-              }}
-            >
-              <img
-                src={postImageUrl}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                  objectPosition: "center",
-                  backgroundColor: "black",
-                }}
-                alt={postTitle}
-              />
-            </div>
-          </div>
-          <div className="carousel-item">
-            <div
-              style={{
-                width: "100%", // Set width to 100% to match parent div
-                height: "720px", // Set height as desired
-                overflow: "hidden",
-                position: "relative",
-              }}
-            >
-              <img
-                src={postImageUrl}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                  objectPosition: "center",
-                  backgroundColor: "black",
-                }}
-                alt={postTitle}
-              />
-            </div>
-          </div>
-        </div>
-        <a
-          className="carousel-control-prev"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="sr-only">Next</span>
-        </a>
-      </div> */}
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center">
             <div>

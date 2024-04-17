@@ -78,7 +78,7 @@ const NavBar = () => {
               </button>
 
               <button
-                className="nav-link "
+                className="nav-link"
                 type="button"
                 onClick={() => router.push("/Profile")}
               >

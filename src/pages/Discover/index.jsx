@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Range, getTrackBackground } from "react-range";
 
 import Post from "../../components/Post";
+import SearchBar from "../../components/SearchBar";
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -75,30 +76,6 @@ const MAX = 1000;
 //Index.auth = false; //newly added. this is for the authentication service
 
 const Index = () => {
-  const authors = [
-    { authorName: "Enrico Lim", rating: "4.5" },
-    { authorName: "Enrico Tan", rating: "4.6" },
-    { authorName: "Enrico Toh", rating: "4.7" },
-    { authorName: "Enrico A", rating: "4.9" },
-    { authorName: "Enrico Zhao", rating: "4.1" },
-    { authorName: "Enrico Qwek", rating: "4.2" },
-    { authorName: "Enrico Lin", rating: "4.4" },
-    { authorName: "Enrico Goh", rating: "4.0" },
-  ];
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [countryFilter, setCountryFilter] = useState("");
-  const [rating, setRating] = useState("");
-  const [budget, setBudget] = useState({ min: 0, max: 1000 });
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    console.log("Search Term:", searchTerm);
-    console.log("Country Filter:", countryFilter);
-    console.log("Rating:", rating);
-    console.log("Budget:", budget);
-  };
-
   const totalCards = 60;
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 5; // Display 5 cards per page
@@ -118,64 +95,10 @@ const Index = () => {
     setCurrentPage(newPage);
   };
 
-  const handleBudgetChange = (name, value) => {
-    setBudget((prevBudget) => ({ ...prevBudget, [name]: value }));
-  };
-
   return (
     <div className="container my-5">
       {/* Search Bar */}
-      <div className="search-filters my-4 mt-5 mb-5">
-        <form onSubmit={handleSearch} className="input-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search Keywords"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <select
-            className="form-control"
-            value={countryFilter}
-            onChange={(e) => setCountryFilter(e.target.value)}
-          >
-            <option value="">Select Country</option>
-            <option value="Thailand">Thailand</option>
-            <option value="Singapore">Singapore</option>
-            <option value="USA">USA</option>
-          </select>
-
-          <select
-            className="form-control"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          >
-            <option value="">Rating</option>
-            {[5, 4, 3, 2, 1].map((star) => (
-              <option key={star} value={star}>{`${star} stars & up`}</option>
-            ))}
-          </select>
-
-          <input
-            type="number"
-            className="form-control"
-            placeholder="Min price"
-            value={budget.min}
-            onChange={(e) => handleBudgetChange("min", e.target.value)}
-          />
-          <input
-            type="number"
-            className="form-control"
-            placeholder="Max price"
-            value={budget.max}
-            onChange={(e) => handleBudgetChange("max", e.target.value)}
-          />
-
-          <button type="submit" className="btn btn-primary">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
-        </form>
-      </div>
+      <SearchBar />
 
       {/* Itineraries Grid */}
       <div className="row">

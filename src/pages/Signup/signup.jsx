@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/router";
-import axiosClient from "../../others/network/axiosClient";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signIn } from "next-auth/react";
 
 const Index = () => {
   const router = useRouter();
   const [formDetails, setFormDetails] = useState({
     username: "",
     password: "",
+    name: "",
+    email: "",
   });
   const [errorMsgs, setErrorMsgs] = useState("");
+
   const onChangeField = (field) => (e) => {
     setFormDetails({
       ...formDetails,
@@ -21,36 +23,55 @@ const Index = () => {
 
   const validateFields = () => {
     let hasError = false;
-    const { username, password } = formDetails;
+    const { username, password, name, email } = formDetails;
     let newErrorMsg = "";
     if (username.length < 1) {
       hasError = true;
-      newErrorMsg = newErrorMsg + "Username is missing. ";
+      newErrorMsg = newErrorMsg + "Username, ";
     }
 
-    if (password.length < 1) {
+    if (name.length < 1) {
       hasError = true;
-      newErrorMsg = newErrorMsg + "Password is missing. ";
+      newErrorMsg = newErrorMsg + "Name, ";
+    }
+
+    if (email.length < 1 || !email.includes("@")) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Email, ";
+    }
+
+    const pattern = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+    if (
+      password.length < 8 ||
+      password.length > 20 ||
+      !pattern.test(password)
+    ) {
+      hasError = true;
+      newErrorMsg = newErrorMsg + "Password, ";
     }
     setErrorMsgs(newErrorMsg);
     console.log("data validated");
     return hasError;
   };
 
-  const onLogin = async () => {
-    const hasError = validateFields();
-    if (!hasError) {
-      //all fields are ok, we send data to BE
-      //redirect to another page
-      try {
-        await axiosClient.post(
-          "/customers/login",
-          //request body below
-          formDetails
-        );
-        router.push("/Discover");
-      } catch (error) {
-        setErrorMsgs("Account not found! Try signing up.  ");
+  const onSignUp = async () => {
+    try {
+      const response = await axiosClient.post("/members/register", formDetails);
+      // Handle the registration response
+      const { token, user } = response.data;
+      // Store the JWT token in the local storage or cookies
+      localStorage.setItem("jwt", token);
+      // Store the user data in the application state or context
+      setUserData(user);
+      // Redirect the user to the desired page
+      router.push("/Discover");
+    } catch (error) {
+      if (error.response) {
+        // Handle specific error responses from the server
+        setErrorMsgs(error.response.data.message);
+      } else {
+        // Handle network or other errors
+        setErrorMsgs("An error occurred. Please try again later.");
       }
     }
   };
@@ -61,24 +82,21 @@ const Index = () => {
       style={{ minHeight: "40rem", maxWidth: "40rem" }}
     >
       <img
-        src="loginpage.png"
+        src="signupPage.png"
         //alt="Logo"
         width="600"
         height="600"
         className="align-middle rounded-3"
       />
       <br />
-      <h1 className="text-center"> Welcome back to Journy</h1>
-      <h5 className="text-center" style={{ fontWeight: "50" }}>
-        Where enchanted journeys begin. Log in or sign up to continue
-      </h5>
+      <h1 className="text-center">Register for a magical journey</h1>
       {errorMsgs.length > 0 && (
         <div
           class="alert alert-warning alert-dismissible fade show"
           role="alert"
         >
           <div>
-            Holy guacamole!
+            Holy guacamole! You should check on these fields:
             <strong> {errorMsgs.substring(0, errorMsgs.length - 2)}</strong>
           </div>
         </div>
@@ -86,13 +104,39 @@ const Index = () => {
       <br />
       <div className="mb-3">
         <label for="exampleFormControlInput1" className="form-label">
+          Name
+        </label>
+        <input
+          type="name"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Enter Your Name"
+          value={formDetails.name}
+          onChange={onChangeField("name")}
+        />
+      </div>
+      <div className="mb-3">
+        <label for="exampleFormControlInput1" className="form-label">
+          Email address
+        </label>
+        <input
+          type="email"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="name@example.com"
+          value={formDetails.email}
+          onChange={onChangeField("email")}
+        />
+      </div>
+      <div className="mb-3">
+        <label for="exampleFormControlInput1" className="form-label">
           Username
         </label>
         <input
-          type="username"
+          type="email"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="Username"
+          placeholder="Create a Username"
           value={formDetails.username}
           onChange={onChangeField("username")}
         />
@@ -105,6 +149,7 @@ const Index = () => {
         id="inputPassword5"
         className="form-control"
         aria-describedby="passwordHelpBlock"
+        placeholder="Create a Password"
         value={formDetails.password}
         onChange={onChangeField("password")}
       />
@@ -121,26 +166,12 @@ const Index = () => {
           width: "100%",
           fontSize: "0.9rem;",
         }}
-        onClick={onLogin}
+        onClick={onSignUp}
       >
-        Log in
+        Join us
       </button>
-      <h6 className="text-center mt-2" style={{ fontWeight: "50" }}>
-        or
-      </h6>
-      <button
-        type="button"
-        className="btn btn-primary rounded-4 mt-2"
-        style={{
-          width: "100%",
-          fontSize: "0.9rem;",
-        }}
-      >
-        Continue with Google
-      </button>
-
       <h6 className="text-center mt-4" style={{ fontWeight: "40" }}>
-        Don't have an account?
+        Already with journy?
       </h6>
       <button
         type="button"
@@ -149,9 +180,9 @@ const Index = () => {
           width: "100%",
           fontSize: "0.9rem;",
         }}
-        onClick={() => router.push("/Signup")}
+        onClick={() => router.push("/Login")}
       >
-        Sign up
+        Log in
       </button>
     </div>
   );

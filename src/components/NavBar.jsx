@@ -1,28 +1,26 @@
 import { motion } from "framer-motion";
 import React from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-//import "./index.scss";
 
-const NavBar = () => {
+const NavBar = ({ userData }) => {
   const router = useRouter();
-  const { data: session } = useSession();
 
   const handleProfileClick = () => {
     // If user is not authenticated, redirect to the signup page
-    if (!session) {
+    if (!userData) {
       router.push("/Signup");
     } else {
       // Otherwise, handle profile click as usual
       router.push("/Profile");
     }
   };
+
   const handlePlanningClick = () => {
     // If user is not authenticated, redirect to the signup page
-    if (!session) {
+    if (!userData) {
       router.push("/Signup");
     } else {
-      // Otherwise, handle profile click as usual
+      // Otherwise, handle planning click as usual
       router.push("/Planning");
     }
   };
@@ -43,7 +41,6 @@ const NavBar = () => {
           <a className="navbar-brand" target="_blank" rel="noreferrer">
             <img
               src="journy.png"
-              //alt="Logo"
               width="30"
               height="30"
               className="d-inline-block"
@@ -81,7 +78,6 @@ const NavBar = () => {
               <button className="nav-link " onClick={handlePlanningClick}>
                 Planning
               </button>
-
               <button
                 className="nav-link "
                 type="button"
@@ -89,7 +85,6 @@ const NavBar = () => {
               >
                 Profile
               </button>
-
               <button
                 type="button"
                 className="btn btn-outline-primary"

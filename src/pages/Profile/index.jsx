@@ -1,51 +1,181 @@
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getServerSession } from "next-auth/next";
-import authOptions from "../../api/auth/[...nextauth]";
-import { redirect } from "next/navigation";
+import { faHeart, faClipboardList, faUserGroup, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import UploadImage from "../../components/UploadImage";
+import styles from './index.module.css';
+import axiosClient from '../../others/network/axiosClient';
 
-import {
-  faHeart,
-  faClipboardList,
-  faUserGroup,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
+const Index = () => {
+  const [userData, setUserData] = useState({
+    name: "Enrico Lim",
+    contact: "91234567",
+    email: "EnricoLim@gmail.com",
+    location: "Singapore",
+    about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. asfjsdhgjsdghjhdsGDHBhjsgb sajghdSKJGHSjkdhgjsdghjs JAKDGHksdgjsebgjhsabGJKbdjkfbgajkshb",
+    followers: 123,
+    following: 456,
+    itineraries: 12,
+    totalLikes: 789,
+    imageUrl: "",
+  });
+  const [tempUserData, setTempUserData] = useState({ ...userData });
+  const [editMode, setEditMode] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-const userData = {
-  name: "Enrico Lim",
-  contact: "91234567",
-  email: "EnricoLim@gmail.com",
-  location: "Singapore",
-  about: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-  followers: 123,
-  following: 456,
-  itineraries: 12,
-  totalLikes: 789,
-};
+  const handleUploadSuccess = (imageUrl) => {
+    setTempUserData(prevData => ({ ...prevData, imageUrl }));
+  };
 
-const Index = async () => {
-/*   const session = await getServerSession(authOptions);
-  console.log(session);
-  if (session == null) {
-    return redirect("/Signup");
-  } else { */
-    return (
-      <div className="container my-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h1 className="mb-4">{userData.name}</h1>
-            <p className="mb-2">
-              <strong>Contact:</strong> {userData.contact}
-            </p>
-            <p className="mb-2">
-              <strong>Email address:</strong> {userData.email}
-            </p>
-            <p className="mb-4">
-              <strong>Location:</strong> {userData.location}
-            </p>
-            <h3 className="mb-3">About Me:</h3>
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setTempUserData(prevData => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSaveChanges = () => {
+    let newErrors = {};
+    let hasErrors = false;
+
+    if (!/^\d+$/.test(tempUserData.contact)) {
+      newErrors.contact = 'Contact must contain only numbers.';
+      hasErrors = true;
+    }
+  
+    if (!/^\S+@\S+\.\S+$/.test(tempUserData.email)) {
+      newErrors.email = 'Please enter a valid email address.';
+      hasErrors = true;
+    }
+
+    if (!tempUserData.location.trim()) {
+      newErrors.location = 'Location cannot be empty.';
+      hasErrors = true;
+    }
+
+    if (!tempUserData.name.trim()) {
+      newErrors.name = 'Name cannot be empty.';
+      hasErrors = true;
+    }
+
+    setErrors(newErrors);
+
+    if (!hasErrors) {
+      setUserData({ ...tempUserData });
+      setEditMode(false);
+      setErrors({});
+    }
+  };
+
+  const handleCancel = () => {
+    setTempUserData({ ...userData });
+    setEditMode(false);
+  };
+
+  const handleEditProfile = () => {
+    if (isUserLoggedIn) {
+    } else {
+      alert("You are not authorized to edit this profile.");
+    }
+  };
+
+  return (
+    <div className="container my-5">
+      <div className="row">
+        <div className="col-md-6">
+        {editMode ? (
+          <div>
+            <strong>Name:</strong>
+            <input 
+              type="text" 
+              id="name"
+              value={tempUserData.name} 
+              onChange={handleInputChange} 
+              name="name"
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`} 
+              placeholder="Enter name"
+            />
+            {errors.name && (
+              <div className="alert alert-danger mt-2" role="alert">{errors.name}</div>
+            )}
+          </div>
+        ) : (
+          <h1>{userData.name}</h1>
+        )}
+        <br/>
+        <p>
+          <strong>Contact: </strong>
+          {editMode ? (
+            <div>
+              <input 
+                type="text" 
+                value={tempUserData.contact} 
+                onChange={handleInputChange} 
+                name="contact" 
+                className={`form-control ${errors.contact ? 'is-invalid' : ''}`} 
+                placeholder="Enter contact"
+              />
+              {errors.contact && (
+                <div className="alert alert-danger mt-2" role="alert">{errors.contact}</div> 
+              )}
+            </div>
+          ) : userData.contact}
+        </p>
+        <p>
+          <strong>Email address: </strong>
+          {editMode ? (
+            <div>
+              <input 
+                type="email" 
+                value={tempUserData.email} 
+                onChange={handleInputChange} 
+                name="email" 
+                className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                placeholder="Enter email"
+              />
+              {errors.email && (
+                <div className="alert alert-danger mt-2" role="alert">{errors.email}</div>
+              )}
+            </div>
+          ) : userData.email}
+        </p>
+        <p>
+          <strong>Location: </strong>
+          {editMode ? (
+            <div>
+              <input 
+                type="text" 
+                value={tempUserData.location} 
+                onChange={handleInputChange} 
+                name="location" 
+                className={`form-control ${errors.location ? 'is-invalid' : ''}`}
+                placeholder="Enter Location"
+              />
+              {errors.location && (
+                <div className="alert alert-danger mt-2" role="alert">{errors.location}</div> 
+              )}
+            </div>
+          ) : userData.location}
+        </p>
+
+          <h3>About Me:</h3>
+          {editMode ? (
+            <textarea 
+              className={styles.textAreaField}
+              value={tempUserData.about} 
+              onChange={handleInputChange} 
+              name="about"
+            />
+          ) : (
             <p>{userData.about}</p>
+          )}
+          
+          {editMode ? (
+            <div className={styles.buttonGroup}>
+              <button onClick={handleSaveChanges} className={`${styles.button} ${styles.buttonPrimary}`} type="button">Save Changes</button>
+              <button onClick={handleCancel} className={`${styles.button} ${styles.buttonSecondary}`} type="button">Cancel</button>
+            </div>
+          ) : (
+            <button onClick={() => setEditMode(true)} className={`${styles.button} ${styles.buttonPrimary} mt-3`}>Edit Profile</button>
+          )}
 
             <div className="mt-4">
               <div className="row text-center">
@@ -73,21 +203,21 @@ const Index = async () => {
             </div>
           </div>
 
-          <div className="col-md-6 d-flex justify-content-center align-items-center">
-            <div style={{ maxWidth: "400px" }}>
-              <Image
-                src="/profileimg.jpg"
-                alt="Profile Picture"
-                width={300}
-                height={400}
-                layout="responsive"
-              />
-            </div>
-          </div>
+        <div className="col-md-6 d-flex flex-column align-items-center">
+          {tempUserData.imageUrl && (
+            <img
+              src={tempUserData.imageUrl}
+              alt="Profile"
+              className={styles.profileImage}
+            />
+          )}
+          {editMode && (
+            <UploadImage onUploadSuccess={handleUploadSuccess} />
+          )}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default Index;

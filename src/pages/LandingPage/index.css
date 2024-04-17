@@ -1,27 +1,130 @@
-@media (max-width: 992px) {
+/* index.css */
+
+/* Global Styles */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+.margin-landing {
+  margin-top: 20%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.full-screen-section {
+  height: 70vh; /* Set the height to 100% of the viewport height */
+  padding: 0; /* Remove any padding */
+  margin: 0; /* Remove any margin */
+  /* Optionally, you can also set other styles like background color or background image */
+}
+
+/* Landing Page Styles */
+.landing-container {
+  padding: 50px 0;
+}
+
+.text-container {
+  text-align: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.card-section {
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.features-section {
+  padding: 50px 0;
+}
+
+.feature {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.feature i {
+  color: #007bff;
+}
+
+.testimonials-section {
+  background-color: #f8f9fa;
+  padding: 100px 0;
+}
+
+.testimonial {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.author {
+  font-style: italic;
+  color: #6c757d;
+}
+
+.cta-section {
+  background-image: url("../../../public/widget8.png");
+  color: #ffffff;
+  padding: 100px 0;
+}
+
+.cta-section h2,
+.cta-section p {
+  text-align: center;
+}
+
+.outlined-text {
+  color: white; /* Set text color */
+  text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333,
+    1px 1px 0 #333; /* Black outline */
+}
+
+.cta-section button.btn-primary {
+  background-color: #ffffff;
+  color: #007bff;
+  border: 2px solid #ffffff;
+  padding: 10px 30px;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.cta-section button.btn-primary:hover {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
   .landing-container {
-    position: relative;
     flex-direction: column;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 3rem;
   }
+
+  .image-container,
   .text-container {
-    min-width: 95%;
-  }
-  .image-container {
-    position: absolute;
-    object-fit: cover;
-    height: 100vh;
-    max-height: 50rem;
-    top: -12rem;
-    left: 0;
-    z-index: -1;
-    opacity: 40%;
+    width: 100%;
+    text-align: center;
   }
 }
 
-.spacer {
-  margin-top: 20rem;
-  height: 20rem;
+.custom-pad {
+  height: 30vh;
+  margin-bottom: 100px;
 }

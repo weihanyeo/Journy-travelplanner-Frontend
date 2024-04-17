@@ -1,0 +1,8 @@
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff; /* Adjust as needed */
+  border-top: 1px solid #e0e0e0; /* Add a border if desired */
+  padding: 20px 0; /* Add padding to create separation from the content */
+}

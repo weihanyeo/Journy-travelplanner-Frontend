@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { useRouter } from "next/router";
+import axiosClient from "./axiosClient";
 
 const NavBar = ({ userData }) => {
   const router = useRouter();

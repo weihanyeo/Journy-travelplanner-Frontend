@@ -1,5 +1,4 @@
 //to be deleted
-import { useEffect } from "react";
 import dynamic from "next/dynamic";
 
 const KMLDisplay = dynamic(
@@ -9,10 +8,10 @@ const KMLDisplay = dynamic(
 
 const PostDetails = () => {
   return (
-    <div className="flex flex-col p-10 gap-5">
-      <div className="flex flex-row justify-evenly items-center">
+    <div className="tw-flex tw-flex-col tw-p-10 tw-gap-5">
+      <div className="tw-flex tw-flex-row tw-justify-evenly tw-items-center">
         <KMLDisplay />
-        <div className="flex flex-col ">
+        <div className="tw-flex tw-flex-col ">
           <p>user profile pic</p>
           <p>user name</p>
           <p>user about me</p>
@@ -21,10 +20,10 @@ const PostDetails = () => {
           </button>
         </div>
       </div>
-      <div className="border-2">
+      <div className="tw-border-2">
         <p>Description</p>
       </div>
-      <div className="border-2">
+      <div className="tw-border-2">
         <textarea>Comments</textarea>
       </div>
     </div>

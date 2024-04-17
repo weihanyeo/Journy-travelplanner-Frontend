@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import dynamic from "next/dynamic";
 
 const KMLEditor = dynamic(
@@ -7,7 +6,7 @@ const KMLEditor = dynamic(
 );
 const CreateNewPost = () => {
   return (
-    <div className="flex flex-col gap-3 p-10">
+    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
       <KMLEditor />
       <input
         type="text"
@@ -20,7 +19,7 @@ const CreateNewPost = () => {
         aria-label="Description"
         placeholder="Description"
       ></textarea>
-      <button className="border-2 bg-blue-500">Publish Post</button>
+      <button className="tw-border-2 tw-bg-blue-500">Publish Post</button>
     </div>
   );
 };

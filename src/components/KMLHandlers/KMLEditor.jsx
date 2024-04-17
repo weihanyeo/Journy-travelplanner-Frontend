@@ -245,9 +245,9 @@ const KMLEditor = () => {
   };
 
   return (
-    <div className="flex flex-row gap-5 w-full">
-      <div className="flex flex-col border-2">
-        <div className="border-2">
+    <div className="tw-flex tw-flex-row tw-gap-5 tw-w-full">
+      <div className="tw-flex tw-flex-col tw-border-2">
+        <div className="tw-border-2">
           <input type="file" accept=".kml" onChange={handleFileSelection} />
           <label>mode of transport:</label>
           <select
@@ -259,7 +259,7 @@ const KMLEditor = () => {
             <option value="cycle">Cycling</option>
           </select>
         </div>
-        <div className="flex flex-col border-2">
+        <div className="tw-flex tw-flex-col tw-border-2">
           <p>search for locations</p>
           <input onChange={onSearch} value={search} />
           {searchResults.length > 0 && (
@@ -310,19 +310,6 @@ const KMLEditor = () => {
                     delete
                   </button>
                   <div>
-                    <button
-                      class="btn btn-primary"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseExample"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
-                      View Directions
-                    </button>
-                    <div class="collapse" id="collapseExample">
-                      <div class="card card-body">hi</div>
-                    </div>
                     {index < directions.length &&
                       directions[index].steps.map((step) => (
                         <dd>{step.instruction.text}</dd>

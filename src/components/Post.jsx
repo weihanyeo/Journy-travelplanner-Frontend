@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 
 const Post = () => {
   const router = useRouter();
+
   const [expandedComments, setExpandedComments] = useState(false);
   const [expandedCommentIndex, setExpandedCommentIndex] = useState(-1);
   const MAX_COMMENTS_SHOWN = 5;

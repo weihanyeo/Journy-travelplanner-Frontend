@@ -6,7 +6,8 @@ import { Icon, marker } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./leafletStyles.module.css";
 
-export default function KMLViewer() {
+export default function KMLViewer({ kmlFile }) {
+  console.log("this component is running..");
   const [layer, setLayer] = useState(null);
   const [center, setCenter] = useState([1.294385, 103.7727545]);
 
@@ -16,17 +17,24 @@ export default function KMLViewer() {
     setKey((prevKey) => prevKey + 1); // Update the key when center changes
   }, [center]);
 
-  const handleFileSelection = (event) => {
-    const file = event.target.files[0]; // get file
-    const reader = new FileReader();
+  useEffect(() => {
+    console.log("this component is running..", kmlFile);
+    handleFileConversion(kmlFile);
+  }, []);
 
-    // on load file end, parse the text read
-    reader.onloadend = (event) => {
-      const text = event.target.result;
-      parseKMLtoGeoJSON(text);
-    };
+  const handleFileConversion = (kmlfile) => {
+    const file = kmlfile; // get file
+    parseKMLtoGeoJSON(kmlFile);
+    console.log("this file is being displayed", kmlFile);
+    // const reader = new FileReader();
 
-    reader.readAsText(file); // start reading file
+    // // on load file end, parse the text read
+    // reader.onloadend = (event) => {
+    //   const text = event.target.result;
+    //   parseKMLtoGeoJSON(text);
+    // };
+
+    // reader.readAsText(file); // start reading file
   };
 
   const parseKMLtoGeoJSON = (text) => {
@@ -104,7 +112,6 @@ export default function KMLViewer() {
             ))}
         </MapContainer>
       </div>
-      <input type="file" accept=".kml" onChange={handleFileSelection} />
     </div>
   );
 }

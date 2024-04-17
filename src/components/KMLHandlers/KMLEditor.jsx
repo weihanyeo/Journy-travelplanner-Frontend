@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axiosClient from "../../others/network/axiosClient";
+import axiosClient, {
+  axiosExternalClient,
+} from "../../others/network/axiosClient";
 import * as tj from "@mapbox/togeojson";
 import rewind from "@mapbox/geojson-rewind";
 import { saveAs } from "file-saver";
 import tokml from "tokml";
 import ReusableKMLViewer from "./KMLViewer";
 
-const KMLEditor = () => {
+const KMLEditor = ({ onChangeKML }) => {
   //suggestions
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -29,7 +31,7 @@ const KMLEditor = () => {
   const onFindPlaces = async () => {
     if (search != "") {
       try {
-        await axiosClient
+        await axiosExternalClient
           .get(
             `https://api.geoapify.com/v1/geocode/autocomplete?text=${search}&format=json&apiKey=ed24fe3439e946d5a60cda3a1b687587`
           )
@@ -56,7 +58,7 @@ const KMLEditor = () => {
   //api call to parse coords into location
   const parseCoordsToLocation = async (lat, long) => {
     try {
-      const response = await axiosClient.get(
+      const response = await axiosExternalClient.get(
         `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${long}&format=json&apiKey=ed24fe3439e946d5a60cda3a1b687587`
       );
       return response;
@@ -162,7 +164,7 @@ const KMLEditor = () => {
         formattedWaypoints.length - 1
       );
       try {
-        await axiosClient
+        await axiosExternalClient
           .get(
             `https://api.geoapify.com/v1/routing?waypoints=${formattedWaypoints}&mode=${mode}&apiKey=ed24fe3439e946d5a60cda3a1b687587`
           )
@@ -209,7 +211,7 @@ const KMLEditor = () => {
     }
   };
 
-  const downloadAsKML = () => {
+  const saveKMLMap = () => {
     const geoJSON = convertToGeoJSON();
 
     // Convert GeoJSON to KML
@@ -220,8 +222,10 @@ const KMLEditor = () => {
       type: "kml",
     });
 
+    onChangeKML(blob);
+
     // Save the Blob as a file
-    saveAs(blob, "3106testerKML.kml");
+    // saveAs(blob, "3106testerKML.kml");
   };
 
   const onDragStart = (event, index) => {
@@ -248,7 +252,7 @@ const KMLEditor = () => {
     <div className="tw-flex tw-flex-row tw-gap-5 tw-w-full">
       <div className="tw-flex tw-flex-col tw-border-2">
         <div className="tw-border-2">
-          <input type="file" accept=".kml" onChange={handleFileSelection} />
+          {/* <input type="file" accept=".kml" onChange={handleFileSelection} /> */}
           <label>mode of transport:</label>
           <select
             onChange={(e) => setMode(e.target.value)}
@@ -262,6 +266,7 @@ const KMLEditor = () => {
         <div className="tw-flex tw-flex-col tw-border-2">
           <p>search for locations</p>
           <input onChange={onSearch} value={search} />
+
           {searchResults.length > 0 && (
             <div>
               <p>search results</p>
@@ -321,8 +326,8 @@ const KMLEditor = () => {
           </div>
         )}
         {currentLocations.length > 0 && (
-          <button type="button" class="btn btn-primary" onClick={downloadAsKML}>
-            download as kml
+          <button type="button" class="btn btn-primary" onClick={saveKMLMap}>
+            save map changes
           </button>
         )}
       </div>

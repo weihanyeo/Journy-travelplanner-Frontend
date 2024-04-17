@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import RootLayout from "./layout";
+import "./globals.css";
 import { useRouter } from 'next/router';
 import axiosClient from "../others/network/axiosClient";
 

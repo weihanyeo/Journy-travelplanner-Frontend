@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
+import RootLayout from "./layout";
 import { useRouter } from 'next/router';
-import axiosClient from '../components/axiosClient';
+import axiosClient from "../others/network/axiosClient";
 
-function MyApp({ Component, pageProps }) {
+import "bootstrap/dist/css/bootstrap.min.css"; // bootstrap stylesheet
+
+export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -46,7 +49,9 @@ function MyApp({ Component, pageProps }) {
     };
   }, [router]);
 
-  return <Component {...pageProps} />;
+  return (
+    < RootLayout >
+      <Component {...pageProps} />
+    </RootLayout >
+  )
 }
-
-export default MyApp;

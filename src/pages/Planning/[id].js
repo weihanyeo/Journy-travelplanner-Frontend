@@ -1,15 +1,32 @@
 import dynamic from "next/dynamic";
-import axiosClient from "../../../others/network/axiosClient";
+import axiosClient from "../../others/network/axiosClient";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const KMLEditor = dynamic(
-  () => import("../../../components/KMLHandlers/KMLEditor"),
+  () => import("../../components/KMLHandlers/KMLEditor"),
   { ssr: false }
 );
 
 const CreateNewPost = () => {
   const router = useRouter();
+  const { id } = router.query;
+  const [currentKML, setCurrentKML] = useState();
+
+  useEffect(() => {
+    getCurrentKMLFile(id);
+  }, []);
+
+  const getCurrentKMLFile = async (postId) => {
+    try {
+      await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
+        setCurrentKML(res.data);
+        console.log(res.data);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const onChangeFields = (field) => (e) => {
     if (field === "budget") {
@@ -22,15 +39,6 @@ const CreateNewPost = () => {
         ...formDetails,
         [field]: e.target.value,
       });
-    }
-  };
-
-  const getAllPosts = async () => {
-    try {
-      const res = await axiosClient.get("/posts");
-      console.log(res);
-    } catch (e) {
-      console.error(e);
     }
   };
 
@@ -54,6 +62,7 @@ const CreateNewPost = () => {
 
   const handlePostKMLFile = async (postId) => {
     try {
+<<<<<<< HEAD:src/pages/Post/createNewPost/index.js
       const formData = new FormData();
       formData.append("file", file);
       const res = await axiosClient.post(`/posts/${postId}/kml-file`, formData, {
@@ -63,6 +72,23 @@ const CreateNewPost = () => {
         },
       });
       console.log(res);
+=======
+      await axiosClient
+        .post(
+          `/posts/${postId}/kml-file`,
+          { file: file },
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4aW55aSIsImlhdCI6MTcxMzQ1NTY2MCwiZXhwIjoxNzEzNDU3MTAwfQ.4w8RPyl12D9m7_-1WJAoaxSlywz4LBDb1BP6IdI0ITA",
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+>>>>>>> 47f7df5 (feat: connection to BE for posts, viewing post details, forking kml file):src/pages/Planning/[id].js
       router.push("/Discover");
     } catch (e) {
       console.error(e);
@@ -74,6 +100,7 @@ const CreateNewPost = () => {
   };
 
   return (
+<<<<<<< HEAD:src/pages/Post/createNewPost/index.js
     <div className="container mt-5">
       <KMLEditor onChangeKML={onChangeKML} />
       <div className="row mt-3">
@@ -116,6 +143,38 @@ const CreateNewPost = () => {
           </button>
         </div>
       </div>
+=======
+    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
+      {currentKML && (
+        <KMLEditor onChangeKML={onChangeKML} initialKML={currentKML} />
+      )}
+      <input
+        type="text"
+        aria-label="Title"
+        placeholder="Title"
+        className="border-2"
+        onChange={onChangeFields("postTitle")}
+        value={formDetails.postTitle}
+      ></input>
+      <textarea
+        className="border-2"
+        aria-label="Description"
+        placeholder="Description"
+        onChange={onChangeFields("postDescription")}
+        value={formDetails.postDescription}
+      ></textarea>
+      <input
+        type="number"
+        onChange={onChangeFields("budget")}
+        value={formDetails.budget}
+      ></input>
+      <button
+        className="tw-border-2 tw-bg-blue-500"
+        onClick={handlePublishPost}
+      >
+        Publish Post
+      </button>
+>>>>>>> 47f7df5 (feat: connection to BE for posts, viewing post details, forking kml file):src/pages/Planning/[id].js
     </div>
   );
 };

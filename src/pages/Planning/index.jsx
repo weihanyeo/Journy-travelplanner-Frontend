@@ -1,107 +1,105 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import axiosClient from "../../others/network/axiosClient";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import Card from "../../components/Card";
-import Timetable from "../../components/Timetable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-const Index = () => {
-  const [nearbyPlaces, setNearbyPlaces] = useState(new Array(4).fill(0));
+const KMLEditor = dynamic(
+  () => import("../../components/KMLHandlers/KMLEditor"),
+  { ssr: false }
+);
+const CreateNewPost = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("jwt");
-      if (token) {
-        console.log("JWT token found in local storage");
-        // Fetch the user data from the server or set a placeholder
-        setUserData({
-          /* placeholder user data */
-        });
-      } else {
-        setUserData(null);
-        console.log("JWT not found");
-        router.push("/Signup");
-      }
+  const onChangeFields = (field) => (e) => {
+    if (field == "budget") {
+      setFormDetails({
+        ...formDetails,
+        [field]: Number(e.target.value),
+      });
     }
-  }, [router]);
-
-  const loadMoreAdventures = () => {
-    setNearbyPlaces((prevPlaces) => [...prevPlaces, ...new Array(4).fill(0)]);
+    setFormDetails({
+      ...formDetails,
+      [field]: e.target.value,
+    });
   };
 
-  const timetableData = [
-    {
-      date: "12th Sept 2023",
-      activities: [
-        { time: "9:30am", name: "Activity Name" },
-        { time: "11:30am", name: "Activity Name" },
-      ],
-    },
-  ];
+  const [formDetails, setFormDetails] = useState({
+    postPicture: "",
+    postTitle: "",
+    postDescription: "",
+    budget: 0,
+    locations: ["singapore"],
+  });
+  const [file, setFile] = useState();
+
+  const handlePublishPost = async () => {
+    try {
+      await axiosClient.post("/posts", formDetails).then((res) => {
+        handlePostKMLFile(res.data.postId);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handlePostKMLFile = async (postId) => {
+    try {
+      await axiosClient
+        .post(
+          `/posts/${postId}/kml-file`,
+          { file: file },
+          {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4aW55aSIsImlhdCI6MTcxMzQ1Njk4NSwiZXhwIjoxNzEzNDU4NDI1fQ.WM5HsJp3TR-PtkwUxLbkB44b2pdYqSS6kD9ll0Hif5E",
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+      router.push("/Discover");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onChangeKML = (kmlfile) => {
+    setFile(kmlfile);
+  };
 
   return (
-    <div className="container my-5">
-      {/*Timetable*/}
-      <div className="row">
-        <div className="col-md-6">
-          <h2>Your Timetable</h2>
-          <Timetable data={timetableData} />
-        </div>
-        <div className="col-md-6">
-          <div
-            className="map-placeholder"
-            style={{ height: "200px", backgroundColor: "#ddd" }}
-          />
-        </div>
-      </div>
-
-      {/*Nearby places*/}
-      <div className="row mt-5 align-items-center">
-        <div className="col-md-6">
-          <h2>Nearby Places</h2>
-        </div>
-        <div className="col-md-6">
-          <div className="input-group">
-            <span className="input-group-text" id="basic-addon1">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search Place/Activities"
-              aria-label="Search"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/*Cards*/}
-      <div className="row mt-3">
-        {nearbyPlaces.map((_, index) => (
-          <div
-            className="col-6 col-md-3 mb-4"
-            key={index}
-            style={{ padding: "0 8px" }}
-          >
-            <Card />
-          </div>
-        ))}
-      </div>
-
-      {/*Load more*/}
-      <div className="row">
-        <div className="col-12 text-center">
-          <button className="btn btn-primary" onClick={loadMoreAdventures}>
-            Load more adventures!
-          </button>
-        </div>
-      </div>
+    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
+      <KMLEditor onChangeKML={onChangeKML} />
+      <input
+        type="text"
+        aria-label="Title"
+        placeholder="Title"
+        className="border-2"
+        onChange={onChangeFields("postTitle")}
+        value={formDetails.postTitle}
+      ></input>
+      <textarea
+        className="border-2"
+        aria-label="Description"
+        placeholder="Description"
+        onChange={onChangeFields("postDescription")}
+        value={formDetails.postDescription}
+      ></textarea>
+      <input
+        type="number"
+        onChange={onChangeFields("budget")}
+        value={formDetails.budget}
+      ></input>
+      <button
+        className="tw-border-2 tw-bg-blue-500"
+        onClick={handlePublishPost}
+      >
+        Publish Post
+      </button>
     </div>
   );
 };
 
-export default Index;
+export default CreateNewPost;

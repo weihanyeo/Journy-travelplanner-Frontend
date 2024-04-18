@@ -8,8 +8,15 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="container-fluid bg-dark text-white py-5">
+    <footer
+      className="footer"
+      style={{
+        backgroundColor: "#196f5d",
+        color: "#f8f0ca",
+        fontFamily: "Poppins, sans-serif",
+      }}
+    >
+      <div className="container py-5">
         <div className="row">
           <div className="col-lg-3 col-md-6">
             <h5>About Journy</h5>
@@ -22,16 +29,24 @@ const Footer = () => {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="/">Home</a>
+                <a href="/" className="text-light">
+                  Home
+                </a>
               </li>
               <li>
-                <a href="/about">About Us</a>
+                <a href="/about" className="text-light">
+                  About Us
+                </a>
               </li>
               <li>
-                <a href="/destinations">Destinations</a>
+                <a href="/destinations" className="text-light">
+                  Destinations
+                </a>
               </li>
               <li>
-                <a href="/contact">Contact Us</a>
+                <a href="/contact" className="text-light">
+                  Contact Us
+                </a>
               </li>
             </ul>
           </div>
@@ -39,17 +54,17 @@ const Footer = () => {
             <h5>Follow Us</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="#">
+                <a href="#" className="text-light">
                   <FontAwesomeIcon icon={faFacebook} /> Facebook
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="#" className="text-light">
                   <FontAwesomeIcon icon={faTwitter} /> Twitter
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="#" className="text-light">
                   <FontAwesomeIcon icon={faInstagram} /> Instagram
                 </a>
               </li>
@@ -67,7 +82,9 @@ const Footer = () => {
               </li>
               <li>
                 <i className="fas fa-envelope"></i>{" "}
-                <a href="mailto:info@journy.com">info@journy.com</a>
+                <a href="mailto:info@journy.com" className="text-light">
+                  info@journy.com
+                </a>
               </li>
             </ul>
           </div>

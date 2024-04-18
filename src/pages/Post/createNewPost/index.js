@@ -7,29 +7,33 @@ const KMLEditor = dynamic(
   () => import("../../../components/KMLHandlers/KMLEditor"),
   { ssr: false }
 );
+
 const CreateNewPost = () => {
   const router = useRouter();
 
   const onChangeFields = (field) => (e) => {
-    if (field == "budget") {
+    if (field === "budget") {
       setFormDetails({
         ...formDetails,
         [field]: Number(e.target.value),
       });
+    } else {
+      setFormDetails({
+        ...formDetails,
+        [field]: e.target.value,
+      });
     }
-    setFormDetails({
-      ...formDetails,
-      [field]: e.target.value,
-    });
   };
 
   const getAllPosts = async () => {
     try {
-      await axiosClient.get("/posts").then((res) => console.log(res));
+      const res = await axiosClient.get("/posts");
+      console.log(res);
     } catch (e) {
       console.error(e);
     }
   };
+
   const [formDetails, setFormDetails] = useState({
     postPicture: "",
     postTitle: "",
@@ -41,9 +45,8 @@ const CreateNewPost = () => {
 
   const handlePublishPost = async () => {
     try {
-      await axiosClient.post("/posts", formDetails).then((res) => {
-        handlePostKMLFile(res.data.postId);
-      });
+      const res = await axiosClient.post("/posts", formDetails);
+      await handlePostKMLFile(res.data.postId);
     } catch (e) {
       console.error(e);
     }
@@ -51,21 +54,15 @@ const CreateNewPost = () => {
 
   const handlePostKMLFile = async (postId) => {
     try {
-      await axiosClient
-        .post(
-          `/posts/${postId}/kml-file`,
-          { file: file },
-          {
-            headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4aW55aTAyMiIsImlhdCI6MTcxMzM1MTE3NiwiZXhwIjoxNzEzNDM3NTc2fQ.sCe2OD9jeTahZOsvAsAaTqbeQ9SqYdKiqyRASm0mbiE",
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        });
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await axiosClient.post(`/posts/${postId}/kml-file`, formData, {
+        headers: {
+          Authorization: "Bearer your-access-token",
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res);
       router.push("/Discover");
     } catch (e) {
       console.error(e);
@@ -74,40 +71,51 @@ const CreateNewPost = () => {
 
   const onChangeKML = (kmlfile) => {
     setFile(kmlfile);
-
-    console.log("file set", kmlfile);
   };
 
   return (
-    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
-      {/* <input type="file" accept=".kml" onChange={handleFileSelection} /> */}
+    <div className="container mt-5">
       <KMLEditor onChangeKML={onChangeKML} />
-      <input
-        type="text"
-        aria-label="Title"
-        placeholder="Title"
-        className="border-2"
-        onChange={onChangeFields("postTitle")}
-        value={formDetails.postTitle}
-      ></input>
-      <textarea
-        className="border-2"
-        aria-label="Description"
-        placeholder="Description"
-        onChange={onChangeFields("postDescription")}
-        value={formDetails.postDescription}
-      ></textarea>
-      <input
-        type="number"
-        onChange={onChangeFields("budget")}
-        value={formDetails.budget}
-      ></input>
-      <button
-        className="tw-border-2 tw-bg-blue-500"
-        onClick={handlePublishPost}
-      >
-        Publish Post
-      </button>
+      <div className="row mt-3">
+        <div className="col-md-6">
+          <input
+            type="text"
+            className="form-control"
+            aria-label="Title"
+            placeholder="Title"
+            onChange={onChangeFields("postTitle")}
+            value={formDetails.postTitle}
+          />
+        </div>
+        <div className="col-md-6">
+          <input
+            type="number"
+            className="form-control"
+            aria-label="Budget"
+            placeholder="Budget"
+            onChange={onChangeFields("budget")}
+            value={formDetails.budget}
+          />
+        </div>
+      </div>
+      <div className="row mt-3">
+        <div className="col-md-12">
+          <textarea
+            className="form-control"
+            aria-label="Description"
+            placeholder="Description"
+            onChange={onChangeFields("postDescription")}
+            value={formDetails.postDescription}
+          />
+        </div>
+      </div>
+      <div className="row mt-3">
+        <div className="col-md-12">
+          <button className="btn btn-primary" onClick={handlePublishPost}>
+            Publish Post
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -47,7 +47,7 @@ const NavBar = () => {
 
   return (
     <motion.div
-      className="header"
+      className="nav-header"
       initial={{ opacity: 0, y: -180 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -56,23 +56,23 @@ const NavBar = () => {
         delay: 0.8,
       }}
     >
-      <nav id="Home" className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" target="_blank" rel="noreferrer">
+      <nav className={`navbar navbar-expand-lg navbar-light navbar`}>
+        <div className="container">
+          <a className={`navbar-brand navbarBrand`} href="#">
             <img
               src="journy.png"
               width="30"
               height="30"
-              className="d-inline-block"
+              className="d-inline-block align-top"
             />
             Journy
           </a>
           <button
-            className="navbar-toggler justify-content-end "
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >

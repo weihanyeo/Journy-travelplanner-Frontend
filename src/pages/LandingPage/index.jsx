@@ -1,27 +1,103 @@
-import React from "react";
-import SearchBar from "../../components/SearchBar";
+"use client";
 
-const LandingPage = () => {
+import React, { useState, useEffect } from "react";
+
+import { motion } from "framer-motion";
+import { useRouter } from "next/router";
+import SearchBar from "../../components/SearchBar";
+import Card from "../../components/Card";
+
+const Index = () => {
+  const router = useRouter();
+  const [initialCardCount, setInitialCardCount] = useState(0);
+  const [additionalCardCount, setAdditionalCardCount] = useState(8);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    // Simulating fetching initial cards from an API or data source
+    const fetchedCards = Array.from({ length: 8 }, (_, index) => (
+      <div key={index} className="col-md-3 mb-4">
+        <Card />
+      </div>
+    ));
+    setCards(fetchedCards);
+    setInitialCardCount(8); // Set the initial card count
+  }, []);
+
+  const handleLoadMore = () => {
+    // Simulating fetching additional cards
+    const additionalCards = Array.from(
+      { length: additionalCardCount },
+      (_, index) => (
+        <div key={initialCardCount + index} className="col-md-3 mb-4">
+          <Card />
+        </div>
+      )
+    );
+    setCards((prevCards) => [...prevCards, ...additionalCards]); // Append additional cards
+    setInitialCardCount((prevCount) => prevCount + additionalCardCount); // Update the initial card count
+  };
   return (
     <div className="contain-landing">
       {/* Hero Section */}
       <div className="heroSection">
-        <div className="row align-items-center">
+        <motion.div
+          className="row align-items-center"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
           <div className="col-md-6">
             <div className="heroContent">
-              <h1 className="heroTitle">Embark on Your Journey with Journy</h1>
+              <h1 className="heroTitle">
+                Embark on Your Journey with <b>Journy</b>{" "}
+              </h1>
               <p className="heroSubtitle">
-                Discover new adventures, connect with fellow travelers, and
-                create unforgettable memories.
+                <p className="lead">Where Adventure Meets Collaboration</p>
+                <p>Explore, Share, Create - Your Ultimate Travel Companion</p>
               </p>
               <SearchBar />
             </div>
           </div>
           <div className="col-md-6">
-            <div className="heroImage">
-              <img src="/widget8.png" alt="Adventure" className="img-fluid" />
-            </div>
+            <motion.div
+              className="image-container col-lg-6 col-md-8 col-sm-10 d-none d-md-block"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              <div className="heroImage">
+                <img src="/widget8.png" alt="Adventure" className="img-fluid" />
+              </div>
+            </motion.div>
           </div>
+        </motion.div>
+      </div>
+
+      {/* Card Section */}
+      <div className="container mt-5">
+        <motion.div
+          className="mb-5"
+          whileInView={{ opacity: [0.2, 1] }}
+          transition={{ duration: 0.2, delay: 0.5 }}
+        >
+          <h2 className="text-center mb-4" style={{ color: "#196f5d" }}>
+            Explore the extraordinary with Journy
+          </h2>
+          <p className="lead text-center" style={{ color: "#141451" }}>
+            Explore potential locations and magical journeys here
+          </p>
+        </motion.div>
+
+        {/* Card Section */}
+        <section className="card-section">
+          <div className="row">{cards}</div>
+        </section>
+
+        <div className="text-center custom-pad">
+          <button className="btn btn-primary" onClick={handleLoadMore}>
+            Load More
+          </button>
         </div>
       </div>
 
@@ -97,4 +173,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Index;

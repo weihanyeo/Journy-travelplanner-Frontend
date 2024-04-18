@@ -61,7 +61,7 @@ const Index = () => {
       //redirect to another page
       try {
         await axiosClient.post(
-          "/customers/register",
+          "/members/register",
           //request body below
           formDetails
         );

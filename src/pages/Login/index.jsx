@@ -44,7 +44,7 @@ const Index = () => {
       //redirect to another page
       try {
         await axiosClient.post(
-          "/customers/login",
+          "/members/login",
           //request body below
           formDetails
         );

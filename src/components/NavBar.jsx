@@ -1,29 +1,48 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import axiosClient from "../others/network/axiosClient";
 
-const NavBar = ({ userData }) => {
+const NavBar = () => {
   const router = useRouter();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      console.log("JWT token found in local storage");
+      // Fetch the user data from the server or set a placeholder
+      setUserData({
+        /* placeholder user data */
+      });
+    } else {
+      setUserData(null);
+      console.log("JWT not found");
+    }
+  }, []);
 
   const handleProfileClick = () => {
-    // If user is not authenticated, redirect to the signup page
     if (!userData) {
       router.push("/Signup");
     } else {
-      // Otherwise, handle profile click as usual
       router.push("/Profile");
     }
   };
 
   const handlePlanningClick = () => {
-    // If user is not authenticated, redirect to the signup page
     if (!userData) {
       router.push("/Signup");
     } else {
-      // Otherwise, handle planning click as usual
       router.push("/Planning");
     }
+  };
+
+  const handleLogout = () => {
+    // Remove the JWT token from local storage
+    localStorage.removeItem("jwt");
+    // Reset the user data state
+    setUserData(null);
+    // Redirect the user to the login page
+    router.push("/Login");
   };
 
   return (
@@ -76,23 +95,36 @@ const NavBar = ({ userData }) => {
               >
                 Discover
               </button>
-              <button className="nav-link " onClick={handlePlanningClick}>
-                Planning
-              </button>
-              <button
-                className="nav-link "
-                type="button"
-                onClick={handleProfileClick}
-              >
-                Profile
-              </button>
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={() => router.push("/Login")}
-              >
-                Lets Explore!
-              </button>
+              {userData && (
+                <>
+                  <button className="nav-link" onClick={handlePlanningClick}>
+                    Planning
+                  </button>
+                  <button
+                    className="nav-link"
+                    type="button"
+                    onClick={handleProfileClick}
+                  >
+                    Profile
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+              {!userData && (
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => router.push("/Login")}
+                >
+                  Let's Explore!
+                </button>
+              )}
             </div>
           </div>
         </div>

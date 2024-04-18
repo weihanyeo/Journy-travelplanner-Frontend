@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faClipboardList, faUserGroup, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import UploadImage from "../../components/UploadImage";
 import styles from './index.module.css';
-import axiosClient from '../../others/network/axiosClient';
 
 const Index = () => {
   const [userData, setUserData] = useState({

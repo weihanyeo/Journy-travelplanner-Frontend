@@ -12,6 +12,8 @@ const Index = () => {
     password: "",
   });
   const [errorMsgs, setErrorMsgs] = useState("");
+  const [userData, setUserData] = useState(null); // Add this line to define the user data state
+
   const onChangeField = (field) => (e) => {
     setFormDetails({
       ...formDetails,
@@ -37,7 +39,7 @@ const Index = () => {
     return hasError;
   };
 
-  const onLogin = async () => {
+  /*   const onLogin = async () => {
     const hasError = validateFields();
     if (!hasError) {
       try {
@@ -60,6 +62,51 @@ const Index = () => {
         } else {
           // Handle network or other errors
           setErrorMsgs("An error occurred. Please try again later.");
+        }
+      }
+    }
+  }; */
+
+  const onLogin = async () => {
+    const hasError = validateFields();
+    if (!hasError) {
+      try {
+        console.log("Attempting to log in...");
+        const response = await axiosClient.post(
+          "/members/authenticate",
+          formDetails
+        );
+        console.log("Login successful!");
+
+        // Handle the login response
+        const { token, user } = response.data;
+        console.log("Received token and user data from server");
+
+        // Store the JWT token in the local storage or cookies
+        localStorage.setItem("jwt", token);
+        console.log("Stored JWT token in local storage");
+
+        // Store the user data in the application state or context
+        setUserData(user); // Update this line
+        console.log("Stored user data in application state/context");
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+
+        // Redirect the user to the desired page
+        router.replace("/Discover");
+        console.log("Redirected user to Discover page");
+      } catch (error) {
+        console.error("Error occurred during login:", error);
+        if (error.response) {
+          // Handle specific error responses from the server
+          setErrorMsgs(error.response.data.message);
+          console.error("Error message set:", error.response.data.message);
+        } else {
+          // Handle network or other errors
+          setErrorMsgs("An error occurred. Please try again later.");
+          console.error("Generic error message set");
         }
       }
     }
@@ -129,7 +176,7 @@ const Index = () => {
         className="btn btn-primary rounded-4"
         style={{
           width: "100%",
-          fontSize: "0.9rem;",
+          fontSize: "0.9rem",
         }}
         onClick={onLogin}
       >
@@ -143,7 +190,7 @@ const Index = () => {
         className="btn btn-primary rounded-4 mt-2"
         style={{
           width: "100%",
-          fontSize: "0.9rem;",
+          fontSize: "0.9rem",
         }}
       >
         Continue with Google
@@ -157,7 +204,7 @@ const Index = () => {
         className="mt-2"
         style={{
           width: "100%",
-          fontSize: "0.9rem;",
+          fontSize: "0.9rem",
         }}
         onClick={() => router.push("/Signup")}
       >

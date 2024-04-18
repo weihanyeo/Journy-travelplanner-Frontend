@@ -51,8 +51,8 @@ export default function App({ Component, pageProps }) {
   }, [router]);
 
   return (
-    < RootLayout >
+    <RootLayout>
       <Component {...pageProps} />
-    </RootLayout >
+    </RootLayout>
   )
 }

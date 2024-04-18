@@ -30,26 +30,26 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="container my-5">
+    <div className={`container searchBarContainer`}>
       {/* Search Bar */}
-      <div className="search-bar-container">
-        <form onSubmit={handleSearch} className="search-form">
-          <div className="search-input">
+      <div className="searchBar">
+        <form onSubmit={handleSearch} className="searchForm">
+          <div className="searchInput">
             <input
               type="text"
-              className="form-control rounded-pill"
+              className={`form-control rounded-pill input`}
               placeholder="Search Keywords"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button type="submit" className="btn btn-primary square">
+            <button type="submit" className={`btn btn-warning searchBtn`}>
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>
           <div className="filters">
             <div className="dropdowns">
               <select
-                className="form-control rounded-pill"
+                className="form-control rounded-pill select"
                 value={countryFilter}
                 onChange={(e) => setCountryFilter(e.target.value)}
               >
@@ -59,7 +59,7 @@ const SearchBar = () => {
                 <option value="USA">USA</option>
               </select>
               <select
-                className="form-control rounded-pill"
+                className="form-control rounded-pill select"
                 value={rating}
                 onChange={(e) => setRating(e.target.value)}
               >
@@ -72,7 +72,7 @@ const SearchBar = () => {
                 ))}
               </select>
               <select
-                className="form-control rounded-pill"
+                className={`form-control rounded-pill select`}
                 value={selectedTag}
                 onChange={(e) => setSelectedTag(e.target.value)}
               >
@@ -84,24 +84,24 @@ const SearchBar = () => {
                 ))}
               </select>
             </div>
-            <div className="price-range">
+            <div className="priceRange">
               <div className="input-group">
-                <div className="input-group-prepend">
+                <div className="input-group-color">
                   <span className="input-group-text">$</span>
                 </div>
                 <input
                   type="number"
-                  className="form-control rounded-pill"
+                  className={`form-control rounded-pill priceInput"`}
                   placeholder="Min price"
                   value={budget.min}
                   onChange={(e) => handleBudgetChange("min", e.target.value)}
                 />
-                <div className="input-group-prepend">
+                <div className="input-group-color">
                   <span className="input-group-text">to</span>
                 </div>
                 <input
                   type="number"
-                  className="form-control rounded-pill"
+                  className={`form-control rounded-pill priceInput"`}
                   placeholder="Max price"
                   value={budget.max}
                   onChange={(e) => handleBudgetChange("max", e.target.value)}

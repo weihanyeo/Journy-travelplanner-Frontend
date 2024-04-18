@@ -1,27 +1,13 @@
 import { motion } from "framer-motion";
 import React from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-//import "./index.scss";
 
 const NavBar = () => {
-  //to be used with footer
-  // const handleScrollTo = (id: string): void => {
-  //   const targetElement = document.getElementById(id);
-
-  //   if (targetElement) {
-  //     window.scrollTo({
-  //       top: targetElement.offsetTop - 70, // Adjust the offset as needed
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // };
-
   const router = useRouter();
 
   return (
     <motion.div
-      className="header"
+      className="nav-header"
       initial={{ opacity: 0, y: -180 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -30,69 +16,70 @@ const NavBar = () => {
         delay: 0.8,
       }}
     >
-      <nav id="Home" className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" target="_blank" rel="noreferrer">
+      <nav className={`navbar navbar-expand-lg navbar-light navbar`}>
+        <div className="container">
+          <a className={`navbar-brand navbarBrand`} href="#">
             <img
               src="journy.png"
-              //alt="Logo"
+              alt="Journy Logo"
               width="30"
               height="30"
-              className="d-inline-block"
+              className="d-inline-block align-top"
             />
             Journy
           </a>
           <button
-            className="navbar-toggler justify-content-end "
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div
-            className="collapse navbar-collapse justify-content-end "
-            id="navbarNavAltMarkup"
-          >
-            <div className="navbar-nav">
-              <button
-                className="nav-link"
-                onClick={() => router.push("/LandingPage")}
-              >
-                Home
-              </button>
-              <button
-                className="nav-link"
-                onClick={() => router.push("/Discover")}
-              >
-                Discover
-              </button>
-              <button
-                className="nav-link "
-                onClick={() => router.push("/Planning")}
-              >
-                Planning
-              </button>
-
-              <button
-                className="nav-link "
-                type="button"
-                onClick={() => router.push("/Profile")}
-              >
-                Profile
-              </button>
-
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={() => router.push("/Login")}
-              >
-                Lets Explore!
-              </button>
-            </div>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className={`navbar-nav ms-auto navbarNav`}>
+              <li className="nav-item">
+                <button
+                  className={`nav-link navLink`}
+                  onClick={() => router.push("/LandingPage")}
+                >
+                  Home
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`nav-link navLink`}
+                  onClick={() => router.push("/Discover")}
+                >
+                  Discover
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`nav-link navLink`}
+                  onClick={() => router.push("/Planning")}
+                >
+                  Planning
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`nav-link navLink`}
+                  onClick={() => router.push("/Profile")}
+                >
+                  Profile
+                </button>
+              </li>
+            </ul>
+            <button
+              className={`btn btn-outline-warning exploreBtn`}
+              onClick={() => router.push("/Login")}
+            >
+              Let's Explore!
+            </button>
           </div>
         </div>
       </nav>

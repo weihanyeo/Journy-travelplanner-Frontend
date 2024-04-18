@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import Card from "../../components/Card";
 import Timetable from "../../components/Timetable";

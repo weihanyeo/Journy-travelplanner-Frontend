@@ -233,15 +233,15 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="col-md-6 d-flex flex-column align-items-center">
-          <img
-            src={userData.profilePictureUrl || "/defaultImg.png"}
-            alt="Profile"
-            className={styles.profileImage}
-          />
-          {editMode && <UploadImage onUploadSuccess={handleUploadSuccess} />}
+          <div className="col-md-6 d-flex flex-column align-items-center">
+            <img
+              src={userData.profilePictureUrl || "/defaultImg.png"}
+              alt="Profile"
+              className={styles.profileImage}
+            />
+            {editMode && <UploadImage onUploadSuccess={handleUploadSuccess} />}
+          </div>
         </div>
       </div>
     </div>

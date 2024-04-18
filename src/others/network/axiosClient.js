@@ -1,44 +1,48 @@
-import axios from "axios";
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: 'http://localhost:8080/api',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
+// Add an interceptor to handle authorization headers
 axiosClient.interceptors.request.use(
   (config) => {
-    //before next auth development is complete, token will be hardcoded
-    //this means this only works on my machine, if you want to run the apis
-    //you'll have to replace the token below with the one that's returned by BE after logging in/signing up
-    const token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4aW55aTAyMiIsImlhdCI6MTcxMzM1MTE3NiwiZXhwIjoxNzEzNDM3NTc2fQ.sCe2OD9jeTahZOsvAsAaTqbeQ9SqYdKiqyRASm0mbiE";
+    // Retrieve the JWT token from storage (e.g., localStorage, cookies)
+    const token = localStorage.getItem('jwt');
     if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
 
+// Add an interceptor to handle unauthorized sessions
 axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    let res = error.response;
-    if (res && res.status == 401) {
-      // TODO: Handle unauthorised error
+    const router = useRouter();
+    const originalRequest = error.config;
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      // Clear the stored token
+      localStorage.removeItem('jwt');
+
+      // Redirect the user to the login page
+      router.push('/Login');
+
+      return axiosClient(originalRequest);
     }
+
+    // Handle other errors
     return Promise.reject(error);
   }
 );
 
 export default axiosClient;
-
-//for external apis
-
-export const axiosExternalClient = axios.create({
-  headers: {
-    "Content-Type": "application/json",
-  },
-});

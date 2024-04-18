@@ -1,9 +1,49 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const NavBar = () => {
   const router = useRouter();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      console.log("JWT token found in local storage");
+      // Fetch the user data from the server or set a placeholder
+      setUserData({
+        /* placeholder user data */
+      });
+    } else {
+      setUserData(null);
+      console.log("JWT not found");
+    }
+  }, []);
+
+  const handleProfileClick = () => {
+    if (!userData) {
+      router.push("/Signup");
+    } else {
+      router.push("/Profile");
+    }
+  };
+
+  const handlePlanningClick = () => {
+    if (!userData) {
+      router.push("/Signup");
+    } else {
+      router.push("/Planning");
+    }
+  };
+
+  const handleLogout = () => {
+    // Remove the JWT token from local storage
+    localStorage.removeItem("jwt");
+    // Reset the user data state
+    setUserData(null);
+    // Redirect the user to the login page
+    router.push("/Login");
+  };
 
   return (
     <motion.div
@@ -21,7 +61,6 @@ const NavBar = () => {
           <a className={`navbar-brand navbarBrand`} href="#">
             <img
               src="journy.png"
-              alt="Journy Logo"
               width="30"
               height="30"
               className="d-inline-block align-top"
@@ -39,47 +78,54 @@ const NavBar = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className={`navbar-nav ms-auto navbarNav`}>
-              <li className="nav-item">
+          <div
+            className="collapse navbar-collapse justify-content-end "
+            id="navbarNavAltMarkup"
+          >
+            <div className="navbar-nav">
+              <button
+                className="nav-link"
+                onClick={() => router.push("/LandingPage")}
+              >
+                Home
+              </button>
+              <button
+                className="nav-link"
+                onClick={() => router.push("/Discover")}
+              >
+                Discover
+              </button>
+              {userData && (
+                <>
+                  <button className="nav-link" onClick={handlePlanningClick}>
+                    Planning
+                  </button>
+                  <button
+                    className="nav-link"
+                    type="button"
+                    onClick={handleProfileClick}
+                  >
+                    Profile
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+              {!userData && (
                 <button
-                  className={`nav-link navLink`}
-                  onClick={() => router.push("/LandingPage")}
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => router.push("/Login")}
                 >
-                  Home
+                  Let's Explore!
                 </button>
-              </li>
-              <li className="nav-item">
-                <button
-                  className={`nav-link navLink`}
-                  onClick={() => router.push("/Discover")}
-                >
-                  Discover
-                </button>
-              </li>
-              <li className="nav-item">
-                <button
-                  className={`nav-link navLink`}
-                  onClick={() => router.push("/Planning")}
-                >
-                  Planning
-                </button>
-              </li>
-              <li className="nav-item">
-                <button
-                  className={`nav-link navLink`}
-                  onClick={() => router.push("/Profile")}
-                >
-                  Profile
-                </button>
-              </li>
-            </ul>
-            <button
-              className={`btn btn-outline-warning exploreBtn`}
-              onClick={() => router.push("/Login")}
-            >
-              Let's Explore!
-            </button>
+              )}
+            </div>
           </div>
         </div>
       </nav>

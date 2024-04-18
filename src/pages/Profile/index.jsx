@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faClipboardList, faUserGroup, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import UploadImage from "../../components/UploadImage";
 import styles from './index.module.css';
-import axiosClient from '../../others/network/axiosClient';
 
 const Index = () => {
   const [userData, setUserData] = useState({
@@ -177,31 +176,31 @@ const Index = () => {
             <button onClick={() => setEditMode(true)} className={`${styles.button} ${styles.buttonPrimary} mt-3`}>Edit Profile</button>
           )}
 
-          <div className="mt-4">
-            <div className="row text-center">
-              <div className="col">
-                <FontAwesomeIcon icon={faUserGroup}/>
-                <h4 className="mt-2">Followers</h4>
-                <p>{userData.followers}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faUserPlus}/>
-                <h4 className="mt-2">Following</h4>
-                <p>{userData.following}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faClipboardList}/>
-                <h4 className="mt-2">Itineraries</h4>
-                <p>{userData.itineraries}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faHeart}/>
-                <h4 className="mt-2">Total Likes</h4>
-                <p>{userData.totalLikes}</p>
+            <div className="mt-4">
+              <div className="row text-center">
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserGroup} />
+                  <h4 className="mt-2">Followers</h4>
+                  <p>{userData.followers}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserPlus} />
+                  <h4 className="mt-2">Following</h4>
+                  <p>{userData.following}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faClipboardList} />
+                  <h4 className="mt-2">Itineraries</h4>
+                  <p>{userData.itineraries}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faHeart} />
+                  <h4 className="mt-2">Total Likes</h4>
+                  <p>{userData.totalLikes}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
         <div className="col-md-6 d-flex flex-column align-items-center">
           {tempUserData.imageUrl && (

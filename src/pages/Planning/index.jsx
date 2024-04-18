@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Card from "../../components/Card";
 import Timetable from "../../components/Timetable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +9,25 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const Index = () => {
   const [nearbyPlaces, setNearbyPlaces] = useState(new Array(4).fill(0));
+  const router = useRouter();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("jwt");
+      if (token) {
+        console.log("JWT token found in local storage");
+        // Fetch the user data from the server or set a placeholder
+        setUserData({
+          /* placeholder user data */
+        });
+      } else {
+        setUserData(null);
+        console.log("JWT not found");
+        router.push("/Signup");
+      }
+    }
+  }, [router]);
 
   const loadMoreAdventures = () => {
     setNearbyPlaces((prevPlaces) => [...prevPlaces, ...new Array(4).fill(0)]);

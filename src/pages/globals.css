@@ -5,6 +5,7 @@
 @import "./LandingPage/index.css";
 @import "../components/Card.css";
 @import "../components/Footer.css";
+@import "../components/Navbar.css";
 @import "../components/SearchBar.css";
 
 :root {

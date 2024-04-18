@@ -1,0 +1,39 @@
+.nav-header {
+  margin-bottom: 2rem;
+}
+
+.navbar {
+  background-color: #196f5d; /* Primary color */
+}
+
+.navbar-brand {
+  color: #f8f0ca; /* Light color */
+  font-family: "Poppins", sans-serif; /* Font family */
+}
+
+.navbar-toggler {
+  border-color: #f8f0ca; /* Light color */
+}
+
+.navbar-toggler-icon {
+  background-color: #f8f0ca; /* Light color */
+}
+
+.navbar-nav {
+  font-family: "Poppins", sans-serif; /* Font family */
+}
+
+.nav-link {
+  color: #f8f0ca !important; /* Light color */
+}
+
+.exploreBtn {
+  font-family: "Poppins", sans-serif; /* Font family */
+  color: #196f5d; /* Primary color */
+  border-color: #196f5d; /* Primary color */
+}
+
+.exploreBtn:hover {
+  background-color: #196f5d; /* Primary color */
+  color: #f8f0ca; /* Light color */
+}

@@ -7,6 +7,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import UploadImage from "../../components/UploadImage";
+import Post from "../../components/Post";
 import styles from "./index.module.css";
 import axiosClient from "../../others/network/axiosClient";
 
@@ -15,21 +16,51 @@ const Index = () => {
   const [tempUserData, setTempUserData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [errors, setErrors] = useState({});
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [activeTab, setActiveTab] = useState("myPosts");
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 5;
+  const [totalPages, setTotalPages] = useState(0);
+
+  const currentPosts = posts.slice(
+    (currentPage - 1) * cardsPerPage,
+    currentPage * cardsPerPage
+  );
+
+  const handleTabChange = (tabName) => {
+    setActiveTab(tabName);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   useEffect(() => {
-    if (isUserLoggedIn) {
+    if (userData) {
+      const newPosts =
+        activeTab === "myPosts" ? userData.posts : userData.likedPosts;
+      setPosts(newPosts);
+      setTotalPages(Math.ceil(newPosts.length / cardsPerPage));
+      setCurrentPage(1);
+    }
+  }, [userData, activeTab]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
       fetchUserData();
     }
-  }, [isUserLoggedIn]);
+  }, []);
 
   const fetchUserData = async () => {
     try {
-      const response = await axiosClient.get("/api/members/my-profile", {
+      console.log("fetching....");
+      const response = await axiosClient.get("/members/my-profile", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       });
+      console.log(response.data ? response.data : "No response");
       setUserData(response.data);
       setTempUserData(response.data);
     } catch (error) {
@@ -50,17 +81,29 @@ const Index = () => {
   };
 
   const updateProfile = async (updatedData) => {
+    const dataToSend = {
+      ...updatedData,
+      authorities: undefined,
+    };
     try {
+      const token = localStorage.getItem("jwt");
+      if (token) {
+        console.log("JWT token exists:", token);
+      } else {
+        console.log("JWT token not found in localStorage");
+      }
       const response = await axiosClient.put(
-        "/api/members/update-profile",
-        updatedData,
+        "/members/update-profile",
+        dataToSend,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
         }
       );
       setUserData(response.data);
+      console.log("Success");
+      return response.data;
     } catch (error) {
       console.error("Error updating user profile:", error);
     }
@@ -70,18 +113,8 @@ const Index = () => {
     let newErrors = {};
     let hasErrors = false;
 
-    if (!/^\d+$/.test(tempUserData.contact)) {
-      newErrors.contact = "Contact must contain only numbers.";
-      hasErrors = true;
-    }
-
     if (!/^\S+@\S+\.\S+$/.test(tempUserData.email)) {
       newErrors.email = "Please enter a valid email address.";
-      hasErrors = true;
-    }
-
-    if (!tempUserData.location.trim()) {
-      newErrors.location = "Location cannot be empty.";
       hasErrors = true;
     }
 
@@ -138,8 +171,11 @@ const Index = () => {
               )}
             </div>
           ) : (
-            <h1>{userData.name}</h1>
+            userData && <h1>{userData.name}</h1>
           )}
+          <p className={styles.usernameText}>
+            <strong>@{userData.username}</strong>
+          </p>
           <br />
           <p>
             <strong>Email address: </strong>
@@ -160,7 +196,7 @@ const Index = () => {
                 )}
               </div>
             ) : (
-              userData.email
+              userData && <p>{userData.email}</p>
             )}
           </p>
           <h3>About Me:</h3>
@@ -172,7 +208,7 @@ const Index = () => {
               name="aboutMe"
             />
           ) : (
-            <p>{userData.aboutMe}</p>
+            userData && <p>{userData.aboutMe}</p>
           )}
 
           {editMode ? (
@@ -202,48 +238,119 @@ const Index = () => {
           )}
 
           <div className="mt-4">
-            <div className="row text-center">
-              <div className="col">
-                <FontAwesomeIcon icon={faUserGroup} />
-                <h4 className="mt-2">Followers</h4>
-                <p>
-                  {userData.followersMembers
-                    ? userData.followersMembers.length
-                    : 0}
-                </p>
+            {userData && (
+              <div className="row text-center">
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserGroup} />
+                  <h4 className="mt-2">Followers</h4>
+                  <p>
+                    {userData.followersMembers
+                      ? userData.followersMembers.length
+                      : 0}
+                  </p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserPlus} />
+                  <h4 className="mt-2">Following</h4>
+                  <p>
+                    {userData.followingMembers
+                      ? userData.followingMembers.length
+                      : 0}
+                  </p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faClipboardList} />
+                  <h4 className="mt-2">Itineraries</h4>
+                  <p>{userData.posts ? userData.posts.length : 0}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faHeart} />
+                  <h4 className="mt-2">Likes Received</h4>
+                  <p>{userData.likesReceived ? userData.likesReceived : 0}</p>
+                </div>
               </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faUserPlus} />
-                <h4 className="mt-2">Following</h4>
-                <p>
-                  {userData.followingMembers
-                    ? userData.followingMembers.length
-                    : 0}
-                </p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faClipboardList} />
-                <h4 className="mt-2">Itineraries</h4>
-                <p>{userData.posts ? userData.posts.length : 0}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faHeart} />
-                <h4 className="mt-2">Likes Received</h4>
-                <p>{userData.likesReceived}</p>
-              </div>
-            </div>
+            )}
           </div>
-
-          <div className="col-md-6 d-flex flex-column align-items-center">
+        </div>
+        <div className="col-md-6 d-flex flex-column align-items-center">
+          {userData && (
             <img
-              src={userData.profilePictureUrl || "/defaultImg.png"}
+              src={userData.profilePictureURL || "/defaultImg.png"}
               alt="Profile"
               className={styles.profileImage}
             />
-            {editMode && <UploadImage onUploadSuccess={handleUploadSuccess} />}
-          </div>
+          )}
+          {editMode && <UploadImage onUploadSuccess={handleUploadSuccess} />}
         </div>
       </div>
+      <div className={styles.buttonContainer}>
+        <button
+          className={`${styles.toggleButton} ${
+            activeTab === "myPosts" ? styles.active : ""
+          }`}
+          onClick={() => handleTabChange("myPosts")}
+        >
+          <div className={styles.iconContainer}>
+            <FontAwesomeIcon icon={faClipboardList} size="lg" />
+          </div>
+          My Posts
+        </button>
+        <button
+          className={`${styles.toggleButton} ${
+            activeTab === "likedPosts" ? styles.active : ""
+          }`}
+          onClick={() => handleTabChange("likedPosts")}
+        >
+          <div className={styles.iconContainer}>
+            <FontAwesomeIcon icon={faHeart} size="lg" />
+          </div>
+          Liked Posts
+        </button>
+      </div>
+      {activeTab === "myPosts" && (
+        <>
+          <div className="row">
+            {currentPosts.map((post, index) => (
+              <div key={index} className="col-12 mb-4">
+                <Post post={post} />
+              </div>
+            ))}
+          </div>
+
+          <nav aria-label="Page navigation">
+            <ul className="pagination justify-content-center">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (number) => (
+                  <li
+                    key={number}
+                    className={`page-item ${
+                      currentPage === number ? "active" : ""
+                    }`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => handlePageChange(number)}
+                    >
+                      {number}
+                    </button>
+                  </li>
+                )
+              )}
+            </ul>
+          </nav>
+
+          {currentPage < totalPages && (
+            <div className="text-center">
+              <button
+                className="btn btn-primary"
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                View More
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

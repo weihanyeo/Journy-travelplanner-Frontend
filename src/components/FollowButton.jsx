@@ -23,7 +23,18 @@ const FollowButton = ({ targetMemberId, followingMembers }) => {
 
   const handleFollowClick = async () => {
     try {
-      if (!isFollowing) {
+      if (isFollowing) {
+        await axiosClient.delete(
+          `/members/unfollow/${targetMemberId}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+          }
+        );
+        setIsFollowing(false);
+        console.log(`Following member: ${targetMemberId}`);
+        window.location.reload();
+      } else {
         await axiosClient.post(
           `/members/follow/${targetMemberId}`,
           {},
@@ -32,9 +43,7 @@ const FollowButton = ({ targetMemberId, followingMembers }) => {
           }
         );
         setIsFollowing(true);
-        console.log(`Following member: ${targetMemberId}`);
         window.location.reload();
-      } else {
       }
     } catch (error) {
       console.error("Error following/unfollowing user:", error);

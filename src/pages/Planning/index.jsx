@@ -76,39 +76,56 @@ const CreateNewPost = () => {
   };
 
   return (
-    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
-      <KMLEditor onChangeKML={onChangeKML} />
-      <input
-        type="text"
-        aria-label="Title"
-        placeholder="Title"
-        className="border-2"
-        onChange={onChangeFields("title")}
-        value={formDetails.title}
-      ></input>
-      <textarea
-        className="border-2"
-        aria-label="Description"
-        placeholder="Description"
-        onChange={onChangeFields("description")}
-        value={formDetails.description}
-      ></textarea>
-      <input
-        type="number"
-        onChange={onChangeFields("budget")}
-        value={formDetails.budget}
-      ></input>
-      {showError && (
-        <div class="alert alert-danger" role="alert">
-          Save Map Before Proceeding!
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-lg-10">
+          <div className="row">
+            <div className="col-lg-6 mb-4">
+              <div className="map-container">
+                <div className="kml-editor">
+                  <KMLEditor onChangeKML={onChangeKML} />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6 mb-4">
+              <div className="form-container">
+                <input
+                  type="text"
+                  aria-label="Title"
+                  placeholder="Title"
+                  className="form-control mb-3"
+                  onChange={onChangeFields("title")}
+                  value={formDetails.title}
+                />
+                <textarea
+                  className="form-control mb-3"
+                  aria-label="Description"
+                  placeholder="Description"
+                  onChange={onChangeFields("description")}
+                  value={formDetails.description}
+                />
+                <input
+                  type="number"
+                  className="form-control mb-3"
+                  onChange={onChangeFields("budget")}
+                  value={formDetails.budget}
+                />
+                {showError && (
+                  <div className="alert-danger mb-3" role="alert">
+                    Save Map Before Proceeding!
+                  </div>
+                )}
+                <button
+                  className="btn-primary rounded-pill publish-button"
+                  onClick={handlePublishPost}
+                >
+                  Publish Post
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
-      <button
-        className="tw-border-2 tw-bg-blue-500"
-        onClick={handlePublishPost}
-      >
-        Publish Post
-      </button>
+      </div>
     </div>
   );
 };

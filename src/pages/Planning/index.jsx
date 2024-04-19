@@ -43,6 +43,7 @@ const CreateNewPost = () => {
   };
 
   const handlePostKMLFile = async (postId) => {
+    const token = localStorage.getItem("jwt");
     try {
       await axiosClient
         .post(
@@ -50,8 +51,7 @@ const CreateNewPost = () => {
           { file: file },
           {
             headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4aW55aSIsImlhdCI6MTcxMzQ1Njk4NSwiZXhwIjoxNzEzNDU4NDI1fQ.WM5HsJp3TR-PtkwUxLbkB44b2pdYqSS6kD9ll0Hif5E",
+              Authorization: `Bearer ${token} `,
               "Content-Type": "multipart/form-data",
             },
           }

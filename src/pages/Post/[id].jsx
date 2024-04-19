@@ -57,7 +57,6 @@ const PostDetails = () => {
   };
 
   const onSendNewComment = async () => {
-    console.log("curent username is set to", username);
     const newCommentObject = {
       commentDetails: newComment,
       commenter: { username: username },

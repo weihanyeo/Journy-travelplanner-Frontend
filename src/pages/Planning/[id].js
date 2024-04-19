@@ -12,6 +12,7 @@ const CreateNewPost = () => {
   const router = useRouter();
   const { id } = router.query;
   const [currentKML, setCurrentKML] = useState();
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     getCurrentKMLFile(id);
@@ -21,7 +22,7 @@ const CreateNewPost = () => {
     try {
       await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
         setCurrentKML(res.data);
-        console.log(res.data);
+        console.log("current kmlfile", res.data);
       });
     } catch (e) {
       console.error(e);
@@ -43,24 +44,31 @@ const CreateNewPost = () => {
   };
 
   const [formDetails, setFormDetails] = useState({
-    postPicture: "",
-    postTitle: "",
-    postDescription: "",
+    postPictureURL: "",
+    title: "",
+    description: "",
     budget: 0,
-    locations: ["singapore"],
+    locations: [],
   });
   const [file, setFile] = useState();
 
   const handlePublishPost = async () => {
+    if (!file) {
+      setShowError(true);
+      return;
+    }
     try {
-      const res = await axiosClient.post("/posts", formDetails);
-      await handlePostKMLFile(res.data.postId);
+      await axiosClient.post("/posts", formDetails).then((res) => {
+        handlePostKMLFile(res.data.postId);
+      });
+      router.push("/Discover");
     } catch (e) {
       console.error(e);
     }
   };
 
   const handlePostKMLFile = async (postId) => {
+    const token = localStorage.getItem("jwt");
     try {
       await axiosClient
         .post(
@@ -68,8 +76,7 @@ const CreateNewPost = () => {
           { file: file },
           {
             headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4aW55aSIsImlhdCI6MTcxMzQ1NTY2MCwiZXhwIjoxNzEzNDU3MTAwfQ.4w8RPyl12D9m7_-1WJAoaxSlywz4LBDb1BP6IdI0ITA",
+              Authorization: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
             },
           }
@@ -97,21 +104,26 @@ const CreateNewPost = () => {
         aria-label="Title"
         placeholder="Title"
         className="border-2"
-        onChange={onChangeFields("postTitle")}
-        value={formDetails.postTitle}
+        onChange={onChangeFields("title")}
+        value={formDetails.title}
       ></input>
       <textarea
         className="border-2"
         aria-label="Description"
         placeholder="Description"
-        onChange={onChangeFields("postDescription")}
-        value={formDetails.postDescription}
+        onChange={onChangeFields("description")}
+        value={formDetails.description}
       ></textarea>
       <input
         type="number"
         onChange={onChangeFields("budget")}
         value={formDetails.budget}
       ></input>
+      {showError && (
+        <div class="alert alert-danger" role="alert">
+          Save Map Before Proceeding!
+        </div>
+      )}
       <button
         className="tw-border-2 tw-bg-blue-500"
         onClick={handlePublishPost}

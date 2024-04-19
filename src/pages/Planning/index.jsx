@@ -9,6 +9,7 @@ const KMLEditor = dynamic(
 );
 const CreateNewPost = () => {
   const router = useRouter();
+  const [showError, setShowError] = useState(false);
 
   const onChangeFields = (field) => (e) => {
     if (field == "budget") {
@@ -24,19 +25,24 @@ const CreateNewPost = () => {
   };
 
   const [formDetails, setFormDetails] = useState({
-    postPicture: "",
-    postTitle: "",
-    postDescription: "",
+    postPictureURL: "",
+    title: "",
+    description: "",
     budget: 0,
-    locations: ["singapore"],
+    locations: [],
   });
   const [file, setFile] = useState();
 
   const handlePublishPost = async () => {
+    if (!file) {
+      setShowError(true);
+      return;
+    }
     try {
       await axiosClient.post("/posts", formDetails).then((res) => {
         handlePostKMLFile(res.data.postId);
       });
+      router.push("/Discover");
     } catch (e) {
       console.error(e);
     }
@@ -77,21 +83,26 @@ const CreateNewPost = () => {
         aria-label="Title"
         placeholder="Title"
         className="border-2"
-        onChange={onChangeFields("postTitle")}
-        value={formDetails.postTitle}
+        onChange={onChangeFields("title")}
+        value={formDetails.title}
       ></input>
       <textarea
         className="border-2"
         aria-label="Description"
         placeholder="Description"
-        onChange={onChangeFields("postDescription")}
-        value={formDetails.postDescription}
+        onChange={onChangeFields("description")}
+        value={formDetails.description}
       ></textarea>
       <input
         type="number"
         onChange={onChangeFields("budget")}
         value={formDetails.budget}
       ></input>
+      {showError && (
+        <div class="alert alert-danger" role="alert">
+          Save Map Before Proceeding!
+        </div>
+      )}
       <button
         className="tw-border-2 tw-bg-blue-500"
         onClick={handlePublishPost}

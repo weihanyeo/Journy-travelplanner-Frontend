@@ -45,4 +45,10 @@ axiosClient.interceptors.response.use(
   }
 );
 
+export const axiosExternalClient = axios.create({
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export default axiosClient;

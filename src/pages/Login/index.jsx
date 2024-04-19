@@ -107,7 +107,7 @@ const Index = () => {
       </h5>
       {errorMsgs.length > 0 && (
         <div
-          class="alert alert-warning alert-dismissible fade show"
+          className="alert alert-warning alert-dismissible fade show"
           role="alert"
         >
           <div>
@@ -157,19 +157,6 @@ const Index = () => {
         onClick={onLogin}
       >
         Log in
-      </button>
-      <h6 className="text-center mt-2" style={{ fontWeight: "50" }}>
-        or
-      </h6>
-      <button
-        type="button"
-        className="btn btn-primary rounded-4 mt-2"
-        style={{
-          width: "100%",
-          fontSize: "0.9rem",
-        }}
-      >
-        Continue with Google
       </button>
 
       <h6 className="text-center mt-4" style={{ fontWeight: "40" }}>

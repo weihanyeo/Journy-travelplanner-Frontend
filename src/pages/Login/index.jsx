@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axiosClient from "../../others/network/axiosClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { jwtDecode } from "jwt-decode";
 
 const Index = () => {
   const router = useRouter();
@@ -50,11 +51,14 @@ const Index = () => {
         );
         console.log("Login successful!");
 
-        // Handle the login response
+        // store current member username
         const { token, user } = response.data;
         console.log("Received token and user data from server");
+        const decoded = jwtDecode(token);
+        console.log("decoded:", decoded);
 
         // Store the JWT token in the local storage or cookies
+        localStorage.setItem("currentUser", decoded.sub);
         localStorage.setItem("jwt", token);
         console.log("Stored JWT token in local storage");
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,
@@ -9,16 +10,22 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import UploadImage from "../../components/UploadImage";
+import FollowButton from "../../components/FollowButton";
 import Post from "../../components/Post";
-import styles from "./index.module.css";
+import styles from "./[memberId].module.css";
 import axiosClient from "../../others/network/axiosClient";
 
 const Index = () => {
+  const router = useRouter();
+  const { memberId } = router.query;
+
   const [userData, setUserData] = useState(null);
   const [tempUserData, setTempUserData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [errors, setErrors] = useState({});
   const [activeTab, setActiveTab] = useState("myPosts");
+  const [isOwnProfile, setIsOwnProfile] = useState(false);
+  const [currentUser, setCurrentUser] = useState([]);
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 5;
@@ -38,7 +45,7 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (userData && (userData.posts || userData.likedPosts)) {
+    if (userData) {
       const newPosts =
         activeTab === "myPosts" ? userData.posts : userData.likedPosts;
       setPosts(newPosts);
@@ -48,27 +55,41 @@ const Index = () => {
   }, [userData, activeTab]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetchUserData();
-    }
-  }, []);
+    const fetchUserData = async () => {
+      try {
+        const userResponse = await axiosClient.get("/members/my-profile", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+        });
+        setCurrentUser(userResponse.data);
 
-  const fetchUserData = async () => {
-    try {
-      console.log("fetching....");
-      const response = await axiosClient.get("/members/my-profile", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-      });
-      console.log(response.data ? response.data : "No response");
-      setUserData(response.data);
-      setTempUserData(response.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+        const profileResponse = await axiosClient.get(
+          `/members/profile/${memberId}`,
+          {
+            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+          }
+        );
+        setUserData(profileResponse.data);
+        setTempUserData(profileResponse.data);
+
+        if (userResponse.data.username === profileResponse.data.username) {
+          setIsOwnProfile(true);
+        } else {
+          setIsOwnProfile(false);
+        }
+
+        setPosts(profileResponse.data.posts || []);
+        setTotalPages(
+          Math.ceil((profileResponse.data.posts || []).length / cardsPerPage)
+        );
+
+        console.log("checking: " + userResponse.data.followingMembers);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [memberId]);
 
   const handleUploadSuccess = (imageUrl) => {
     setTempUserData((prevData) => ({
@@ -88,12 +109,6 @@ const Index = () => {
       authorities: undefined,
     };
     try {
-      const token = localStorage.getItem("jwt");
-      if (token) {
-        console.log("JWT token exists:", token);
-      } else {
-        console.log("JWT token not found in localStorage");
-      }
       const response = await axiosClient.put(
         "/members/update-profile",
         dataToSend,
@@ -146,10 +161,6 @@ const Index = () => {
     setEditMode(false);
   };
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
   return (
     <div className="container my-5">
       <div className="row">
@@ -173,8 +184,21 @@ const Index = () => {
               )}
             </div>
           ) : (
-            userData && <h1>{userData.name}</h1>
+            userData && (
+              <h1>
+                {userData.name}{" "}
+                {userData && !isOwnProfile ? (
+                  <FollowButton
+                    targetMemberId={memberId}
+                    followingMembers={currentUser.followingMembers}
+                  />
+                ) : (
+                  ""
+                )}
+              </h1>
+            )
           )}
+
           <p className={styles.usernameText}>
             {userData && <strong>@{userData.username}</strong>}
           </p>
@@ -230,13 +254,15 @@ const Index = () => {
                 Cancel
               </button>
             </div>
-          ) : (
+          ) : isOwnProfile ? (
             <button
               onClick={() => setEditMode(true)}
               className={`${styles.button} ${styles.buttonPrimary} mt-3`}
             >
               Edit Profile
             </button>
+          ) : (
+            ""
           )}
 
           <div className="mt-4">
@@ -262,7 +288,7 @@ const Index = () => {
                 </div>
                 <div className="col">
                   <FontAwesomeIcon icon={faClipboardList} />
-                  <h4 className="mt-2">Itineraries</h4>
+                  <h4 className="mt-2">Posts</h4>
                   <p>{userData.posts ? userData.posts.length : 0}</p>
                 </div>
                 <div className="col">
@@ -295,7 +321,7 @@ const Index = () => {
           <div className={styles.iconContainer}>
             <FontAwesomeIcon icon={faClipboardList} size="lg" />
           </div>
-          My Posts
+          Posts
         </button>
         <button
           className={`${styles.toggleButton} ${
@@ -309,50 +335,52 @@ const Index = () => {
           Liked Posts
         </button>
       </div>
-      {activeTab === "myPosts" && (
-        <>
-          <div className="row">
-            {currentPosts.map((post, index) => (
-              <div key={index} className="col-12 mb-4">
-                <Post post={post} />
-              </div>
-            ))}
-          </div>
-
-          <nav aria-label="Page navigation">
-            <ul className="pagination justify-content-center">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (number) => (
-                  <li
-                    key={number}
-                    className={`page-item ${
-                      currentPage === number ? "active" : ""
-                    }`}
-                  >
-                    <button
-                      className="page-link"
-                      onClick={() => handlePageChange(number)}
-                    >
-                      {number}
-                    </button>
-                  </li>
-                )
-              )}
-            </ul>
-          </nav>
-
-          {currentPage < totalPages && (
-            <div className="text-center">
-              <button
-                className="btn btn-primary"
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                View More
-              </button>
+      <div className="mt-5">
+        {activeTab === "myPosts" && (
+          <>
+            <div className="row">
+              {currentPosts.map((post, index) => (
+                <div key={index} className="col-12 mb-4">
+                  <Post post={post} />
+                </div>
+              ))}
             </div>
-          )}
-        </>
-      )}
+
+            <nav aria-label="Page navigation">
+              <ul className="pagination justify-content-center">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (number) => (
+                    <li
+                      key={number}
+                      className={`page-item ${
+                        currentPage === number ? "active" : ""
+                      }`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => handlePageChange(number)}
+                      >
+                        {number}
+                      </button>
+                    </li>
+                  )
+                )}
+              </ul>
+            </nav>
+
+            {currentPage < totalPages && (
+              <div className="text-center">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  View More
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

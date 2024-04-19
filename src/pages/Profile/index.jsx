@@ -9,59 +9,72 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import UploadImage from "../../components/UploadImage";
+import Post from "../../components/Post";
 import styles from "./index.module.css";
-import { useRouter } from "next/router";
+import axiosClient from "../../others/network/axiosClient";
 
 const Index = () => {
-  const [userData, setUserData] = useState({
-    name: "Enrico Lim",
-    contact: "91234567",
-    email: "EnricoLim@gmail.com",
-    location: "Singapore",
-    about:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. asfjsdhgjsdghjhdsGDHBhjsgb sajghdSKJGHSjkdhgjsdghjs JAKDGHksdgjsebgjhsabGJKbdjkfbgajkshb",
-    followers: 123,
-    following: 456,
-    itineraries: 12,
-    totalLikes: 789,
-    imageUrl: "",
-  });
-  const [tempUserData, setTempUserData] = useState({ ...userData });
+  const [userData, setUserData] = useState(null);
+  const [tempUserData, setTempUserData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [errors, setErrors] = useState({});
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const router = useRouter();
+  const [activeTab, setActiveTab] = useState("myPosts");
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 5;
+  const [totalPages, setTotalPages] = useState(0);
+
+  const currentPosts = posts.slice(
+    (currentPage - 1) * cardsPerPage,
+    currentPage * cardsPerPage
+  );
+
+  const handleTabChange = (tabName) => {
+    setActiveTab(tabName);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("jwt");
-      if (token) {
-        console.log("JWT token found in local storage");
-        // Fetch the user data from the server or set a placeholder
-        setUserData({
-          /* placeholder user data */
-          name: "Enrico Lim",
-          contact: "91234567",
-          email: "EnricoLim@gmail.com",
-          location: "Singapore",
-          about:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. asfjsdhgjsdghjhdsGDHBhjsgb sajghdSKJGHSjkdhgjsdghjs JAKDGHksdgjsebgjhsabGJKbdjkfbgajkshb",
-          followers: 123,
-          following: 456,
-          itineraries: 12,
-          totalLikes: 789,
-          imageUrl: "",
-        });
-      } else {
-        setUserData(null);
-        console.log("JWT not found");
-        router.push("/Signup");
-      }
+    if (userData && (userData.posts || userData.likedPosts)) {
+      const newPosts =
+        activeTab === "myPosts" ? userData.posts : userData.likedPosts;
+      setPosts(newPosts);
+      setTotalPages(Math.ceil(newPosts.length / cardsPerPage));
+      setCurrentPage(1);
     }
-  }, [router]);
+  }, [userData, activeTab]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetchUserData();
+    }
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      console.log("fetching....");
+      const response = await axiosClient.get("/members/my-profile", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      });
+      console.log(response.data ? response.data : "No response");
+      setUserData(response.data);
+      setTempUserData(response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   const handleUploadSuccess = (imageUrl) => {
-    setTempUserData((prevData) => ({ ...prevData, imageUrl }));
+    setTempUserData((prevData) => ({
+      ...prevData,
+      profilePictureURL: imageUrl,
+    }));
   };
 
   const handleInputChange = (e) => {
@@ -69,22 +82,41 @@ const Index = () => {
     setTempUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSaveChanges = () => {
+  const updateProfile = async (updatedData) => {
+    const dataToSend = {
+      ...updatedData,
+      authorities: undefined,
+    };
+    try {
+      const token = localStorage.getItem("jwt");
+      if (token) {
+        console.log("JWT token exists:", token);
+      } else {
+        console.log("JWT token not found in localStorage");
+      }
+      const response = await axiosClient.put(
+        "/members/update-profile",
+        dataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        }
+      );
+      setUserData(response.data);
+      console.log("Success");
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+    }
+  };
+
+  const handleSaveChanges = async () => {
     let newErrors = {};
     let hasErrors = false;
 
-    if (!/^\d+$/.test(tempUserData.contact)) {
-      newErrors.contact = "Contact must contain only numbers.";
-      hasErrors = true;
-    }
-
     if (!/^\S+@\S+\.\S+$/.test(tempUserData.email)) {
       newErrors.email = "Please enter a valid email address.";
-      hasErrors = true;
-    }
-
-    if (!tempUserData.location.trim()) {
-      newErrors.location = "Location cannot be empty.";
       hasErrors = true;
     }
 
@@ -96,9 +128,16 @@ const Index = () => {
     setErrors(newErrors);
 
     if (!hasErrors) {
-      setUserData({ ...tempUserData });
-      setEditMode(false);
-      setErrors({});
+      try {
+        await updateProfile(tempUserData);
+        setUserData({ ...tempUserData });
+        setEditMode(false);
+        setErrors({});
+      } catch (error) {
+        console.error("Error updating user data:", error);
+      }
+    } else {
+      setErrors(newErrors);
     }
   };
 
@@ -107,12 +146,9 @@ const Index = () => {
     setEditMode(false);
   };
 
-  const handleEditProfile = () => {
-    if (isUserLoggedIn) {
-    } else {
-      alert("You are not authorized to edit this profile.");
-    }
-  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
     <div className="container my-5">
@@ -137,34 +173,13 @@ const Index = () => {
               )}
             </div>
           ) : (
-            <h1>{userData.name}</h1>
+            userData && <h1>{userData.name}</h1>
           )}
+          <p className={styles.usernameText}>
+            {userData && <strong>@{userData.username}</strong>}
+          </p>
           <br />
-          <div>
-            <strong>Contact: </strong>
-            {editMode ? (
-              <div>
-                <input
-                  type="text"
-                  value={tempUserData.contact}
-                  onChange={handleInputChange}
-                  name="contact"
-                  className={`form-control ${
-                    errors.contact ? "is-invalid" : ""
-                  }`}
-                  placeholder="Enter contact"
-                />
-                {errors.contact && (
-                  <div className="alert alert-danger mt-2" role="alert">
-                    {errors.contact}
-                  </div>
-                )}
-              </div>
-            ) : (
-              userData.contact
-            )}
-          </div>
-          <div>
+          <p>
             <strong>Email address: </strong>
             {editMode ? (
               <div>
@@ -183,44 +198,19 @@ const Index = () => {
                 )}
               </div>
             ) : (
-              userData.email
+              userData && <p>{userData.email}</p>
             )}
-          </div>
-          <div>
-            <strong>Location: </strong>
-            {editMode ? (
-              <div>
-                <input
-                  type="text"
-                  value={tempUserData.location}
-                  onChange={handleInputChange}
-                  name="location"
-                  className={`form-control ${
-                    errors.location ? "is-invalid" : ""
-                  }`}
-                  placeholder="Enter Location"
-                />
-                {errors.location && (
-                  <div className="alert alert-danger mt-2" role="alert">
-                    {errors.location}
-                  </div>
-                )}
-              </div>
-            ) : (
-              userData.location
-            )}
-          </div>
-
+          </p>
           <h3>About Me:</h3>
           {editMode ? (
             <textarea
               className={styles.textAreaField}
-              value={tempUserData.about}
+              value={tempUserData.aboutMe}
               onChange={handleInputChange}
-              name="about"
+              name="aboutMe"
             />
           ) : (
-            <p>{userData.about}</p>
+            userData && <p>{userData.aboutMe}</p>
           )}
 
           {editMode ? (
@@ -250,35 +240,44 @@ const Index = () => {
           )}
 
           <div className="mt-4">
-            <div className="row text-center">
-              <div className="col">
-                <FontAwesomeIcon icon={faUserGroup} />
-                <h4 className="mt-2">Followers</h4>
-                <p>{userData.followers}</p>
+            {userData && (
+              <div className="row text-center">
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserGroup} />
+                  <h4 className="mt-2">Followers</h4>
+                  <p>
+                    {userData.followersMembers
+                      ? userData.followersMembers.length
+                      : 0}
+                  </p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faUserPlus} />
+                  <h4 className="mt-2">Following</h4>
+                  <p>
+                    {userData.followingMembers
+                      ? userData.followingMembers.length
+                      : 0}
+                  </p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faClipboardList} />
+                  <h4 className="mt-2">Itineraries</h4>
+                  <p>{userData.posts ? userData.posts.length : 0}</p>
+                </div>
+                <div className="col">
+                  <FontAwesomeIcon icon={faHeart} />
+                  <h4 className="mt-2">Likes Received</h4>
+                  <p>{userData.likesReceived ? userData.likesReceived : 0}</p>
+                </div>
               </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faUserPlus} />
-                <h4 className="mt-2">Following</h4>
-                <p>{userData.following}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faClipboardList} />
-                <h4 className="mt-2">Itineraries</h4>
-                <p>{userData.itineraries}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faHeart} />
-                <h4 className="mt-2">Total Likes</h4>
-                <p>{userData.totalLikes}</p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
-
         <div className="col-md-6 d-flex flex-column align-items-center">
-          {tempUserData.imageUrl && (
+          {userData && (
             <img
-              src={tempUserData.imageUrl}
+              src={userData.profilePictureURL || "/defaultImg.png"}
               alt="Profile"
               className={styles.profileImage}
             />
@@ -286,6 +285,74 @@ const Index = () => {
           {editMode && <UploadImage onUploadSuccess={handleUploadSuccess} />}
         </div>
       </div>
+      <div className={styles.buttonContainer}>
+        <button
+          className={`${styles.toggleButton} ${
+            activeTab === "myPosts" ? styles.active : ""
+          }`}
+          onClick={() => handleTabChange("myPosts")}
+        >
+          <div className={styles.iconContainer}>
+            <FontAwesomeIcon icon={faClipboardList} size="lg" />
+          </div>
+          My Posts
+        </button>
+        <button
+          className={`${styles.toggleButton} ${
+            activeTab === "likedPosts" ? styles.active : ""
+          }`}
+          onClick={() => handleTabChange("likedPosts")}
+        >
+          <div className={styles.iconContainer}>
+            <FontAwesomeIcon icon={faHeart} size="lg" />
+          </div>
+          Liked Posts
+        </button>
+      </div>
+      {activeTab === "myPosts" && (
+        <>
+          <div className="row">
+            {currentPosts.map((post, index) => (
+              <div key={index} className="col-12 mb-4">
+                <Post post={post} />
+              </div>
+            ))}
+          </div>
+
+          <nav aria-label="Page navigation">
+            <ul className="pagination justify-content-center">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (number) => (
+                  <li
+                    key={number}
+                    className={`page-item ${
+                      currentPage === number ? "active" : ""
+                    }`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => handlePageChange(number)}
+                    >
+                      {number}
+                    </button>
+                  </li>
+                )
+              )}
+            </ul>
+          </nav>
+
+          {currentPage < totalPages && (
+            <div className="text-center">
+              <button
+                className="btn btn-primary"
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                View More
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

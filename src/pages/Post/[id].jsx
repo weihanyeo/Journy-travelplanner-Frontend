@@ -93,8 +93,7 @@ const PostDetails = () => {
               <p>user name</p>
               <p>user about me</p>
               <button
-                type="button"
-                className="btn btn-primary"
+                className="tw-bg-green tw-text-beige tw-p-2 tw-rounded-xl tw-font-bold tw-border-0"
                 onClick={() => router.push(`/Planning/${id}`)}
               >
                 Fork this itinerary

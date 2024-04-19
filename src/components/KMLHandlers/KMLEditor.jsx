@@ -8,12 +8,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
   faChevronCircleDown,
-  faPlus,
   faLocation,
 } from "@fortawesome/free-solid-svg-icons";
+import axiosClient from "../../others/network/axiosClient";
 
-const KMLEditor = ({ onChangeKML, initialKML = null }) => {
-  //suggestions
+const KMLEditor = ({ onChangeKML, initialPostId = null }) => {
+  useEffect(() => {
+    if (initialPostId) {
+      getCurrentKMLFile(initialPostId);
+    }
+  }, []);
+
+  const getCurrentKMLFile = async (postId) => {
+    try {
+      await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
+        parseKMLtoGeoJSON(res.data);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -94,12 +108,6 @@ const KMLEditor = ({ onChangeKML, initialKML = null }) => {
       }
     }
   };
-
-  useEffect(() => {
-    if (initialKML) {
-      parseKMLtoGeoJSON(initialKML);
-    }
-  }, []);
 
   const parseKMLtoGeoJSON = (text) => {
     const dom = new DOMParser().parseFromString(text, "text/xml"); // create xml dom object

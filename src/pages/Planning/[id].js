@@ -14,20 +14,19 @@ const CreateNewPost = () => {
   const [currentKML, setCurrentKML] = useState();
   const [showError, setShowError] = useState(false);
 
-  useEffect(() => {
-    getCurrentKMLFile(id);
-  }, []);
+  // useEffect(() => {
+  //   getCurrentKMLFile(id);
+  // }, []);
 
-  const getCurrentKMLFile = async (postId) => {
-    try {
-      await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
-        setCurrentKML(res.data);
-        console.log("current kmlfile", res.data);
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const getCurrentKMLFile = async (postId) => {
+  //   try {
+  //     await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
+  //       setCurrentKML(res.data);
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   const onChangeFields = (field) => (e) => {
     if (field === "budget") {
@@ -96,7 +95,7 @@ const CreateNewPost = () => {
 
   return (
     <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10 tw-w-full tw-h-full tw-bg-blue tw-text-white">
-      <KMLEditor onChangeKML={onChangeKML} initialKML={currentKML} />
+      <KMLEditor onChangeKML={onChangeKML} initialPostId={id} />
       <div>
         <div className="form-container">
           <b className="tw-text-black">Give Your Post a Title</b>

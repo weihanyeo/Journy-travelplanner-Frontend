@@ -55,28 +55,6 @@ const Index = () => {
     return hasError;
   };
 
-  /*   const onSignUp = async () => {
-    try {
-      const response = await axiosClient.post("/members/register", formDetails);
-      // Handle the registration response
-      const { token, user } = response.data;
-      // Store the JWT token in the local storage or cookies
-      localStorage.setItem("jwt", token);
-      // Store the user data in the application state or context
-      setUserData(user);
-      // Redirect the user to the desired page
-      router.push("/Discover");
-    } catch (error) {
-      if (error.response) {
-        // Handle specific error responses from the server
-        setErrorMsgs(error.response.data.message);
-      } else {
-        // Handle network or other errors
-        setErrorMsgs("An error occurred. Please try again later.");
-      }
-    }
-  }; */
-
   const onSignUp = async () => {
     const hasError = validateFields();
     if (!hasError) {
@@ -96,6 +74,10 @@ const Index = () => {
           // Store the JWT token in the local storage or cookies
           localStorage.setItem("jwt", token);
           console.log("Stored JWT token in local storage");
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
 
           // Redirect the user to the desired page
           router.replace("/Discover");

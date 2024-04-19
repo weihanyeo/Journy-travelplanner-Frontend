@@ -43,7 +43,6 @@ const PostDetails = () => {
     try {
       await axiosClient.get(`/members/my-profile`).then((res) => {
         setUsername(res.data.username);
-        console.log("this username:", res.data.username);
       });
     } catch (e) {
       console.error(e);
@@ -54,7 +53,6 @@ const PostDetails = () => {
     try {
       await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
         setCurrentKML(res.data);
-        console.log(res.data);
       });
     } catch (e) {
       console.error(e);
@@ -69,13 +67,9 @@ const PostDetails = () => {
     setNewComment("");
     setComments([...comments, newCommentObject]);
     try {
-      await axiosClient
-        .post(`/posts/${id}/comments`, {
-          commentDetails: newComment,
-        })
-        .then((res) => {
-          console.log(res);
-        });
+      await axiosClient.post(`/posts/${id}/comments`, {
+        commentDetails: newComment,
+      });
     } catch (e) {
       console.error(e);
     }

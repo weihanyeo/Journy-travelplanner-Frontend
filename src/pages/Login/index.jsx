@@ -35,7 +35,6 @@ const Index = () => {
       newErrorMsg = newErrorMsg + "Password is missing. ";
     }
     setErrorMsgs(newErrorMsg);
-    console.log("data validated");
     return hasError;
   };
 
@@ -70,7 +69,6 @@ const Index = () => {
         }, 500);
 
         router.replace("/Discover");
-        console.log("Redirected user to Discover page");
       } catch (error) {
         console.error("Error occurred during login:", error);
         if (error.response) {

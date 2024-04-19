@@ -62,17 +62,6 @@ const CreateNewPost = () => {
 
   const handlePostKMLFile = async (postId) => {
     try {
-<<<<<<< HEAD:src/pages/Post/createNewPost/index.js
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await axiosClient.post(`/posts/${postId}/kml-file`, formData, {
-        headers: {
-          Authorization: "Bearer your-access-token",
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(res);
-=======
       await axiosClient
         .post(
           `/posts/${postId}/kml-file`,
@@ -88,7 +77,6 @@ const CreateNewPost = () => {
         .then((res) => {
           console.log(res);
         });
->>>>>>> 47f7df5 (feat: connection to BE for posts, viewing post details, forking kml file):src/pages/Planning/[id].js
       router.push("/Discover");
     } catch (e) {
       console.error(e);
@@ -100,50 +88,6 @@ const CreateNewPost = () => {
   };
 
   return (
-<<<<<<< HEAD:src/pages/Post/createNewPost/index.js
-    <div className="container mt-5">
-      <KMLEditor onChangeKML={onChangeKML} />
-      <div className="row mt-3">
-        <div className="col-md-6">
-          <input
-            type="text"
-            className="form-control"
-            aria-label="Title"
-            placeholder="Title"
-            onChange={onChangeFields("postTitle")}
-            value={formDetails.postTitle}
-          />
-        </div>
-        <div className="col-md-6">
-          <input
-            type="number"
-            className="form-control"
-            aria-label="Budget"
-            placeholder="Budget"
-            onChange={onChangeFields("budget")}
-            value={formDetails.budget}
-          />
-        </div>
-      </div>
-      <div className="row mt-3">
-        <div className="col-md-12">
-          <textarea
-            className="form-control"
-            aria-label="Description"
-            placeholder="Description"
-            onChange={onChangeFields("postDescription")}
-            value={formDetails.postDescription}
-          />
-        </div>
-      </div>
-      <div className="row mt-3">
-        <div className="col-md-12">
-          <button className="btn btn-primary" onClick={handlePublishPost}>
-            Publish Post
-          </button>
-        </div>
-      </div>
-=======
     <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
       {currentKML && (
         <KMLEditor onChangeKML={onChangeKML} initialKML={currentKML} />
@@ -174,7 +118,6 @@ const CreateNewPost = () => {
       >
         Publish Post
       </button>
->>>>>>> 47f7df5 (feat: connection to BE for posts, viewing post details, forking kml file):src/pages/Planning/[id].js
     </div>
   );
 };

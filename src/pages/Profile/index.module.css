@@ -1,61 +1,91 @@
-.textAreaField {
-  border: 2px solid #000; 
-  border-radius: 4px; 
-  padding: 8px 12px;
-  margin-bottom: 16px;
-  width: 100%;
-  height: 150px; 
-  transition: border-color 0.3s;
+.bentoBox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
 }
 
-.textAreaField:focus {
-  border-color: #007bff;
+.bentoSection {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.bentoTile {
+  background-color: #f8f0ca;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.userInfoTile {
+  min-height: 400px;
+}
+
+.primaryButton {
+  background-color: #196f5d;
+  border-color: #196f5d;
+  color: #fff;
+}
+
+.secondaryButton {
+  background-color: #141451;
+  border-color: #141451;
+  color: #fff;
 }
 
 .buttonGroup {
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
-}
-
-.button {
-  padding: 10px 20px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-  transition: transform 0.3s ease;
-}
-
-.button:hover {
-  transform: translateY(-2px);
-  background-color: #0056b3;
-}
-
-.buttonPrimary {
-  background-color: #007bff; 
-  color: white;
-}
-
-.buttonSecondary {
-  background-color: #6c757d; 
-  color: white;
+  margin-top: 20px;
 }
 
 .profileImage {
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
 
-.inputField, .textAreaField {
-  transition: all 0.3s ease;
-  box-shadow: none;
-  border: 1px solid #ccc;
+.statsContainer {
+  background-color: #748268;
+  border-radius: 4px;
+  padding: 20px;
+  width: 100%;
+  margin-top: 20px;
 }
 
-.inputField:hover, .textAreaField:hover,
-.inputField:focus, .textAreaField:focus {
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+.statsRow {
+  display: flex;
+  justify-content: space-around;
+  color: #f8f0ca;
+}
+
+.statsTile {
+  text-align: center;
+}
+
+.userInfoLabel {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.userInfoValue {
+  margin-bottom: 20px;
+}
+
+.textAreaField {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid #8c8c8c;
+  border-radius: 4px;
+  background-color: #f8f0ca;
+}
+
+.textAreaField:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }

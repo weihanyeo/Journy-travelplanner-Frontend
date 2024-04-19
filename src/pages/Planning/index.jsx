@@ -1,11 +1,9 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Card from "../../components/Card";
 import Timetable from "../../components/Timetable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const Index = () => {
   const [nearbyPlaces, setNearbyPlaces] = useState(new Array(4).fill(0));
@@ -44,8 +42,8 @@ const Index = () => {
   ];
 
   return (
-    <div className="container my-5">
-      {/*Timetable*/}
+    <div className={`container my-5 planningPage`}>
+      {/* Timetable */}
       <div className="row">
         <div className="col-md-6">
           <h2>Your Timetable</h2>
@@ -59,15 +57,15 @@ const Index = () => {
         </div>
       </div>
 
-      {/*Nearby places*/}
+      {/* Nearby places */}
       <div className="row mt-5 align-items-center">
         <div className="col-md-6">
           <h2>Nearby Places</h2>
         </div>
         <div className="col-md-6">
-          <div className="input-group">
+          <div className={`input-group searchInput`}>
             <span className="input-group-text" id="basic-addon1">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
+              <FontAwesomeIcon icon={faSearch} />
             </span>
             <input
               type="text"
@@ -79,7 +77,7 @@ const Index = () => {
         </div>
       </div>
 
-      {/*Cards*/}
+      {/* Cards */}
       <div className="row mt-3">
         {nearbyPlaces.map((_, index) => (
           <div
@@ -92,7 +90,7 @@ const Index = () => {
         ))}
       </div>
 
-      {/*Load more*/}
+      {/* Load more */}
       <div className="row">
         <div className="col-12 text-center">
           <button className="btn btn-primary" onClick={loadMoreAdventures}>

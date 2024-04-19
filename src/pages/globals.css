@@ -3,15 +3,19 @@
 @tailwind utilities;
 
 @import "./LandingPage/index.css";
+@import "./Planning/index.css";
+/* @import "./Profile/index.css"; */
 @import "../components/Card.css";
 @import "../components/Footer.css";
 @import "../components/Navbar.css";
 @import "../components/SearchBar.css";
 
 :root {
-  --foreground-rgb: #196f5d;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary-color: #196f5d;
+  --secondary-color: #f8f0ca;
+  --accent-color: #141451;
+  --dark-gray: #748268;
+  --light-gray: #8c8c8c;
 }
 
 @media (prefers-color-scheme: dark) {

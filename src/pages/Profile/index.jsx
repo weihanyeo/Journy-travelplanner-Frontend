@@ -1,4 +1,4 @@
-"use client";
+// ProfilePage.jsx
 
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -115,126 +115,120 @@ const Index = () => {
   };
 
   return (
-    <div className="container my-5">
-      <div className="row">
-        <div className="col-md-6">
-          {editMode ? (
-            <div>
-              <strong>Name:</strong>
-              <input
-                type="text"
-                id="name"
-                value={tempUserData.name}
-                onChange={handleInputChange}
-                name="name"
-                className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                placeholder="Enter name"
-              />
-              {errors.name && (
-                <div className="alert alert-danger mt-2" role="alert">
-                  {errors.name}
-                </div>
-              )}
-            </div>
-          ) : (
-            <h1>{userData.name}</h1>
-          )}
-          <br />
-          <div>
-            <strong>Contact: </strong>
-            {editMode ? (
-              <div>
-                <input
-                  type="text"
-                  value={tempUserData.contact}
-                  onChange={handleInputChange}
-                  name="contact"
-                  className={`form-control ${
-                    errors.contact ? "is-invalid" : ""
-                  }`}
-                  placeholder="Enter contact"
-                />
+    <div className={`container my-5 ${styles.bentoBox}`}>
+      <div className={`row ${styles.bentoSection}`}>
+        <div className={`col-md-6 ${styles.bentoTile}`}>
+          <div className={styles.userInfoTile}>
+            <h1>{editMode ? "Edit Profile" : userData.name}</h1>
+            <div className={styles.userInfoField}>
+              <div className={styles.userInfoLabel}>
+                <strong>Contact:</strong>
+              </div>
+              <div className={styles.userInfoValue}>
+                {editMode ? (
+                  <input
+                    type="text"
+                    value={tempUserData.contact}
+                    onChange={handleInputChange}
+                    name="contact"
+                    className={`form-control ${
+                      errors.contact ? "is-invalid" : ""
+                    }`}
+                    placeholder="Enter contact"
+                  />
+                ) : (
+                  userData.contact
+                )}
                 {errors.contact && (
                   <div className="alert alert-danger mt-2" role="alert">
                     {errors.contact}
                   </div>
                 )}
               </div>
-            ) : (
-              userData.contact
-            )}
-          </div>
-          <div>
-            <strong>Email address: </strong>
-            {editMode ? (
-              <div>
-                <input
-                  type="email"
-                  value={tempUserData.email}
-                  onChange={handleInputChange}
-                  name="email"
-                  className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                  placeholder="Enter email"
-                />
+            </div>
+            <div className={styles.userInfoField}>
+              <div className={styles.userInfoLabel}>
+                <strong>Email address:</strong>
+              </div>
+              <div className={styles.userInfoValue}>
+                {editMode ? (
+                  <input
+                    type="email"
+                    value={tempUserData.email}
+                    onChange={handleInputChange}
+                    name="email"
+                    className={`form-control ${
+                      errors.email ? "is-invalid" : ""
+                    }`}
+                    placeholder="Enter email"
+                  />
+                ) : (
+                  userData.email
+                )}
                 {errors.email && (
                   <div className="alert alert-danger mt-2" role="alert">
                     {errors.email}
                   </div>
                 )}
               </div>
-            ) : (
-              userData.email
-            )}
-          </div>
-          <div>
-            <strong>Location: </strong>
-            {editMode ? (
-              <div>
-                <input
-                  type="text"
-                  value={tempUserData.location}
-                  onChange={handleInputChange}
-                  name="location"
-                  className={`form-control ${
-                    errors.location ? "is-invalid" : ""
-                  }`}
-                  placeholder="Enter Location"
-                />
+            </div>
+            <div className={styles.userInfoField}>
+              <div className={styles.userInfoLabel}>
+                <strong>Location:</strong>
+              </div>
+              <div className={styles.userInfoValue}>
+                {editMode ? (
+                  <input
+                    type="text"
+                    value={tempUserData.location}
+                    onChange={handleInputChange}
+                    name="location"
+                    className={`form-control ${
+                      errors.location ? "is-invalid" : ""
+                    }`}
+                    placeholder="Enter Location"
+                  />
+                ) : (
+                  userData.location
+                )}
                 {errors.location && (
                   <div className="alert alert-danger mt-2" role="alert">
                     {errors.location}
                   </div>
                 )}
               </div>
-            ) : (
-              userData.location
-            )}
+            </div>
+            <div className={styles.userInfoField}>
+              <div className={styles.userInfoLabel}>
+                <h3>About Me:</h3>
+              </div>
+              <div className={styles.userInfoValue}>
+                {editMode ? (
+                  <textarea
+                    className={styles.textAreaField}
+                    value={tempUserData.about}
+                    onChange={handleInputChange}
+                    name="about"
+                  />
+                ) : (
+                  <p>{userData.about}</p>
+                )}
+              </div>
+            </div>
           </div>
-
-          <h3>About Me:</h3>
-          {editMode ? (
-            <textarea
-              className={styles.textAreaField}
-              value={tempUserData.about}
-              onChange={handleInputChange}
-              name="about"
-            />
-          ) : (
-            <p>{userData.about}</p>
-          )}
 
           {editMode ? (
             <div className={styles.buttonGroup}>
               <button
                 onClick={handleSaveChanges}
-                className={`${styles.button} ${styles.buttonPrimary}`}
+                className={`btn btn-primary ${styles.primaryButton}`}
                 type="button"
               >
                 Save Changes
               </button>
               <button
                 onClick={handleCancel}
-                className={`${styles.button} ${styles.buttonSecondary}`}
+                className={`btn btn-secondary ${styles.secondaryButton}`}
                 type="button"
               >
                 Cancel
@@ -243,39 +237,16 @@ const Index = () => {
           ) : (
             <button
               onClick={() => setEditMode(true)}
-              className={`${styles.button} ${styles.buttonPrimary} mt-3`}
+              className={`btn btn-primary mt-3 ${styles.primaryButton}`}
             >
               Edit Profile
             </button>
           )}
-
-          <div className="mt-4">
-            <div className="row text-center">
-              <div className="col">
-                <FontAwesomeIcon icon={faUserGroup} />
-                <h4 className="mt-2">Followers</h4>
-                <p>{userData.followers}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faUserPlus} />
-                <h4 className="mt-2">Following</h4>
-                <p>{userData.following}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faClipboardList} />
-                <h4 className="mt-2">Itineraries</h4>
-                <p>{userData.itineraries}</p>
-              </div>
-              <div className="col">
-                <FontAwesomeIcon icon={faHeart} />
-                <h4 className="mt-2">Total Likes</h4>
-                <p>{userData.totalLikes}</p>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <div className="col-md-6 d-flex flex-column align-items-center">
+        <div
+          className={`col-md-6 d-flex flex-column align-items-center ${styles.bentoTile}`}
+        >
           {tempUserData.imageUrl && (
             <img
               src={tempUserData.imageUrl}
@@ -284,6 +255,31 @@ const Index = () => {
             />
           )}
           {editMode && <UploadImage onUploadSuccess={handleUploadSuccess} />}
+
+          <div className={`mt-4 ${styles.statsContainer}`}>
+            <div className={`row text-center ${styles.statsRow}`}>
+              <div className={`col ${styles.statsTile}`}>
+                <FontAwesomeIcon icon={faUserGroup} />
+                <h4 className="mt-2">Followers</h4>
+                <p>{userData.followers}</p>
+              </div>
+              <div className={`col ${styles.statsTile}`}>
+                <FontAwesomeIcon icon={faUserPlus} />
+                <h4 className="mt-2">Following</h4>
+                <p>{userData.following}</p>
+              </div>
+              <div className={`col ${styles.statsTile}`}>
+                <FontAwesomeIcon icon={faClipboardList} />
+                <h4 className="mt-2">Itineraries</h4>
+                <p>{userData.itineraries}</p>
+              </div>
+              <div className={`col ${styles.statsTile}`}>
+                <FontAwesomeIcon icon={faHeart} />
+                <h4 className="mt-2">Total Likes</h4>
+                <p>{userData.totalLikes}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

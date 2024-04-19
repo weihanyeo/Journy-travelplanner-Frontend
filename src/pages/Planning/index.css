@@ -1,0 +1,24 @@
+.planningPage {
+  background-color: #f8f0ca; /* Light color */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.searchInput {
+  border-radius: 20px;
+}
+
+.searchInput .form-control {
+  border-radius: 20px;
+}
+
+.btn-primary {
+  background-color: #196f5d; /* Green color */
+  border-color: #196f5d;
+}
+
+.btn-primary:hover {
+  background-color: #141451; /* Darker green color */
+  border-color: #141451;
+}

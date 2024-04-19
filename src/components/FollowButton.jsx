@@ -35,6 +35,7 @@ const FollowButton = ({ targetMemberId, followingMembers }) => {
         );
         setIsFollowing(true);
         console.log(`Following member: ${targetMemberId}`);
+        window.location.reload();
       } else {
       }
     } catch (error) {

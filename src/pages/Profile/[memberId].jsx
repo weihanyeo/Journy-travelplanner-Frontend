@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import UploadImage from "../../components/UploadImage";
 import FollowButton from "../../components/FollowButton";
+import FollowListModal from "../../components/FollowListModal";
 import Post from "../../components/Post";
 import styles from "./[memberId].module.css";
 import axiosClient from "../../others/network/axiosClient";
@@ -26,6 +27,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("myPosts");
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [currentUser, setCurrentUser] = useState([]);
+
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 5;
@@ -35,6 +37,21 @@ const Index = () => {
     (currentPage - 1) * cardsPerPage,
     currentPage * cardsPerPage
   );
+
+  const [showFollowersModal, setShowFollowersModal] = useState(false);
+  const [showFollowingModal, setShowFollowingModal] = useState(false);
+  const [followersList, setFollowersList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
+
+  const handleShowFollowersModal = () => {
+    setFollowersList(userData.followersMembers || []);
+    setShowFollowersModal(true);
+  };
+
+  const handleShowFollowingModal = () => {
+    setFollowingList(userData.followingMembers || []);
+    setShowFollowingModal(true);
+  };
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
@@ -268,7 +285,11 @@ const Index = () => {
           <div className="mt-4">
             {userData && (
               <div className="row text-center">
-                <div className="col">
+                <div
+                  className="col"
+                  onClick={handleShowFollowersModal}
+                  style={{ cursor: "pointer" }}
+                >
                   <FontAwesomeIcon icon={faUserGroup} />
                   <h4 className="mt-2">Followers</h4>
                   <p>
@@ -277,7 +298,11 @@ const Index = () => {
                       : 0}
                   </p>
                 </div>
-                <div className="col">
+                <div
+                  className="col"
+                  onClick={handleShowFollowingModal}
+                  style={{ cursor: "pointer" }}
+                >
                   <FontAwesomeIcon icon={faUserPlus} />
                   <h4 className="mt-2">Following</h4>
                   <p>
@@ -286,6 +311,23 @@ const Index = () => {
                       : 0}
                   </p>
                 </div>
+
+                <FollowListModal
+                  show={showFollowersModal}
+                  onHide={() => setShowFollowersModal(false)}
+                  type="followers"
+                  currentUserId={currentUser.memberId}
+                  listData={followersList}
+                />
+
+                <FollowListModal
+                  show={showFollowingModal}
+                  onHide={() => setShowFollowingModal(false)}
+                  type="following"
+                  currentUserId={currentUser.memberId}
+                  listData={followingList}
+                />
+
                 <div className="col">
                   <FontAwesomeIcon icon={faClipboardList} />
                   <h4 className="mt-2">Posts</h4>

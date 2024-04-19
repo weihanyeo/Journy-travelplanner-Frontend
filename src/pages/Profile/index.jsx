@@ -174,7 +174,7 @@ const Index = () => {
             userData && <h1>{userData.name}</h1>
           )}
           <p className={styles.usernameText}>
-            <strong>@{userData.username}</strong>
+            {userData && <strong>@{userData.username}</strong>}
           </p>
           <br />
           <p>

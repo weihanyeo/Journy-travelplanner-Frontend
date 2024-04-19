@@ -158,19 +158,6 @@ const Index = () => {
       >
         Log in
       </button>
-      <h6 className="text-center mt-2" style={{ fontWeight: "50" }}>
-        or
-      </h6>
-      <button
-        type="button"
-        className="btn btn-primary rounded-4 mt-2"
-        style={{
-          width: "100%",
-          fontSize: "0.9rem",
-        }}
-      >
-        Continue with Google
-      </button>
 
       <h6 className="text-center mt-4" style={{ fontWeight: "40" }}>
         Don't have an account?

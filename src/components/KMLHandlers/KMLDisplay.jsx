@@ -83,7 +83,10 @@ export default function KMLViewer({ kmlFile }) {
           center={center}
           zoom={8}
           scrollWheelZoom={false}
-          style={{ height: "500px", width: "800px" }}
+          style={{
+            height: "500px",
+            width: "800px",
+          }}
         >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

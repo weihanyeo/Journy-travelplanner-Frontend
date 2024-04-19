@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { useRouter } from 'next/router';
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: "http://localhost:8080/api",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -12,7 +12,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config) => {
     // Retrieve the JWT token from storage (e.g., localStorage, cookies)
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -32,10 +32,10 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
 
       // Clear the stored token
-      localStorage.removeItem('jwt');
+      localStorage.removeItem("jwt");
 
       // Redirect the user to the login page
-      router.push('/Login');
+      router.push("/Login");
 
       return axiosClient(originalRequest);
     }
@@ -44,5 +44,11 @@ axiosClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const axiosExternalClient = axios.create({
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export default axiosClient;

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -56,23 +58,27 @@ const NavBar = () => {
         delay: 0.8,
       }}
     >
-      <nav className={`navbar navbar-expand-lg navbar-light navbar`}>
+      <nav id="Home" className="navbar navbar-expand-lg navbar-light navbar">
         <div className="container">
-          <a className={`navbar-brand navbarBrand`} href="#">
+          <a
+            className="navbar-brand navwwwwwbarBrand"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img
               src="journy.png"
               width="30"
               height="30"
-              className="d-inline-block align-top"
+              className="d-inline-block"
             />
             Journy
           </a>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler justify-content-end "
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
@@ -109,7 +115,7 @@ const NavBar = () => {
                   </button>
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
+                    className="btn btn-outline-warning"
                     onClick={handleLogout}
                   >
                     Logout

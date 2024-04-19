@@ -45,7 +45,7 @@ export default function ReusableKMLViewer({ layer, center, geometry }) {
         center={center}
         zoom={8}
         scrollWheelZoom={false}
-        style={{ height: "600px", width: "600px" }}
+        style={{ height: "500px", width: "500px", borderRadius: "15px" }}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

@@ -4,9 +4,30 @@ import * as tj from "@mapbox/togeojson";
 import rewind from "@mapbox/geojson-rewind";
 import tokml from "tokml";
 import ReusableKMLViewer from "./KMLViewer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faChevronCircleDown,
+  faLocation,
+} from "@fortawesome/free-solid-svg-icons";
+import axiosClient from "../../others/network/axiosClient";
 
-const KMLEditor = ({ onChangeKML, initialKML = null }) => {
-  //suggestions
+const KMLEditor = ({ onChangeKML, initialPostId = null }) => {
+  useEffect(() => {
+    if (initialPostId) {
+      getCurrentKMLFile(initialPostId);
+    }
+  }, []);
+
+  const getCurrentKMLFile = async (postId) => {
+    try {
+      await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
+        parseKMLtoGeoJSON(res.data);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -87,12 +108,6 @@ const KMLEditor = ({ onChangeKML, initialKML = null }) => {
       }
     }
   };
-
-  useEffect(() => {
-    if (initialKML) {
-      parseKMLtoGeoJSON(initialKML);
-    }
-  }, []);
 
   const parseKMLtoGeoJSON = (text) => {
     const dom = new DOMParser().parseFromString(text, "text/xml"); // create xml dom object
@@ -238,91 +253,136 @@ const KMLEditor = ({ onChangeKML, initialKML = null }) => {
     }
   };
 
-  return (
-    <div className="tw-flex tw-flex-row tw-gap-5 tw-w-full">
-      <div className="tw-flex tw-flex-col tw-border-2">
-        <div className="tw-border-2">
-          {/* <input type="file" accept=".kml" onChange={handleFileSelection} /> */}
-          <label>mode of transport:</label>
-          <select
-            onChange={(e) => setMode(e.target.value)}
-            style={{ maxWidth: "20%" }}
-          >
-            <option value="drive">Car</option>
-            <option value="walk">Walking</option>
-            <option value="cycle">Cycling</option>
-          </select>
-        </div>
-        <div className="tw-flex tw-flex-col tw-border-2">
-          <p>search for locations</p>
-          <input onChange={onSearch} value={search} />
+  const [activeCollapses, setActiveCollapses] = useState([]);
 
-          {searchResults.length > 0 && (
+  const toggleCollapse = (index) => {
+    const updatedCollapses = [...activeCollapses];
+    if (updatedCollapses.includes(index)) {
+      updatedCollapses.splice(updatedCollapses.indexOf(index), 1);
+    } else {
+      updatedCollapses.push(index);
+    }
+    setActiveCollapses(updatedCollapses);
+  };
+
+  return (
+    <div className="tw-flex tw-flex-row tw-w-full tw-justify-evenly tw-p-10 tw-h-full tw-text-white tw-gap-5">
+      <div className="tw-bg-beige tw-text-blue tw-p-5 tw-rounded tw-gap-5 tw-flex tw-flex-col  tw-w-1/2">
+        <h5 className="tw-font-bold">Selected Locations</h5>
+        {currentLocations.length > 0 ? (
+          <div className="tw-flex tw-flex-col tw-justify-between tw-h-full">
             <div>
-              <p>search results</p>
-              <ul>
-                {searchResults.map((result) => (
-                  <li style={{ marginBottom: "20px" }}>
-                    <div>{result.address_line1}</div>
-                    <div>{result.address_line2}</div>
-                    <div value={result.lon}>long: {result.lon}</div>
-                    <div value={result.lat}>lat: {result.lat}</div>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      onClick={onAddItinerary}
-                      value={`${result.lat} ${result.lon}`}
-                    >
-                      add to itinerary
-                    </button>
+              <div className="tw-border-2 tw-gap-3 tw-flex">
+                <b>Mode of Transport:</b>
+                <select onChange={(e) => setMode(e.target.value)}>
+                  <option value="drive">Car</option>
+                  <option value="walk">Walking</option>
+                  <option value="cycle">Cycling</option>
+                </select>
+              </div>
+              <ol>
+                {currentLocations.map((location, index) => (
+                  <li
+                    style={{ marginBottom: "20px" }}
+                    key={index}
+                    draggable="true"
+                    onDragStart={(event) => onDragStart(event, index)}
+                    onDragOver={onDragOver}
+                    onDrop={(event) => onDrop(event, index)}
+                  >
+                    <div className="tw-flex tw-flex-col tw-mb-10 tw-gap-3">
+                      <div className="tw-flex tw-flex-row tw-gap-2 tw-items-center tw-justify-between">
+                        <div className="tw-cursor-pointer">
+                          <div>{location.data.results[0].address_line1}</div>
+                          <div>{location.data.results[0].address_line2}</div>
+                        </div>
+                        <button
+                          type="button"
+                          className="tw-text-beige rounded tw-w-fit tw-h-fit tw-bg-red tw-border-0 tw-flex tw-flex-row tw-gap-2 tw-items-center"
+                          onClick={onDeleteLocation}
+                          value={`${location.data.query.lat} ${location.data.query.lon}`}
+                        >
+                          Remove
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </div>
+
+                      {index < directions.length && (
+                        <div className="tw-ml-5">
+                          <button
+                            className="tw-bg-transparent tw-text-green tw-border-0 tw-font-bold tw-w-fit tw-h-fit tw-flex-row tw-gap-2 tw-flex tw-items-centers"
+                            onClick={() => toggleCollapse(index)}
+                            aria-expanded={
+                              activeCollapses.includes(index) ? "true" : "false"
+                            }
+                            aria-controls={`collapseExample${index}`}
+                          >
+                            <FontAwesomeIcon icon={faChevronCircleDown} />
+                            Directions
+                          </button>
+                          {directions[index].steps.map((step) => (
+                            <dd
+                              className={`collapse ${
+                                activeCollapses.includes(index) ? "show" : ""
+                              }`}
+                              id={`collapseExample${index}`}
+                            >
+                              {step.instruction.text}
+                            </dd>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </li>
                 ))}
-              </ul>
+              </ol>
+            </div>
+            <button
+              type="button"
+              className="tw-bg-green tw-text-beige tw-rounded tw-font-bold"
+              onClick={saveKMLMap}
+            >
+              Save Map Changes
+            </button>
+          </div>
+        ) : (
+          <b>
+            <FontAwesomeIcon icon={faLocation} /> No Locations to display yet...
+          </b>
+        )}
+      </div>
+
+      <div className="tw-flex tw-flex-col tw-gap-10 tw-w-1/2">
+        <ReusableKMLViewer layer={layer} center={center} geometry={geometry} />
+        <div className="tw-bg-beige tw-text-blue tw-p-5 tw-rounded tw-gap-5 tw-flex tw-flex-col tw-h-72 tw-w-full">
+          <h5 className="tw-font-bold">Where Next?</h5>
+          <input
+            onChange={onSearch}
+            value={search}
+            placeholder="Search for any location"
+          />
+
+          {searchResults.length > 0 && (
+            <div className="tw-overflow-y-auto tw-flex tw-flex-col tw-gap-3 tw-p-3">
+              {searchResults.map((result) => (
+                <li className="tw-p-3 tw-flex tw-flex-row tw-justify-between tw-gap-2">
+                  <div>
+                    {result.address_line1},{result.address_line2}
+                  </div>
+                  <div value={result.lon}></div>
+                  <div value={result.lat}></div>
+                  <button
+                    onClick={onAddItinerary}
+                    className="tw-bg-transparent tw-text-green tw-border-0 tw-font-bold"
+                    value={`${result.lat} ${result.lon}`}
+                  >
+                    +
+                  </button>
+                </li>
+              ))}
             </div>
           )}
         </div>
-        {currentLocations.length > 0 && (
-          <div>
-            <p>current locations entered</p>
-            <ul>
-              {currentLocations.map((location, index) => (
-                <li
-                  style={{ marginBottom: "20px" }}
-                  key={index}
-                  draggable="true"
-                  onDragStart={(event) => onDragStart(event, index)}
-                  onDragOver={onDragOver}
-                  onDrop={(event) => onDrop(event, index)}
-                >
-                  <div>{location.data.results[0].address_line1}</div>
-                  <div>{location.data.results[0].address_line2}</div>
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    onClick={onDeleteLocation}
-                    value={`${location.data.query.lat} ${location.data.query.lon}`}
-                  >
-                    delete
-                  </button>
-                  <div>
-                    {index < directions.length &&
-                      directions[index].steps.map((step) => (
-                        <dd>{step.instruction.text}</dd>
-                      ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {currentLocations.length > 0 && (
-          <button type="button" class="btn btn-primary" onClick={saveKMLMap}>
-            save map changes
-          </button>
-        )}
-      </div>
-      <div>
-        <ReusableKMLViewer layer={layer} center={center} geometry={geometry} />
       </div>
     </div>
   );

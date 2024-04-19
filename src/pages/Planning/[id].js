@@ -14,20 +14,19 @@ const CreateNewPost = () => {
   const [currentKML, setCurrentKML] = useState();
   const [showError, setShowError] = useState(false);
 
-  useEffect(() => {
-    getCurrentKMLFile(id);
-  }, []);
+  // useEffect(() => {
+  //   getCurrentKMLFile(id);
+  // }, []);
 
-  const getCurrentKMLFile = async (postId) => {
-    try {
-      await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
-        setCurrentKML(res.data);
-        console.log("current kmlfile", res.data);
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const getCurrentKMLFile = async (postId) => {
+  //   try {
+  //     await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
+  //       setCurrentKML(res.data);
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   const onChangeFields = (field) => (e) => {
     if (field === "budget") {
@@ -95,43 +94,53 @@ const CreateNewPost = () => {
   };
 
   return (
-    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
-      {currentKML && (
-        <KMLEditor onChangeKML={onChangeKML} initialKML={currentKML} />
-      )}
-      <input
-        type="text"
-        aria-label="Title"
-        placeholder="Title"
-        className="border-2"
-        onChange={onChangeFields("title")}
-        value={formDetails.title}
-      ></input>
-      <textarea
-        className="border-2"
-        aria-label="Description"
-        placeholder="Description"
-        onChange={onChangeFields("description")}
-        value={formDetails.description}
-      ></textarea>
-      <input
-        type="number"
-        onChange={onChangeFields("budget")}
-        value={formDetails.budget}
-      ></input>
-      {showError && (
-        <div class="alert alert-danger" role="alert">
-          Save Map Before Proceeding!
+    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10 tw-w-full tw-h-full tw-bg-blue tw-text-white">
+      <KMLEditor onChangeKML={onChangeKML} initialPostId={id} />
+      <div>
+        <div className="form-container">
+          <b className="tw-text-black">Give Your Post a Title</b>
+          <input
+            type="text"
+            aria-label="Title"
+            placeholder="Title"
+            className="form-control mb-3"
+            onChange={onChangeFields("title")}
+            value={formDetails.title}
+          />
+          <b className="tw-text-black">Tell us more about your itinerary</b>
+          <textarea
+            className="form-control mb-3"
+            aria-label="Description"
+            placeholder="Description"
+            onChange={onChangeFields("description")}
+            value={formDetails.description}
+          />
+
+          <b className="tw-text-black">Give an approx. budget</b>
+          <input
+            type="number"
+            min={1}
+            className="form-control mb-3"
+            onChange={onChangeFields("budget")}
+            value={formDetails.budget}
+          />
+
+          {showError && (
+            <b className="alert-danger mb-3" role="alert">
+              Save Map Before Proceeding!
+            </b>
+          )}
+          <button
+            className="btn-primary rounded-pill publish-button"
+            onClick={handlePublishPost}
+          >
+            Publish Post
+          </button>
         </div>
-      )}
-      <button
-        className="tw-border-2 tw-bg-blue-500"
-        onClick={handlePublishPost}
-      >
-        Publish Post
-      </button>
+      </div>
     </div>
   );
+
 };
 
 export default CreateNewPost;

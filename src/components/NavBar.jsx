@@ -49,7 +49,6 @@ const NavBar = () => {
 
   return (
     <motion.div
-      className="nav-header"
       initial={{ opacity: 0, y: -180 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{

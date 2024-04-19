@@ -73,42 +73,105 @@ const CreateNewPost = () => {
 
   const onChangeKML = (kmlfile) => {
     setFile(kmlfile);
+    setShowError(false);
   };
 
   return (
-    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
+<<<<<<< HEAD
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-lg-10">
+          <div className="row">
+            <div className="col-lg-6 mb-4">
+              <div className="map-container">
+                <div className="kml-editor">
+                  <KMLEditor onChangeKML={onChangeKML} />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6 mb-4">
+              <div className="form-container">
+                <input
+                  type="text"
+                  aria-label="Title"
+                  placeholder="Title"
+                  className="form-control mb-3"
+                  onChange={onChangeFields("title")}
+                  value={formDetails.title}
+                />
+                <textarea
+                  className="form-control mb-3"
+                  aria-label="Description"
+                  placeholder="Description"
+                  onChange={onChangeFields("description")}
+                  value={formDetails.description}
+                />
+                <input
+                  type="number"
+                  className="form-control mb-3"
+                  onChange={onChangeFields("budget")}
+                  value={formDetails.budget}
+                />
+                {showError && (
+                  <div className="alert-danger mb-3" role="alert">
+                    Save Map Before Proceeding!
+                  </div>
+                )}
+                <button
+                  className="btn-primary rounded-pill publish-button"
+                  onClick={handlePublishPost}
+                >
+                  Publish Post
+                </button>
+              </div>
+            </div>
+          </div>
+=======
+    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10 tw-w-full tw-h-full tw-bg-blue tw-text-white">
       <KMLEditor onChangeKML={onChangeKML} />
-      <input
-        type="text"
-        aria-label="Title"
-        placeholder="Title"
-        className="border-2"
-        onChange={onChangeFields("title")}
-        value={formDetails.title}
-      ></input>
-      <textarea
-        className="border-2"
-        aria-label="Description"
-        placeholder="Description"
-        onChange={onChangeFields("description")}
-        value={formDetails.description}
-      ></textarea>
-      <input
-        type="number"
-        onChange={onChangeFields("budget")}
-        value={formDetails.budget}
-      ></input>
-      {showError && (
-        <div class="alert alert-danger" role="alert">
-          Save Map Before Proceeding!
+      <div>
+        <div className="form-container">
+          <b className="tw-text-black">Give Your Post a Title</b>
+          <input
+            type="text"
+            aria-label="Title"
+            placeholder="Title"
+            className="form-control mb-3"
+            onChange={onChangeFields("title")}
+            value={formDetails.title}
+          />
+          <b className="tw-text-black">Tell us more about your itinerary</b>
+          <textarea
+            className="form-control mb-3"
+            aria-label="Description"
+            placeholder="Description"
+            onChange={onChangeFields("description")}
+            value={formDetails.description}
+          />
+
+          <b className="tw-text-black">Give an approx. budget</b>
+          <input
+            type="number"
+            min={1}
+            className="form-control mb-3"
+            onChange={onChangeFields("budget")}
+            value={formDetails.budget}
+          />
+
+          {showError && (
+            <b className="alert-danger mb-3" role="alert">
+              Save Map Before Proceeding!
+            </b>
+          )}
+          <button
+            className="btn-primary rounded-pill publish-button"
+            onClick={handlePublishPost}
+          >
+            Publish Post
+          </button>
+>>>>>>> 838a0c7e577710ad514360c8f498cbe8c8c77f24
         </div>
-      )}
-      <button
-        className="tw-border-2 tw-bg-blue-500"
-        onClick={handlePublishPost}
-      >
-        Publish Post
-      </button>
+      </div>
     </div>
   );
 };

@@ -36,7 +36,7 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (userData) {
+    if (userData && (userData.posts || userData.likedPosts)) {
       const newPosts =
         activeTab === "myPosts" ? userData.posts : userData.likedPosts;
       setPosts(newPosts);

@@ -18,24 +18,8 @@ export default function KMLViewer({ kmlFile }) {
   }, [center]);
 
   useEffect(() => {
-    console.log("this component is running..", kmlFile);
-    handleFileConversion(kmlFile);
-  }, []);
-
-  const handleFileConversion = (kmlfile) => {
-    const file = kmlfile; // get file
     parseKMLtoGeoJSON(kmlFile);
-    console.log("this file is being displayed", kmlFile);
-    // const reader = new FileReader();
-
-    // // on load file end, parse the text read
-    // reader.onloadend = (event) => {
-    //   const text = event.target.result;
-    //   parseKMLtoGeoJSON(text);
-    // };
-
-    // reader.readAsText(file); // start reading file
-  };
+  }, []);
 
   const parseKMLtoGeoJSON = (text) => {
     const dom = new DOMParser().parseFromString(text, "text/xml"); // create xml dom object

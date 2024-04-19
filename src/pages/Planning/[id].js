@@ -1,27 +1,46 @@
 import dynamic from "next/dynamic";
 import axiosClient from "../../others/network/axiosClient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const KMLEditor = dynamic(
   () => import("../../components/KMLHandlers/KMLEditor"),
   { ssr: false }
 );
+
 const CreateNewPost = () => {
   const router = useRouter();
+  const { id } = router.query;
+  const [currentKML, setCurrentKML] = useState();
   const [showError, setShowError] = useState(false);
 
+  useEffect(() => {
+    getCurrentKMLFile(id);
+  }, []);
+
+  const getCurrentKMLFile = async (postId) => {
+    try {
+      await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
+        setCurrentKML(res.data);
+        console.log("current kmlfile", res.data);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const onChangeFields = (field) => (e) => {
-    if (field == "budget") {
+    if (field === "budget") {
       setFormDetails({
         ...formDetails,
         [field]: Number(e.target.value),
       });
+    } else {
+      setFormDetails({
+        ...formDetails,
+        [field]: e.target.value,
+      });
     }
-    setFormDetails({
-      ...formDetails,
-      [field]: e.target.value,
-    });
   };
 
   const [formDetails, setFormDetails] = useState({
@@ -57,7 +76,7 @@ const CreateNewPost = () => {
           { file: file },
           {
             headers: {
-              Authorization: `Bearer ${token} `,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
             },
           }
@@ -77,7 +96,9 @@ const CreateNewPost = () => {
 
   return (
     <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
-      <KMLEditor onChangeKML={onChangeKML} />
+      {currentKML && (
+        <KMLEditor onChangeKML={onChangeKML} initialKML={currentKML} />
+      )}
       <input
         type="text"
         aria-label="Title"

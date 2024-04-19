@@ -13,6 +13,7 @@ import AuthorCard from "../../components/AuthorCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Range, getTrackBackground } from "react-range";
+import axiosClient from "../../others/network/axiosClient";
 
 import Post from "../../components/Post";
 import SearchBar from "../../components/SearchBar";
@@ -76,7 +77,8 @@ const MAX = 1000;
 //Index.auth = false; //newly added. this is for the authentication service
 
 const Index = () => {
-  const totalCards = 60;
+  const [allPosts, setAllPosts] = useState([]);
+  const totalCards = allPosts.length;
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 5; // Display 5 cards per page
   const totalPages = Math.ceil(totalCards / cardsPerPage);
@@ -95,18 +97,35 @@ const Index = () => {
     setCurrentPage(newPage);
   };
 
+  const getAllPosts = async () => {
+    try {
+      await axiosClient.get("/posts").then((res) => {
+        setAllPosts(res.data);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
+
   return (
     <div className="container my-5">
       {/* Search Bar */}
       <SearchBar />
 
       {/* Itineraries Grid */}
+
       <div className="row">
-        {cardIndices.map((cardIndex) => (
-          <div key={cardIndex} className="col-12 mb-4">
-            <Post />
-          </div>
-        ))}
+        {allPosts
+          .slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage)
+          .map((post, index) => (
+            <div key={index} className="col-12 mb-4">
+              <Post postDetails={post} />
+            </div>
+          ))}
       </div>
 
       {/* Pagination */}

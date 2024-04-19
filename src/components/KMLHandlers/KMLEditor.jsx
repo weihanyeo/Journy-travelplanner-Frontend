@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axiosClient, {
-  axiosExternalClient,
-} from "../../others/network/axiosClient";
+import { axiosExternalClient } from "../../others/network/axiosClient";
 import * as tj from "@mapbox/togeojson";
 import rewind from "@mapbox/geojson-rewind";
-import { saveAs } from "file-saver";
 import tokml from "tokml";
 import ReusableKMLViewer from "./KMLViewer";
 
-const KMLEditor = ({ onChangeKML }) => {
+const KMLEditor = ({ onChangeKML, initialKML = null }) => {
   //suggestions
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -91,18 +88,11 @@ const KMLEditor = ({ onChangeKML }) => {
     }
   };
 
-  const handleFileSelection = (event) => {
-    const file = event.target.files[0]; // get file
-    const reader = new FileReader();
-
-    // on load file end, parse the text read
-    reader.onloadend = (event) => {
-      const text = event.target.result;
-      parseKMLtoGeoJSON(text);
-    };
-
-    reader.readAsText(file); // start reading file
-  };
+  useEffect(() => {
+    if (initialKML) {
+      parseKMLtoGeoJSON(initialKML);
+    }
+  }, []);
 
   const parseKMLtoGeoJSON = (text) => {
     const dom = new DOMParser().parseFromString(text, "text/xml"); // create xml dom object

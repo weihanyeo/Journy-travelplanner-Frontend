@@ -7,7 +7,6 @@ import "leaflet/dist/leaflet.css";
 import "./leafletStyles.module.css";
 
 export default function KMLViewer({ kmlFile }) {
-  console.log("this component is running..");
   const [layer, setLayer] = useState(null);
   const [center, setCenter] = useState([1.294385, 103.7727545]);
 
@@ -83,7 +82,7 @@ export default function KMLViewer({ kmlFile }) {
           center={center}
           zoom={8}
           scrollWheelZoom={false}
-          style={{ height: "500px", width: "800px" }}
+          style={{ height: "500px", width: "500px", borderRadius: "15px" }}
         >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

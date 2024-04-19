@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import axiosClient from "../../others/network/axiosClient";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
+import {
+  faComment,
+  faCircleChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const KMLDisplay = dynamic(
   () => import("../../components/KMLHandlers/KMLDisplay"),
@@ -80,94 +83,74 @@ const PostDetails = () => {
   };
 
   return (
-    <>
-      <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossOrigin="anonymous"
-      />
-      <div
-        className="card mx-auto shadow mw-90"
-        style={{
-          maxWidth: "720px",
-          borderRadius: "15px",
-          backgroundColor: "#f8f0ca",
-          marginBottom: "20px",
-          border: "none",
-        }}
-      >
-        {postDetails ? (
-          <div className="tw-flex tw-flex-col tw-p-10 tw-gap-5">
-            <div className="tw-flex tw-flex-row tw-justify-evenly tw-items-center">
-              {currentKML && <KMLDisplay kmlFile={currentKML} />}
-              <div className="tw-flex tw-flex-col">
-                <p>user profile pic</p>
-                <p>user name</p>
-                <p>user about me</p>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => router.push(`/Planning/${id}`)}
-                >
-                  Fork this itinerary
-                </button>
-              </div>
-            </div>
-            <div>
-              <h5 className="card-title" style={{ color: "#141451" }}>
-                {postDetails.title}
-              </h5>
-              <p className="card-text">{postDetails.description}</p>
-              <div
-                className="card-body"
-                style={{ border: "2px solid #196f5d", padding: "20px" }}
+    <div>
+      {postDetails ? (
+        <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10 tw-w-full tw-h-full tw-bg-blue tw-text-white">
+          <div className="tw-flex tw-flex-row tw-justify-evenly tw-items-center tw-bg-beige tw-text-blue tw-rounded-xl tw-p-10">
+            {currentKML && <KMLDisplay kmlFile={currentKML} />}
+            <div className="tw-flex tw-flex-col">
+              <p>user profile pic</p>
+              <p>user name</p>
+              <p>user about me</p>
+              <button
+                className="tw-bg-green tw-text-beige tw-p-2 tw-rounded-xl tw-font-bold tw-border-0"
+                onClick={() => router.push(`/Planning/${id}`)}
               >
-                <h6 style={{ marginBottom: "10px" }}>
-                  <FontAwesomeIcon
-                    icon={faComment}
-                    style={{ color: "#141451" }}
-                    className="mr-2"
-                  />
-                  Comments Section:
-                </h6>
-                {comments.length > 0 &&
-                  comments.map((comment, index) => (
-                    <div key={index} className="tw-flex tw-flex-row mb-2">
-                      <strong className="tw-mr-2">
-                        {comment.commenter.username}:
-                      </strong>
-                      <p>{comment.commentDetails}</p>
-                    </div>
-                  ))}
-                <div className="tw-flex tw-flex-row tw-gap-5">
-                  <input
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Add a comment!"
-                    className="form-control"
-                  />
-                  {newComment && (
-                    <button
-                      onClick={onSendNewComment}
-                      className="btn btn-primary"
-                      style={{
-                        backgroundColor: "#196f5d",
-                        borderColor: "#196f5d",
-                      }}
-                    >
-                      Send Comment
-                    </button>
-                  )}
-                </div>
+                Fork this itinerary
+              </button>
+            </div>
+          </div>
+          <div>
+            <h5
+              className="card-title tw-font-bold"
+              style={{ color: "#141451" }}
+            >
+              {postDetails.title}
+            </h5>
+            <p className="card-text tw-font-bold">{postDetails.description}</p>
+            <div className="tw-border-beige tw-border-solid tw-border-2 tw-flex tw-flex-col tw-p-3 tw-min-h-fit tw-rounded-xl">
+              <h6 className="tw-text-beige tw-flex tw-flex-row tw-gap-2 tw-items-center">
+                <FontAwesomeIcon icon={faComment} className="mr-2" />
+                Comments
+              </h6>
+              {comments.length > 0 ? (
+                comments.map((comment, index) => (
+                  <div key={index} className="tw-flex tw-flex-row mb-2 tw-pl-5">
+                    <strong className="tw-mr-2">
+                      {comment.commenter.username}:
+                    </strong>
+                    <p>{comment.commentDetails}</p>
+                  </div>
+                ))
+              ) : (
+                <b className="tw-text-beige tw-font-bold tw-ml-10 tw-pl-5">
+                  No Comments Yet...
+                </b>
+              )}
+              <div className="tw-flex tw-flex-row tw-gap-5 tw-mt-10">
+                <input
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Add a comment!"
+                  className="tw-w-3/4 tw-h-10 tw-rounded-xl tw-p-2"
+                />
+                {newComment && (
+                  <button
+                    onClick={onSendNewComment}
+                    className="tw-flex tw-flex-row tw-gap-2 tw-items-center tw-text-beige tw-bg-green tw-font-bold tw-rounded-full tw-p-2"
+                  >
+                    Send
+                    <FontAwesomeIcon icon={faCircleChevronRight} />
+                  </button>
+                )}
               </div>
             </div>
           </div>
-        ) : (
-          <div>Loading...</div>
-        )}
-      </div>
-    </>
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
   );
 };
 

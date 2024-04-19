@@ -14,20 +14,19 @@ const CreateNewPost = () => {
   const [currentKML, setCurrentKML] = useState();
   const [showError, setShowError] = useState(false);
 
-  useEffect(() => {
-    getCurrentKMLFile(id);
-  }, []);
+  // useEffect(() => {
+  //   getCurrentKMLFile(id);
+  // }, []);
 
-  const getCurrentKMLFile = async (postId) => {
-    try {
-      await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
-        setCurrentKML(res.data);
-        console.log("current kmlfile", res.data);
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const getCurrentKMLFile = async (postId) => {
+  //   try {
+  //     await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
+  //       setCurrentKML(res.data);
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   const onChangeFields = (field) => (e) => {
     if (field === "budget") {
@@ -95,57 +94,48 @@ const CreateNewPost = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="custom-card p-4 shadow-lg rounded bg-light">
-            <div className="row mb-4">
-              <div className="col-md-6 mb-4">
-                <KMLEditor onChangeKML={onChangeKML} />
-              </div>
-              <div className="col-md-6">
-                <div className="input-wrapper">
-                  <input
-                    type="text"
-                    aria-label="Title"
-                    placeholder="Title"
-                    className="form-control mb-3 custom-input"
-                    onChange={onChangeFields("title")}
-                    value={formDetails.title}
-                  />
-                </div>
-                <div className="input-wrapper">
-                  <textarea
-                    aria-label="Description"
-                    placeholder="Description"
-                    className="form-control mb-3 custom-input"
-                    onChange={onChangeFields("description")}
-                    value={formDetails.description}
-                  />
-                </div>
-                <div className="input-wrapper">
-                  <input
-                    type="number"
-                    onChange={onChangeFields("budget")}
-                    value={formDetails.budget}
-                    className="form-control mb-3 custom-input"
-                  />
-                </div>
-              </div>
-            </div>
-            {showError && (
-              <div className="alert alert-danger mb-3" role="alert">
-                Save Map Before Proceeding!
-              </div>
-            )}
-            <button
-              className="btn btn-primary rounded-pill publish-button"
-              onClick={handlePublishPost}
-              style={{ backgroundColor: "#196f5d", borderColor: "#196f5d" }}
-            >
-              Publish Post
-            </button>
-          </div>
+    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10 tw-w-full tw-h-full tw-bg-blue tw-text-white">
+      <KMLEditor onChangeKML={onChangeKML} initialPostId={id} />
+      <div>
+        <div className="form-container">
+          <b className="tw-text-black">Give Your Post a Title</b>
+          <input
+            type="text"
+            aria-label="Title"
+            placeholder="Title"
+            className="form-control mb-3"
+            onChange={onChangeFields("title")}
+            value={formDetails.title}
+          />
+          <b className="tw-text-black">Tell us more about your itinerary</b>
+          <textarea
+            className="form-control mb-3"
+            aria-label="Description"
+            placeholder="Description"
+            onChange={onChangeFields("description")}
+            value={formDetails.description}
+          />
+
+          <b className="tw-text-black">Give an approx. budget</b>
+          <input
+            type="number"
+            min={1}
+            className="form-control mb-3"
+            onChange={onChangeFields("budget")}
+            value={formDetails.budget}
+          />
+
+          {showError && (
+            <b className="alert-danger mb-3" role="alert">
+              Save Map Before Proceeding!
+            </b>
+          )}
+          <button
+            className="btn-primary rounded-pill publish-button"
+            onClick={handlePublishPost}
+          >
+            Publish Post
+          </button>
         </div>
       </div>
     </div>

@@ -52,10 +52,10 @@ const Index = () => {
               <h1 className="heroTitle">
                 Embark on Your Journey with <b>Journy</b>{" "}
               </h1>
-              <p className="heroSubtitle">
+              <div className="heroSubtitle">
                 <p className="lead">Where Adventure Meets Collaboration</p>
                 <p>Explore, Share, Create - Your Ultimate Travel Companion</p>
-              </p>
+              </div>
               <SearchBar />
             </div>
           </div>

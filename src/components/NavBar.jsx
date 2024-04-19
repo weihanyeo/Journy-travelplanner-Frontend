@@ -61,7 +61,7 @@ const NavBar = () => {
       <nav id="Home" className="navbar navbar-expand-lg navbar-light navbar">
         <div className="container">
           <a
-            className="navbar-brand navbarBrand"
+            className="navbar-brand navwwwwwbarBrand"
             target="_blank"
             rel="noreferrer"
           >

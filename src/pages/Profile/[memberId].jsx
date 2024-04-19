@@ -381,7 +381,7 @@ const Index = () => {
         <div className="row">
           {currentPosts.map((post, index) => (
             <div key={index} className="col-12 mb-4">
-              <Post postDetails={post} />
+              <Post postDetails={{ ...post, creator: userData }} />
             </div>
           ))}
         </div>

@@ -14,10 +14,21 @@ const Post = ({ postDetails }) => {
     locations = [],
     likeCount = 10,
     comments = [],
+    creator = {},
   } = postDetails;
   const [expandedComments, setExpandedComments] = useState(false);
   const [expandedCommentIndex, setExpandedCommentIndex] = useState(-1);
   const MAX_COMMENTS_SHOWN = 3;
+
+  console.log(postDetails.creator);
+
+  const redirectToCreatorProfile = () => {
+    if (postDetails.creator && postDetails.creator.memberId) {
+      router.push(`/Profile/${postDetails.creator.memberId}`);
+    } else {
+      console.error("Creator data is missing or incomplete");
+    }
+  };
 
   // Fake post details
   const postImageUrl = "/paris.jpg";
@@ -57,15 +68,28 @@ const Post = ({ postDetails }) => {
           border: "none",
         }}
       >
-        <div className="card-header d-flex align-items-center mw-90">
+        <div
+          onClick={redirectToCreatorProfile}
+          style={{ cursor: "pointer" }}
+          className="card-header d-flex align-items-center mw-90"
+        >
           <img
-            src="https://via.placeholder.com/40"
+            src={
+              postDetails &&
+              postDetails.creator &&
+              postDetails.creator.profilePictureURL
+                ? postDetails.creator.profilePictureURL
+                : "/defaultImg.png"
+            }
             className="rounded-circle mr-2"
             alt="User"
+            style={{ width: "40px", height: "40px", objectFit: "cover" }}
           />
           <div>
             <h6 className="mb-0" style={{ color: "#141451" }}>
-              Username
+              {postDetails && postDetails.creator
+                ? postDetails.creator.username
+                : ""}
             </h6>
             {locations.map((location) => {
               return <small className="text-muted">{location}, </small>;

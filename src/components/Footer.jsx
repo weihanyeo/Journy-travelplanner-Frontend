@@ -15,7 +15,7 @@ const Footer = () => {
         color: "#f8f0ca",
         fontFamily: "Poppins, sans-serif",
         bottom: "0",
-        position: "fixed",
+        position: "static",
       }}
     >
       <div className="container py-5">

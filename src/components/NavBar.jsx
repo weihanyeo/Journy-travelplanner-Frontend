@@ -141,7 +141,11 @@ const NavBar = () => {
               {!userData && (
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
+                  className="btn btn-primary rounded-4"
+                  style={{
+                    width: "100%",
+                    fontSize: "0.9rem",
+                  }}
                   onClick={() => router.push("/Login")}
                 >
                   Let's Explore!

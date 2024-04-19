@@ -93,13 +93,6 @@ const Index = () => {
       className="container mt-3 justify-content-center"
       style={{ minHeight: "40rem", maxWidth: "40rem" }}
     >
-      <img
-        src="loginpage.png"
-        //alt="Logo"
-        width="600"
-        height="600"
-        className="align-middle rounded-3"
-      />
       <br />
       <h1 className="text-center"> Welcome back to Journy</h1>
       <h5 className="text-center" style={{ fontWeight: "50" }}>

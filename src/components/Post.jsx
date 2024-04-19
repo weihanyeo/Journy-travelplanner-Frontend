@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
+import axiosClient from "../others/network/axiosClient";
 
 const Post = ({ postDetails }) => {
   const router = useRouter();
@@ -15,6 +16,29 @@ const Post = ({ postDetails }) => {
     likeCount = 10,
     comments = [],
   } = postDetails;
+  const [isLikedClicked, setIsLikedClicked] = useState(false);
+  const [postLikeCount, setPostLikeCount] = useState(likeCount);
+
+  const handleClick = async () => {
+    try {
+      const endpoint = isLikedClicked
+        ? `/posts/${postId}/unlike`
+        : `/posts/${postId}/like`;
+
+      if (isLikedClicked) {
+        await axiosClient.delete(endpoint);
+        setPostLikeCount(postLikeCount - 1);
+      } else {
+        await axiosClient.post(endpoint);
+        setPostLikeCount(postLikeCount + 1);
+      }
+
+      setIsLikedClicked(!isLikedClicked);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const [expandedComments, setExpandedComments] = useState(false);
   const [expandedCommentIndex, setExpandedCommentIndex] = useState(-1);
   const MAX_COMMENTS_SHOWN = 3;
@@ -102,14 +126,23 @@ const Post = ({ postDetails }) => {
               </h5>
               <p className="card-text">{description}</p>
             </div>
-            <div>
-              <FontAwesomeIcon icon={faHeart} className="mr-2" />
+            <div className="heart-icon" onClick={handleClick}>
+              <FontAwesomeIcon
+                icon={faHeart}
+                className={
+                  isLikedClicked ? "text-danger mr-2" : "text-muted mr-2"
+                }
+              />
             </div>
           </div>
           <div>
             <FontAwesomeIcon icon={faDollarSign} className="mr-1" />
             <FontAwesomeIcon icon={faDollarSign} className="mr-1" />
             <span>Budget: {budget}</span>
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faHeart} className="mr-1" />
+            {postLikeCount} likes
           </div>
         </div>
         <div className="card-footer">

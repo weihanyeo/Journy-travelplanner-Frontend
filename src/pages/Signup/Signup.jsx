@@ -9,11 +9,9 @@ const Index = () => {
   const [formDetails, setFormDetails] = useState({
     username: "",
     password: "",
-    name: "",
-    email: "",
   });
   const [errorMsgs, setErrorMsgs] = useState("");
-  //const [userData, setUserData] = useState(null); // Add this line to define the user data state
+  const [userData, setUserData] = useState(null); // Add this line to define the user data state
 
   const onChangeField = (field) => (e) => {
     setFormDetails({
@@ -89,33 +87,25 @@ const Index = () => {
         console.log("Sign-up successful!");
 
         // Handle the registration response
-        if (response.data && response.data.token) {
-          const { token } = response.data;
-          console.log("Received token from server");
+        const { token, user } = response.data;
+        console.log("Received token and user data from server");
 
-          // Store the JWT token in the local storage or cookies
-          localStorage.setItem("jwt", token);
-          console.log("Stored JWT token in local storage");
+        // Store the JWT token in the local storage or cookies
+        localStorage.setItem("jwt", token);
+        console.log("Stored JWT token in local storage");
 
-          // Redirect the user to the desired page
-          router.replace("/Discover");
-          console.log("Redirected user to Discover page");
-        } else {
-          // Handle the case where the response is not in the expected format
-          console.error(
-            "Unexpected response format from the server:",
-            response.data
-          );
-          setErrorMsgs("An error occurred. Please try again later.");
-        }
+        // Store the user data in the application state or context
+        setUserData(user);
+        console.log("Stored user data in application state/context");
+
+        // Redirect the user to the desired page
+        router.push("/Discover");
+        console.log("Redirected user to Discover page");
       } catch (error) {
         console.error("Error occurred during sign-up:", error);
         if (error.response) {
           // Handle specific error responses from the server
-          setErrorMsgs(
-            error.response.data.message ||
-              "An error occurred. Please try again later."
-          );
+          setErrorMsgs(error.response.data.message);
           console.error("Error message set:", error.response.data.message);
         } else {
           // Handle network or other errors
@@ -125,6 +115,7 @@ const Index = () => {
       }
     }
   };
+
   return (
     <div
       className="container mt-3 justify-content-center"

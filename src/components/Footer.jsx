@@ -1,31 +1,99 @@
 import React from "react";
-//import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
-    <div
-      className="container-fluid bg-white position-fixed w-100 bottom-0"
-      style={{ height: "15%" }}
+    <footer
+      className="footer"
+      style={{
+        backgroundColor: "#196f5d",
+        color: "#f8f0ca",
+        fontFamily: "Poppins, sans-serif",
+      }}
     >
-      <div
-        className="flex justify-between items-center flex-wrap
-                mt-5 row"
-      >
-        <img src="journy.png" className="col-1 col-sm-1" />
-        <p className="col-6 items-center flex justify-between">
-          @2024 Journy. All Rights Reserved
-        </p>
-
-        <div className="footer__copyrights-link col-4 col-sm-4 ">
-          <div href="/" className="text-grey-500 justify-content-end d-flex">
-            Privacy policy
+      <div className="container py-5">
+        <div className="row">
+          <div className="col-lg-3 col-md-6">
+            <h5>About Journy</h5>
+            <p>
+              Journy is your ultimate travel companion, offering personalized
+              itineraries and connecting you with fellow adventurers.
+            </p>
           </div>
-          <div href="/" className="text-grey-500 justify-content-end d-flex">
-            Terms of Use
+          <div className="col-lg-3 col-md-6">
+            <h5>Quick Links</h5>
+            <ul className="list-unstyled">
+              <li>
+                <a href="/" className="text-light">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/about" className="text-light">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="/destinations" className="text-light">
+                  Destinations
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="text-light">
+                  Contact Us
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="col-lg-3 col-md-6">
+            <h5>Follow Us</h5>
+            <ul className="list-unstyled">
+              <li>
+                <a href="#" className="text-light">
+                  <FontAwesomeIcon icon={faFacebook} /> Facebook
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-light">
+                  <FontAwesomeIcon icon={faTwitter} /> Twitter
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-light">
+                  <FontAwesomeIcon icon={faInstagram} /> Instagram
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="col-lg-3 col-md-6">
+            <h5>Contact Us</h5>
+            <ul className="list-unstyled">
+              <li>
+                <i className="fas fa-map-marker-alt"></i> 123 Main Street, City,
+                Country
+              </li>
+              <li>
+                <i className="fas fa-phone-alt"></i> +123-456-7890
+              </li>
+              <li>
+                <i className="fas fa-envelope"></i>{" "}
+                <a href="mailto:info@journy.com" className="text-light">
+                  info@journy.com
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
+        <div className="text-center mt-4">
+          <p className="mb-0">&copy; 2024 Journy. All Rights Reserved.</p>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

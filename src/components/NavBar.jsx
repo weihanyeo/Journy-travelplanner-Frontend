@@ -1,26 +1,55 @@
+"use client";
+
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-//import "./index.scss";
 
 const NavBar = () => {
-  //to be used with footer
-  // const handleScrollTo = (id: string): void => {
-  //   const targetElement = document.getElementById(id);
-
-  //   if (targetElement) {
-  //     window.scrollTo({
-  //       top: targetElement.offsetTop - 70, // Adjust the offset as needed
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // };
-
   const router = useRouter();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      console.log("JWT token found in local storage");
+      // Fetch the user data from the server or set a placeholder
+      setUserData({
+        /* placeholder user data */
+      });
+    } else {
+      setUserData(null);
+      console.log("JWT not found");
+    }
+  }, []);
+
+  const handleProfileClick = () => {
+    if (!userData) {
+      router.push("/Signup");
+    } else {
+      router.push("/Profile");
+    }
+  };
+
+  const handlePlanningClick = () => {
+    if (!userData) {
+      router.push("/Signup");
+    } else {
+      router.push("/Planning");
+    }
+  };
+
+  const handleLogout = () => {
+    // Remove the JWT token from local storage
+    localStorage.removeItem("jwt");
+    // Reset the user data state
+    setUserData(null);
+    // Redirect the user to the login page
+    router.push("/Login");
+  };
 
   return (
     <motion.div
-      className="header"
+      className="nav-header"
       initial={{ opacity: 0, y: -180 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -29,12 +58,15 @@ const NavBar = () => {
         delay: 0.8,
       }}
     >
-      <nav id="Home" className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" target="_blank" rel="noreferrer">
+      <nav id="Home" className="navbar navbar-expand-lg navbar-light navbar">
+        <div className="container">
+          <a
+            className="navbar-brand navwwwwwbarBrand"
+            target="_blank"
+            rel="noreferrer"
+          >
             <img
               src="journy.png"
-              //alt="Logo"
               width="30"
               height="30"
               className="d-inline-block"
@@ -57,7 +89,10 @@ const NavBar = () => {
             id="navbarNavAltMarkup"
           >
             <div className="navbar-nav">
-              <button className="nav-link" onClick={() => router.push("/Home")}>
+              <button
+                className="nav-link"
+                onClick={() => router.push("/LandingPage")}
+              >
                 Home
               </button>
               <button
@@ -66,28 +101,36 @@ const NavBar = () => {
               >
                 Discover
               </button>
-              <button
-                className="nav-link "
-                onClick={() => router.push("/Planning")}
-              >
-                Planning
-              </button>
-
-              <button
-                className="nav-link "
-                type="button"
-                onClick={() => router.push("/Profile")}
-              >
-                Profile
-              </button>
-
-              <button
-                type="button"
-                class="btn btn-outline-primary"
-                onClick={() => router.push("/Login")}
-              >
-                Lets Explore!
-              </button>
+              {userData && (
+                <>
+                  <button className="nav-link" onClick={handlePlanningClick}>
+                    Planning
+                  </button>
+                  <button
+                    className="nav-link"
+                    type="button"
+                    onClick={handleProfileClick}
+                  >
+                    Profile
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-warning"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+              {!userData && (
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => router.push("/Login")}
+                >
+                  Let's Explore!
+                </button>
+              )}
             </div>
           </div>
         </div>

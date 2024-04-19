@@ -3,9 +3,13 @@
 @tailwind utilities;
 
 @import "./LandingPage/index.css";
+@import "../components/Card.css";
+@import "../components/Footer.css";
+@import "../components/Navbar.css";
+@import "../components/SearchBar.css";
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  --foreground-rgb: #196f5d;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
@@ -30,4 +34,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.leaflet-container {
+  height: 100vh;
 }

@@ -164,10 +164,11 @@ const Index = () => {
       </h6>
       <button
         type="button"
-        className="mt-2"
+        className="btn btn-primary rounded-4"
         style={{
           width: "100%",
           fontSize: "0.9rem",
+          marginBottom: "10px",
         }}
         onClick={() => router.push("/Signup")}
       >

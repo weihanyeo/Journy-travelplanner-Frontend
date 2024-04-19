@@ -84,12 +84,17 @@ const Post = () => {
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <div
-        className="card mx-auto shadow-sm mw-90"
-        style={{ maxWidth: "720px" }}
-        //onClick={() => router.push(`/Post/${id}`)}
+        className="card mx-auto shadow mw-90"
+        style={{
+          maxWidth: "720px",
+          borderRadius: "15px",
+          backgroundColor: "#f8f0ca",
+          marginBottom: "20px",
+          border: "none",
+        }}
         onClick={() => router.push("/Post")}
       >
         <div className="card-header d-flex align-items-center mw-90">
@@ -99,8 +104,12 @@ const Post = () => {
             alt="User"
           />
           <div>
-            <h6 className="mb-0">Username</h6>
-            <small className="text-muted">Location</small>
+            <h6 className="mb-0" style={{ color: "#141451" }}>
+              Username
+            </h6>
+            <small className="text-muted" style={{ color: "#8c8c8c" }}>
+              Location
+            </small>
           </div>
         </div>
 
@@ -119,7 +128,8 @@ const Post = () => {
               height: "100%",
               objectFit: "contain",
               objectPosition: "center",
-              backgroundColor: "black",
+              backgroundColor: "#196f5d",
+              border: "2px dotted #94746c",
             }}
             alt={postTitle}
           />
@@ -127,22 +137,50 @@ const Post = () => {
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              <h5 className="card-title">{postTitle}</h5>
+              <h5 className="card-title" style={{ color: "#141451" }}>
+                {postTitle}
+              </h5>
               <p className="card-text">{postDescription}</p>
             </div>
             <div className="col">
-              <FontAwesomeIcon icon={faHeart} className="mr-2" />
-              <FontAwesomeIcon icon={faComment} className="mr-2" />
-              <FontAwesomeIcon icon={faStar} className="mr-2" />
+              <FontAwesomeIcon
+                icon={faHeart}
+                className="mr-2"
+                style={{ color: "#196f5d" }}
+              />
+              <FontAwesomeIcon
+                icon={faComment}
+                className="mr-2"
+                style={{ color: "#141451" }}
+              />
+              <FontAwesomeIcon
+                icon={faStar}
+                className="mr-2"
+                style={{ color: "#748268" }}
+              />
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-center mt-3">
             <div>
-              <span className="badge badge-primary mr-2">{postTags[0]}</span>
-              <span className="badge badge-primary mr-2">{postTags[1]}</span>
+              <span
+                className="badge badge-primary mr-2"
+                style={{ backgroundColor: "#8cb46c" }}
+              >
+                {postTags[0]}
+              </span>
+              <span
+                className="badge badge-primary mr-2"
+                style={{ backgroundColor: "#8c8c8c" }}
+              >
+                {postTags[1]}
+              </span>
             </div>
             <div>
-              <FontAwesomeIcon icon={faUserGroup} className="mr-1" />
+              <FontAwesomeIcon
+                icon={faUserGroup}
+                className="mr-1"
+                style={{ color: "#196f5d" }}
+              />
               <span>{postTravelers}</span>
             </div>
           </div>
@@ -161,6 +199,7 @@ const Post = () => {
                   <button
                     className="btn btn-link p-0"
                     onClick={() => toggleExpandComment(index)}
+                    style={{ color: "#196f5d" }}
                   >
                     {expandedCommentIndex === index ? "View Less" : "View More"}
                   </button>
@@ -175,7 +214,11 @@ const Post = () => {
               ))}
             {!expandedComments && postComments.length > MAX_COMMENTS_SHOWN && (
               <div className="d-flex justify-content-center">
-                <button className="btn btn-link" onClick={toggleExpandComments}>
+                <button
+                  className="btn btn-link"
+                  onClick={toggleExpandComments}
+                  style={{ color: "#196f5d" }}
+                >
                   View More Comments
                 </button>
               </div>

@@ -99,6 +99,9 @@ const Index = () => {
     <div className="container my-5">
       {/* Search Bar */}
       <SearchBar />
+      <br />
+      <br />
+      <br />
 
       {/* Itineraries Grid */}
       <div className="row">

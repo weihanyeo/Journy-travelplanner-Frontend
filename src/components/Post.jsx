@@ -11,40 +11,9 @@ const Post = ({ postDetails }) => {
     title = "Title goes here",
     description = "Description goes here",
     budget = 99,
-    locations = ["singapore", "malaysia"],
+    locations = [],
     likeCount = 10,
-    comments = [
-      {
-        commentId: 1,
-        commentDateTime: null,
-        commentDetails: "this looks amazing!",
-        commenter: {
-          memberId: 5,
-          username: "xinyi022",
-          password: "",
-          name: "xinyi022",
-          email: "xinyi02@gmail",
-          profilePictureURL: null,
-          aboutMe: null,
-          role: "USER",
-          followingMembers: [],
-          followersMembers: [],
-          posts: [],
-          likesReceived: null,
-          likedPosts: [],
-          comments: [],
-          authorities: [
-            {
-              authority: "USER",
-            },
-          ],
-          accountNonExpired: true,
-          accountNonLocked: true,
-          credentialsNonExpired: true,
-          enabled: true,
-        },
-      },
-    ],
+    comments = [],
   } = postDetails;
   const [expandedComments, setExpandedComments] = useState(false);
   const [expandedCommentIndex, setExpandedCommentIndex] = useState(-1);
@@ -53,7 +22,6 @@ const Post = ({ postDetails }) => {
   // Fake post details
   const postImageUrl = "/paris.jpg";
 
-  const postTags = ["adventure", "history"];
   const formattedComments = comments.map((comment) => {
     return {
       username: comment.commenter.username,

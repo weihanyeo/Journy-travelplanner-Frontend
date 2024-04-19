@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import axiosClient from "../others/network/axiosClient";
 
 const NavBar = () => {
   const router = useRouter();
@@ -22,11 +23,26 @@ const NavBar = () => {
     }
   }, []);
 
-  const handleProfileClick = () => {
-    if (!userData) {
+  const handleProfileClick = async () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) {
       router.push("/Signup");
-    } else {
-      router.push("/Profile");
+      return;
+    }
+
+    try {
+      const response = await axiosClient.get("/members/my-profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.data) {
+        setUserData(response.data);
+        router.push(`/Profile/${response.data.memberId}`);
+      } else {
+        router.push("/Signup");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      router.push("/Signup");
     }
   };
 
@@ -41,6 +57,7 @@ const NavBar = () => {
   const handleLogout = () => {
     // Remove the JWT token from local storage
     localStorage.removeItem("jwt");
+    localStorage.removeItem("currentUser");
     // Reset the user data state
     setUserData(null);
     // Redirect the user to the login page

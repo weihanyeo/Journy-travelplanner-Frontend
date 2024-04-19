@@ -64,10 +64,11 @@ const Index = () => {
               <h1 className="heroTitle">
                 Embark on Your Journey with <b>Journy</b>{" "}
               </h1>
-              <div className="heroSubtitle">
+              <nav className="heroSubtitle">
                 <p className="lead">Where Adventure Meets Collaboration</p>
                 <p>Explore, Share, Create - Your Ultimate Travel Companion</p>
-              </div>
+              </nav>
+              <SearchBar />
             </div>
           </div>
           <div className="col-md-6">

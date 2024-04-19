@@ -89,9 +89,16 @@ const PostDetails = () => {
           <div className="tw-flex tw-flex-row tw-justify-evenly tw-items-center tw-bg-beige tw-text-blue tw-rounded-xl tw-p-10">
             {currentKML && <KMLDisplay kmlFile={currentKML} />}
             <div className="tw-flex tw-flex-col">
-              <p>user profile pic</p>
-              <p>user name</p>
-              <p>user about me</p>
+              <img
+                src={
+                  postDetails?.creator?.profilePictureURL || "/defaultImg.png"
+                }
+                alt="Profile"
+                className="profile-pic"
+                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+              />
+              <p>{postDetails.creator.username}</p>
+              <p>{postDetails.creator.aboutMe}</p>
               <button
                 className="tw-bg-green tw-text-beige tw-p-2 tw-rounded-xl tw-font-bold tw-border-0"
                 onClick={() => router.push(`/Planning/${id}`)}

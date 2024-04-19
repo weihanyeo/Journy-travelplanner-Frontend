@@ -22,12 +22,12 @@ const Post = ({ postDetails }) => {
   // Fake post details
   const postImageUrl = "/paris.jpg";
 
-  const formattedComments = comments.map((comment) => {
-    return {
-      username: comment.commenter.username,
-      text: comment.commentDetails,
-    };
-  });
+  const formattedComments = comments
+    ? comments.map((comment) => ({
+        username: comment.commenter.username,
+        text: comment.commentDetails,
+      }))
+    : [];
 
   const toggleExpandComments = () => {
     setExpandedComments(!expandedComments);

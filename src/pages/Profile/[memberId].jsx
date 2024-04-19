@@ -378,49 +378,45 @@ const Index = () => {
         </button>
       </div>
       <div className="mt-5">
-        {activeTab === "myPosts" && (
-          <>
-            <div className="row">
-              {currentPosts.map((post, index) => (
-                <div key={index} className="col-12 mb-4">
-                  <Post post={post} />
-                </div>
-              ))}
+        <div className="row">
+          {currentPosts.map((post, index) => (
+            <div key={index} className="col-12 mb-4">
+              <Post postDetails={post} />
             </div>
+          ))}
+        </div>
 
-            <nav aria-label="Page navigation">
-              <ul className="pagination justify-content-center">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (number) => (
-                    <li
-                      key={number}
-                      className={`page-item ${
-                        currentPage === number ? "active" : ""
-                      }`}
-                    >
-                      <button
-                        className="page-link"
-                        onClick={() => handlePageChange(number)}
-                      >
-                        {number}
-                      </button>
-                    </li>
-                  )
-                )}
-              </ul>
-            </nav>
-
-            {currentPage < totalPages && (
-              <div className="text-center">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handlePageChange(currentPage + 1)}
+        <nav aria-label="Page navigation">
+          <ul className="pagination justify-content-center">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              (number) => (
+                <li
+                  key={number}
+                  className={`page-item ${
+                    currentPage === number ? "active" : ""
+                  }`}
                 >
-                  View More
-                </button>
-              </div>
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(number)}
+                  >
+                    {number}
+                  </button>
+                </li>
+              )
             )}
-          </>
+          </ul>
+        </nav>
+
+        {currentPage < totalPages && (
+          <div className="text-center">
+            <button
+              className="btn btn-primary"
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              View More
+            </button>
+          </div>
         )}
       </div>
     </div>

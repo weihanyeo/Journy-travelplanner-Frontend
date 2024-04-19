@@ -27,18 +27,17 @@
 }
 
 .featuresSection {
-  background-color: #141451; /* Dark color */
-  color: #f8f0ca; /* Light color */
+  color: #141451; /* Light color */
   padding: 100px 10%;
 }
 
 .featureIcon {
-  color: #748268; /* Subdued color */
+  color: #141451; /* Subdued color */
 }
 
 .testimonialsSection {
-  background-color: #8c8c8c; /* Gray color */
-  color: #f8f0ca; /* Light color */
+  background-color: transparent; /* Gray color */
+  color: #141451; /* Dank color */
   padding: 100px 10%;
 }
 
@@ -59,7 +58,7 @@
 }
 
 .ctaSection {
-  background-color: #196f5d; /* Primary color */
+  background-color: transparent; /* Primary color */
   color: #f8f0ca; /* Light color */
   padding: 100px 10%;
 }

@@ -4,8 +4,13 @@ import React, { useState, useEffect } from "react";
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import SearchBar from "../../components/SearchBar";
 import Card from "../../components/Card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMapMarkedAlt,
+  faUsers,
+  faCalendarAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Index = () => {
   const router = useRouter();
@@ -37,10 +42,17 @@ const Index = () => {
     setCards((prevCards) => [...prevCards, ...additionalCards]); // Append additional cards
     setInitialCardCount((prevCount) => prevCount + additionalCardCount); // Update the initial card count
   };
+
   return (
-    <div className="contain-landing">
+    <div
+      className="contain-landing"
+      style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}
+    >
       {/* Hero Section */}
-      <div className="heroSection">
+      <div
+        className="heroSection"
+        style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}
+      >
         <motion.div
           className="row align-items-center"
           initial={{ opacity: 0, y: -50 }}
@@ -56,7 +68,6 @@ const Index = () => {
                 <p className="lead">Where Adventure Meets Collaboration</p>
                 <p>Explore, Share, Create - Your Ultimate Travel Companion</p>
               </div>
-              <SearchBar />
             </div>
           </div>
           <div className="col-md-6">
@@ -75,87 +86,118 @@ const Index = () => {
       </div>
 
       {/* Card Section */}
-      <div className="container mt-5">
+      <div className="container mt-5 featuresSection">
         <motion.div
           className="mb-5"
           whileInView={{ opacity: [0.2, 1] }}
           transition={{ duration: 0.2, delay: 0.5 }}
         >
-          <h2 className="text-center mb-4" style={{ color: "#196f5d" }}>
+          <h2 className="text-center mb-4 ">
             Explore the extraordinary with Journy
           </h2>
           <p className="lead text-center" style={{ color: "#141451" }}>
             Explore potential locations and magical journeys here
           </p>
         </motion.div>
-
-        {/* Card Section */}
-        <section className="card-section">
-          <div className="row">{cards}</div>
-        </section>
-
-        <div className="text-center custom-pad">
-          <button className="btn btn-primary" onClick={handleLoadMore}>
-            Load More
-          </button>
-        </div>
       </div>
 
       {/* Features Section */}
-      <div className="featuresSection">
+      <div
+        className="featuresSection"
+        style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}
+      >
         <div className="row">
-          <div className="col-md-4">
-            <div className="feature">
-              <i className={`fas fa-map-marked-alt fa-3x featureIcon`}></i>
+          <div className="col-md-4 mb-4">
+            <div className="feature text-center p-4">
+              <FontAwesomeIcon
+                icon={faMapMarkedAlt}
+                size="3x"
+                className="featureIcon mb-3"
+              />
               <h3>Discover</h3>
-              <p>Explore new destinations and uncover hidden gems.</p>
+              <p className="text-muted">
+                Explore new destinations and uncover hidden gems.
+              </p>
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="feature">
-              <i className={`fas fa-users fa-3x featureIcon`}></i>
+          <div className="col-md-4 mb-4">
+            <div className="feature text-center p-4">
+              <FontAwesomeIcon
+                icon={faUsers}
+                size="3x"
+                className="featureIcon mb-3"
+              />
               <h3>Connect</h3>
-              <p>Connect with like-minded travelers and share experiences.</p>
+              <p className="text-muted">
+                Connect with like-minded travelers and share experiences.
+              </p>
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="feature">
-              <i className={`fas fa-calendar-alt fa-3x featureIcon`}></i>
+          <div className="col-md-4 mb-4">
+            <div className="feature text-center p-4">
+              <FontAwesomeIcon
+                icon={faCalendarAlt}
+                size="3x"
+                className="featureIcon mb-3"
+              />
               <h3>Plan</h3>
-              <p>Create personalized itineraries and plan your adventures.</p>
+              <p className="text-muted">
+                Create personalized itineraries and plan your adventures.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Testimonials Section */}
-      <div className="testimonialsSection">
+      <div
+        className="testimonialsSection gradient-04"
+        style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}
+      >
         <div className="row">
           <div className="col-md-6">
-            <div className="testimonial">
+            <motion.div
+              className="testimonial"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
               <p>
                 "Journy helped me discover amazing places and connect with
                 fellow travelers. It's my go-to app for planning adventures!"
               </p>
               <p className="author">- Emily, Adventure Enthusiast</p>
-            </div>
+            </motion.div>
           </div>
           <div className="col-md-6">
-            <div className="testimonial">
+            <motion.div
+              className="testimonial"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
               <p>
                 "I love how easy it is to create and share itineraries with
                 friends. Journy has made traveling so much more enjoyable for
                 me."
               </p>
               <p className="author">- Michael, Backpacker</p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
 
       {/* Call to Action Section */}
-      <div className="ctaSection">
-        <div className="text-center">
+      <div
+        className="ctaSection"
+        style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}
+      >
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
           <h2>Start Your Adventure Today</h2>
           <p className="lead">
             Join thousands of travelers worldwide and make every journey
@@ -167,7 +209,7 @@ const Index = () => {
           >
             Sign Up Now
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

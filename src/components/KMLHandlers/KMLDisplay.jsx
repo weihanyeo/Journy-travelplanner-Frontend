@@ -76,25 +76,23 @@ export default function KMLViewer({ kmlFile }) {
 
   return (
     <div>
-      <div>
-        <MapContainer
-          key={key}
-          center={center}
-          zoom={8}
-          scrollWheelZoom={false}
-          style={{ height: "500px", width: "500px", borderRadius: "15px" }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {layer && <GeoJSON data={layer} pointToLayer={pointToLayer} />}
-          {layer &&
-            drawLinesBetweenLocations().map((line, index) => (
-              <Polyline positions={line} key={index} color="red" />
-            ))}
-        </MapContainer>
-      </div>
+      <MapContainer
+        key={key}
+        center={center}
+        zoom={8}
+        scrollWheelZoom={false}
+        style={{ height: "500px", width: "500px", borderRadius: "15px" }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {layer && <GeoJSON data={layer} pointToLayer={pointToLayer} />}
+        {layer &&
+          drawLinesBetweenLocations().map((line, index) => (
+            <Polyline positions={line} key={index} color="red" />
+          ))}
+      </MapContainer>
     </div>
   );
 }

@@ -87,7 +87,6 @@ const Index = () => {
       className="container mt-3 justify-content-center"
       style={{ minHeight: "40rem", maxWidth: "40rem" }}
     >
-      <br />
       <h1 className="text-center"> Welcome back to Journy</h1>
       <h5 className="text-center" style={{ fontWeight: "50" }}>
         Where enchanted journeys begin. Log in or sign up to continue

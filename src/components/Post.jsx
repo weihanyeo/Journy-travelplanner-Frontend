@@ -43,11 +43,19 @@ const Post = ({ postDetails }) => {
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
+      <br />
+      <br />
       <div
-        className="card mx-auto shadow-sm mw-90"
-        style={{ maxWidth: "720px" }}
+        className="card mx-auto shadow mw-90"
+        style={{
+          maxWidth: "720px",
+          borderRadius: "15px",
+          backgroundColor: "#f8f0ca",
+          marginBottom: "20px",
+          border: "none",
+        }}
       >
         <div className="card-header d-flex align-items-center mw-90">
           <img
@@ -56,7 +64,9 @@ const Post = ({ postDetails }) => {
             alt="User"
           />
           <div>
-            <h6 className="mb-0">Username</h6>
+            <h6 className="mb-0" style={{ color: "#141451" }}>
+              Username
+            </h6>
             {locations.map((location) => {
               return <small className="text-muted">{location}, </small>;
             })}
@@ -78,7 +88,8 @@ const Post = ({ postDetails }) => {
               height: "100%",
               objectFit: "contain",
               objectPosition: "center",
-              backgroundColor: "black",
+              backgroundColor: "#196f5d",
+              border: "2px dotted #94746c",
             }}
             alt={title}
           />
@@ -86,7 +97,9 @@ const Post = ({ postDetails }) => {
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              <h5 className="card-title">{title}</h5>
+              <h5 className="card-title" style={{ color: "#141451" }}>
+                {title}
+              </h5>
               <p className="card-text">{description}</p>
             </div>
             <div>
@@ -126,6 +139,7 @@ const Post = ({ postDetails }) => {
             <div className="d-flex justify-content-center">
               <button
                 className="btn btn-link"
+                style={{ color: "#141451" }}
                 onClick={() => router.push(`/Post/${postId}`)}
               >
                 View Post Details

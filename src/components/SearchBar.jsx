@@ -31,7 +31,6 @@ const SearchBar = () => {
 
   return (
     <div className={`container searchBarContainer`}>
-      {/* Search Bar */}
       <div className="searchBar">
         <form onSubmit={handleSearch} className="searchForm">
           <div className="searchInput">

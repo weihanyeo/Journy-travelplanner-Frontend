@@ -13,7 +13,6 @@ const Index = () => {
     email: "",
   });
   const [errorMsgs, setErrorMsgs] = useState("");
-  //const [userData, setUserData] = useState(null); // Add this line to define the user data state
 
   const onChangeField = (field) => (e) => {
     setFormDetails({
@@ -66,7 +65,6 @@ const Index = () => {
         );
         console.log("Sign-up successful!");
 
-        // Handle the registration response
         if (response.data && response.data.token) {
           const { token } = response.data;
           console.log("Received token from server");
@@ -79,11 +77,9 @@ const Index = () => {
             window.location.reload();
           }, 500);
 
-          // Redirect the user to the desired page
           router.replace("/Discover");
           console.log("Redirected user to Discover page");
         } else {
-          // Handle the case where the response is not in the expected format
           console.error(
             "Unexpected response format from the server:",
             response.data
@@ -93,14 +89,12 @@ const Index = () => {
       } catch (error) {
         console.error("Error occurred during sign-up:", error);
         if (error.response) {
-          // Handle specific error responses from the server
           setErrorMsgs(
             error.response.data.message ||
               "An error occurred. Please try again later."
           );
           console.error("Error message set:", error.response.data.message);
         } else {
-          // Handle network or other errors
           setErrorMsgs("An error occurred. Please try again later.");
           console.error("Generic error message set");
         }
@@ -112,7 +106,6 @@ const Index = () => {
       className="container mt-3 justify-content-center"
       style={{ minHeight: "40rem", maxWidth: "40rem" }}
     >
-      <br />
       <h1 className="text-center">Register for a magical journey</h1>
       {errorMsgs.length > 0 && (
         <div

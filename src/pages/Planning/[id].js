@@ -14,20 +14,6 @@ const CreateNewPost = () => {
   const [currentKML, setCurrentKML] = useState();
   const [showError, setShowError] = useState(false);
 
-  // useEffect(() => {
-  //   getCurrentKMLFile(id);
-  // }, []);
-
-  // const getCurrentKMLFile = async (postId) => {
-  //   try {
-  //     await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
-  //       setCurrentKML(res.data);
-  //     });
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
   const onChangeFields = (field) => (e) => {
     if (field === "budget") {
       setFormDetails({
@@ -140,7 +126,6 @@ const CreateNewPost = () => {
       </div>
     </div>
   );
-
 };
 
 export default CreateNewPost;

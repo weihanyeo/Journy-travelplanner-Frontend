@@ -30,7 +30,6 @@ const PostDetails = () => {
   const getCurrentPost = async () => {
     try {
       await axiosClient.get(`/posts/${id}`).then((res) => {
-        //setCurrentKML(res.data);
         setPostDetails(res.data);
         setComments(res.data.comments);
         getCurrentKMLFile(res.data.postId);
@@ -95,7 +94,7 @@ const PostDetails = () => {
                 }
                 alt="Profile"
                 className="profile-pic"
-                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                style={{ width: "150px", height: "0px", objectFit: "cover" }}
               />
               <p>{postDetails.creator.username}</p>
               <p>{postDetails.creator.aboutMe}</p>

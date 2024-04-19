@@ -3,7 +3,7 @@
 }
 
 .searchBar {
-  background-color: #f8f0ca; /* Light color */
+  background-color: #f8f0ca;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -11,16 +11,16 @@
 
 .searchForm {
   display: flex;
-  flex-direction: column; /* Align items in a column */
+  flex-direction: column;
 }
 
 .searchInput {
   display: flex;
-  align-items: center; /* Align items horizontally */
+  align-items: center;
 }
 
 .input {
-  flex: 1; /* Take remaining space */
+  flex: 1;
   border: none;
   border-radius: 20px;
   padding: 10px 15px;

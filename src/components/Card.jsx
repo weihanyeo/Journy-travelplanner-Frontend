@@ -8,7 +8,7 @@ const adventures = [
     title: "Title example",
     description: "Description example",
     imgUrl: "/loginpage.png",
-    imgNewTab: "https://www.google.com/", // Target link
+    imgNewTab: "https://www.google.com/",
     rating: "3.8",
     reviewCount: "(24)",
     location: "Chiang Mai",

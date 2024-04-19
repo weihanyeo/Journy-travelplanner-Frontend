@@ -11,7 +11,7 @@ const Index = () => {
     password: "",
   });
   const [errorMsgs, setErrorMsgs] = useState("");
-  const [userData, setUserData] = useState(null); // Add this line to define the user data state
+  const [userData, setUserData] = useState(null);
 
   const onChangeField = (field) => (e) => {
     setFormDetails({
@@ -53,28 +53,6 @@ const Index = () => {
     return hasError;
   };
 
-  /*   const onSignUp = async () => {
-    try {
-      const response = await axiosClient.post("/members/register", formDetails);
-      // Handle the registration response
-      const { token, user } = response.data;
-      // Store the JWT token in the local storage or cookies
-      localStorage.setItem("jwt", token);
-      // Store the user data in the application state or context
-      setUserData(user);
-      // Redirect the user to the desired page
-      router.push("/Discover");
-    } catch (error) {
-      if (error.response) {
-        // Handle specific error responses from the server
-        setErrorMsgs(error.response.data.message);
-      } else {
-        // Handle network or other errors
-        setErrorMsgs("An error occurred. Please try again later.");
-      }
-    }
-  }; */
-
   const onSignUp = async () => {
     const hasError = validateFields();
     if (!hasError) {
@@ -86,7 +64,6 @@ const Index = () => {
         );
         console.log("Sign-up successful!");
 
-        // Handle the registration response
         const { token, user } = response.data;
         console.log("Received token and user data from server");
 
@@ -98,17 +75,14 @@ const Index = () => {
         setUserData(user);
         console.log("Stored user data in application state/context");
 
-        // Redirect the user to the desired page
         router.push("/Discover");
         console.log("Redirected user to Discover page");
       } catch (error) {
         console.error("Error occurred during sign-up:", error);
         if (error.response) {
-          // Handle specific error responses from the server
           setErrorMsgs(error.response.data.message);
           console.error("Error message set:", error.response.data.message);
         } else {
-          // Handle network or other errors
           setErrorMsgs("An error occurred. Please try again later.");
           console.error("Generic error message set");
         }
@@ -123,7 +97,6 @@ const Index = () => {
     >
       <img
         src="signupPage.png"
-        //alt="Logo"
         width="600"
         height="600"
         className="align-middle rounded-3"

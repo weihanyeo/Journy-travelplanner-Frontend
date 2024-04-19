@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import FollowButton from "./FollowButton";
 import { useRouter } from "next/router";
 
 const FollowListModal = ({ show, onHide, type, currentUserId, listData }) => {

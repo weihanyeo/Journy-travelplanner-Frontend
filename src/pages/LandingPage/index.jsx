@@ -64,10 +64,10 @@ const Index = () => {
               <h1 className="heroTitle">
                 Embark on Your Journey with <b>Journy</b>{" "}
               </h1>
-              <nav className="heroSubtitle">
+              <div className="heroSubtitle">
                 <p className="lead">Where Adventure Meets Collaboration</p>
                 <p>Explore, Share, Create - Your Ultimate Travel Companion</p>
-              </nav>
+              </div>
             </div>
           </div>
           <div className="col-md-6">
@@ -85,7 +85,6 @@ const Index = () => {
         </motion.div>
       </div>
 
-      {/* Card Section */}
       <div className="container mt-5 featuresSection">
         <motion.div
           className="mb-5"
@@ -101,7 +100,6 @@ const Index = () => {
         </motion.div>
       </div>
 
-      {/* Features Section */}
       <div
         className="featuresSection"
         style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}
@@ -149,7 +147,6 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Testimonials Section */}
       <div
         className="testimonialsSection gradient-04"
         style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}
@@ -187,7 +184,6 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Call to Action Section */}
       <div
         className="ctaSection"
         style={{ background: "linear-gradient(270deg, #196f5d, #f8f0ca)" }}

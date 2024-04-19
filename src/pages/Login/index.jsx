@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axiosClient from "../../others/network/axiosClient";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { jwtDecode } from "jwt-decode";
 
 const Index = () => {
@@ -13,7 +12,7 @@ const Index = () => {
     password: "",
   });
   const [errorMsgs, setErrorMsgs] = useState("");
-  const [userData, setUserData] = useState(null); // Add this line to define the user data state
+  const [userData, setUserData] = useState(null);
 
   const onChangeField = (field) => (e) => {
     setFormDetails({
@@ -63,24 +62,21 @@ const Index = () => {
         console.log("Stored JWT token in local storage");
 
         // Store the user data in the application state or context
-        setUserData(user); // Update this line
+        setUserData(user);
         console.log("Stored user data in application state/context");
 
         setTimeout(() => {
           window.location.reload();
         }, 500);
 
-        // Redirect the user to the desired page
         router.replace("/Discover");
         console.log("Redirected user to Discover page");
       } catch (error) {
         console.error("Error occurred during login:", error);
         if (error.response) {
-          // Handle specific error responses from the server
           setErrorMsgs(error.response.data.message);
           console.error("Error message set:", error.response.data.message);
         } else {
-          // Handle network or other errors
           setErrorMsgs("An error occurred. Please try again later.");
           console.error("Generic error message set");
         }

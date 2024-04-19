@@ -133,7 +133,7 @@ const PostDetails = () => {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Add a comment!"
-                  className="tw-w-3/4 tw-h-10"
+                  className="tw-w-3/4 tw-h-10 tw-rounded-xl tw-p-2"
                 />
                 {newComment && (
                   <button

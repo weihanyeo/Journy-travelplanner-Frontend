@@ -11,6 +11,7 @@ import {
   faUsers,
   faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import SearchBar from "../../components/SearchBar";
 
 const Index = () => {
   const router = useRouter();

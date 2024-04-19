@@ -140,7 +140,7 @@ const Index = () => {
             <h1>{userData.name}</h1>
           )}
           <br />
-          <p>
+          <div>
             <strong>Contact: </strong>
             {editMode ? (
               <div>
@@ -163,8 +163,8 @@ const Index = () => {
             ) : (
               userData.contact
             )}
-          </p>
-          <p>
+          </div>
+          <div>
             <strong>Email address: </strong>
             {editMode ? (
               <div>
@@ -185,8 +185,8 @@ const Index = () => {
             ) : (
               userData.email
             )}
-          </p>
-          <p>
+          </div>
+          <div>
             <strong>Location: </strong>
             {editMode ? (
               <div>
@@ -209,7 +209,7 @@ const Index = () => {
             ) : (
               userData.location
             )}
-          </p>
+          </div>
 
           <h3>About Me:</h3>
           {editMode ? (

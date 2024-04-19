@@ -26,7 +26,7 @@ const Index = () => {
   const [errors, setErrors] = useState({});
   const [activeTab, setActiveTab] = useState("myPosts");
   const [isOwnProfile, setIsOwnProfile] = useState(false);
-  const [currentUser, setCurrentUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +62,7 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (userData) {
+    if (userData && (userData.posts || userData.likedPosts)) {
       const newPosts =
         activeTab === "myPosts" ? userData.posts : userData.likedPosts;
       setPosts(newPosts);

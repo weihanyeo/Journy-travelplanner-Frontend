@@ -7,21 +7,19 @@ import { useEffect } from "react";
 
 const FollowButton = ({ targetMemberId, followingMembers }) => {
   const [isFollowing, setIsFollowing] = useState(false);
-
   useEffect(() => {
     if (followingMembers && followingMembers.length > 0) {
       const isAlreadyFollowing = followingMembers.some((member) => {
         return member.memberId.toString() === targetMemberId;
       });
 
-      console.log("Is already following?", isAlreadyFollowing);
-      setIsFollowing(isAlreadyFollowing);
+      if (isAlreadyFollowing) {
+        setIsFollowing(isAlreadyFollowing);
+      } else {
+        setIsFollowing(false);
+      }
     }
   }, [followingMembers, targetMemberId]);
-
-  useEffect(() => {
-    console.log("Updated isFollowing state:", isFollowing);
-  }, [isFollowing]);
 
   const handleFollowClick = async () => {
     try {

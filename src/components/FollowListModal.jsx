@@ -28,7 +28,7 @@ const FollowListModal = ({ show, onHide, type, currentUserId, listData }) => {
               onClick={() => redirectToUserProfile(member.memberId)}
             >
               <img
-                src={member.profilePictureURL || "/default-profile.png"}
+                src={member.profilePictureURL || "/defaultImg.png"}
                 alt="Profile Image"
                 width={40}
                 height={40}
@@ -36,12 +36,7 @@ const FollowListModal = ({ show, onHide, type, currentUserId, listData }) => {
               />
               <strong>{member.username}</strong>
             </div>
-            {member.memberId !== currentUserId && (
-              <FollowButton
-                targetMemberId={member.memberId.toString()}
-                followingMembers={listData}
-              />
-            )}
+            {member.memberId === currentUserId && "Me"}
           </div>
         ))}
       </Modal.Body>

@@ -5,28 +5,6 @@ import { useRouter } from "next/router";
 import axiosClient from "../others/network/axiosClient";
 
 const Post = ({ postDetails }) => {
-  const [isLikedClicked, setIsLikedClicked] = useState(false);
-  const { postId: id } = postDetails;
-
-  const handleClick = async () => {
-    try {
-      const endpoint = isLikedClicked
-        ? `/posts/${id}/unlike`
-        : `/posts/${id}/like`; // Use 'id' instead of 'postId'
-
-      // Send request with authorization header
-      const response = await axiosClient.post(endpoint, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
-      });
-
-      setIsLikedClicked(!isLikedClicked);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   const router = useRouter();
   const {
     postId = "",
@@ -38,6 +16,29 @@ const Post = ({ postDetails }) => {
     likeCount = 10,
     comments = [],
   } = postDetails;
+  const [isLikedClicked, setIsLikedClicked] = useState(false);
+  const [postLikeCount, setPostLikeCount] = useState(likeCount);
+
+  const handleClick = async () => {
+    try {
+      const endpoint = isLikedClicked
+        ? `/posts/${postId}/unlike`
+        : `/posts/${postId}/like`;
+
+      if (isLikedClicked) {
+        await axiosClient.delete(endpoint);
+        setPostLikeCount(postLikeCount - 1);
+      } else {
+        await axiosClient.post(endpoint);
+        setPostLikeCount(postLikeCount + 1);
+      }
+
+      setIsLikedClicked(!isLikedClicked);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const [expandedComments, setExpandedComments] = useState(false);
   const [expandedCommentIndex, setExpandedCommentIndex] = useState(-1);
   const MAX_COMMENTS_SHOWN = 3;
@@ -131,6 +132,10 @@ const Post = ({ postDetails }) => {
             <FontAwesomeIcon icon={faDollarSign} className="mr-1" />
             <FontAwesomeIcon icon={faDollarSign} className="mr-1" />
             <span>Budget: {budget}</span>
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faHeart} className="mr-1" />
+            {postLikeCount} likes
           </div>
         </div>
         <div className="card-footer">

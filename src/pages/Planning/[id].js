@@ -95,43 +95,62 @@ const CreateNewPost = () => {
   };
 
   return (
-    <div className="tw-flex tw-flex-col tw-gap-3 tw-p-10">
-      {currentKML && (
-        <KMLEditor onChangeKML={onChangeKML} initialKML={currentKML} />
-      )}
-      <input
-        type="text"
-        aria-label="Title"
-        placeholder="Title"
-        className="border-2"
-        onChange={onChangeFields("title")}
-        value={formDetails.title}
-      ></input>
-      <textarea
-        className="border-2"
-        aria-label="Description"
-        placeholder="Description"
-        onChange={onChangeFields("description")}
-        value={formDetails.description}
-      ></textarea>
-      <input
-        type="number"
-        onChange={onChangeFields("budget")}
-        value={formDetails.budget}
-      ></input>
-      {showError && (
-        <div class="alert alert-danger" role="alert">
-          Save Map Before Proceeding!
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-8">
+          <div className="custom-card p-4 shadow-lg rounded bg-light">
+            <div className="row mb-4">
+              <div className="col-md-6 mb-4">
+                <KMLEditor onChangeKML={onChangeKML} />
+              </div>
+              <div className="col-md-6">
+                <div className="input-wrapper">
+                  <input
+                    type="text"
+                    aria-label="Title"
+                    placeholder="Title"
+                    className="form-control mb-3 custom-input"
+                    onChange={onChangeFields("title")}
+                    value={formDetails.title}
+                  />
+                </div>
+                <div className="input-wrapper">
+                  <textarea
+                    aria-label="Description"
+                    placeholder="Description"
+                    className="form-control mb-3 custom-input"
+                    onChange={onChangeFields("description")}
+                    value={formDetails.description}
+                  />
+                </div>
+                <div className="input-wrapper">
+                  <input
+                    type="number"
+                    onChange={onChangeFields("budget")}
+                    value={formDetails.budget}
+                    className="form-control mb-3 custom-input"
+                  />
+                </div>
+              </div>
+            </div>
+            {showError && (
+              <div className="alert alert-danger mb-3" role="alert">
+                Save Map Before Proceeding!
+              </div>
+            )}
+            <button
+              className="btn btn-primary rounded-pill publish-button"
+              onClick={handlePublishPost}
+              style={{ backgroundColor: "#196f5d", borderColor: "#196f5d" }}
+            >
+              Publish Post
+            </button>
+          </div>
         </div>
-      )}
-      <button
-        className="tw-border-2 tw-bg-blue-500"
-        onClick={handlePublishPost}
-      >
-        Publish Post
-      </button>
+      </div>
     </div>
   );
+
 };
 
 export default CreateNewPost;

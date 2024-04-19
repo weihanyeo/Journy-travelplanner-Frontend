@@ -68,7 +68,6 @@ const Index = () => {
                 <p className="lead">Where Adventure Meets Collaboration</p>
                 <p>Explore, Share, Create - Your Ultimate Travel Companion</p>
               </nav>
-              <SearchBar />
             </div>
           </div>
           <div className="col-md-6">

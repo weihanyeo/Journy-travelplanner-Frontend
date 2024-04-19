@@ -99,7 +99,7 @@ const Index = () => {
 
   const getAllPosts = async () => {
     try {
-      await axiosClient.get("/posts").then((res) => {
+      await axiosClient.get("/posts/all").then((res) => {
         setAllPosts(res.data);
       });
     } catch (e) {

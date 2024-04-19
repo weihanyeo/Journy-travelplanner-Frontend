@@ -2,8 +2,31 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
+import axiosClient from "../others/network/axiosClient";
 
 const Post = ({ postDetails }) => {
+  const [isLikedClicked, setIsLikedClicked] = useState(false);
+  const { postId: id } = postDetails;
+
+  const handleClick = async () => {
+    try {
+      const endpoint = isLikedClicked
+        ? `/posts/${id}/unlike`
+        : `/posts/${id}/like`; // Use 'id' instead of 'postId'
+
+      // Send request with authorization header
+      const response = await axiosClient.post(endpoint, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      });
+
+      setIsLikedClicked(!isLikedClicked);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const router = useRouter();
   const {
     postId = "",
@@ -43,11 +66,17 @@ const Post = ({ postDetails }) => {
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <div
-        className="card mx-auto shadow-sm mw-90"
-        style={{ maxWidth: "720px" }}
+        className="card mx-auto shadow mw-90"
+        style={{
+          maxWidth: "720px",
+          borderRadius: "15px",
+          backgroundColor: "#f8f0ca",
+          marginBottom: "20px",
+          border: "none",
+        }}
       >
         <div className="card-header d-flex align-items-center mw-90">
           <img
@@ -89,8 +118,13 @@ const Post = ({ postDetails }) => {
               <h5 className="card-title">{title}</h5>
               <p className="card-text">{description}</p>
             </div>
-            <div>
-              <FontAwesomeIcon icon={faHeart} className="mr-2" />
+            <div className="heart-icon" onClick={handleClick}>
+              <FontAwesomeIcon
+                icon={faHeart}
+                className={
+                  isLikedClicked ? "text-danger mr-2" : "text-muted mr-2"
+                }
+              />
             </div>
           </div>
           <div>

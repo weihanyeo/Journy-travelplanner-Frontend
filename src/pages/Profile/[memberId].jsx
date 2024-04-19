@@ -98,8 +98,6 @@ const Index = () => {
         setTotalPages(
           Math.ceil((profileResponse.data.posts || []).length / cardsPerPage)
         );
-
-        console.log("checking: " + userResponse.data.followingMembers);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -136,7 +134,7 @@ const Index = () => {
         }
       );
       setUserData(response.data);
-      console.log("Success");
+
       return response.data;
     } catch (error) {
       console.error("Error updating user profile:", error);

@@ -55,12 +55,9 @@ const NavBar = () => {
   };
 
   const handleLogout = () => {
-    // Remove the JWT token from local storage
     localStorage.removeItem("jwt");
     localStorage.removeItem("currentUser");
-    // Reset the user data state
     setUserData(null);
-    // Redirect the user to the login page
     router.push("/Login");
   };
 

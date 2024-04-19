@@ -30,7 +30,6 @@ const PostDetails = () => {
   const getCurrentPost = async () => {
     try {
       await axiosClient.get(`/posts/${id}`).then((res) => {
-        //setCurrentKML(res.data);
         setPostDetails(res.data);
         setComments(res.data.comments);
         getCurrentKMLFile(res.data.postId);
@@ -44,7 +43,6 @@ const PostDetails = () => {
     try {
       await axiosClient.get(`/members/my-profile`).then((res) => {
         setUsername(res.data.username);
-        console.log("this username:", res.data.username);
       });
     } catch (e) {
       console.error(e);
@@ -55,7 +53,6 @@ const PostDetails = () => {
     try {
       await axiosClient.get(`/posts/${postId}/kml-file`).then((res) => {
         setCurrentKML(res.data);
-        console.log(res.data);
       });
     } catch (e) {
       console.error(e);
@@ -70,13 +67,9 @@ const PostDetails = () => {
     setNewComment("");
     setComments([...comments, newCommentObject]);
     try {
-      await axiosClient
-        .post(`/posts/${id}/comments`, {
-          commentDetails: newComment,
-        })
-        .then((res) => {
-          console.log(res);
-        });
+      await axiosClient.post(`/posts/${id}/comments`, {
+        commentDetails: newComment,
+      });
     } catch (e) {
       console.error(e);
     }
@@ -95,7 +88,7 @@ const PostDetails = () => {
                 }
                 alt="Profile"
                 className="profile-pic"
-                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                style={{ width: "150px", height: "0px", objectFit: "cover" }}
               />
               <p>{postDetails.creator.username}</p>
               <p>{postDetails.creator.aboutMe}</p>

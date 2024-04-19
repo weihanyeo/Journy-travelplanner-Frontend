@@ -8,14 +8,12 @@ const Post = ({ postDetails }) => {
   const router = useRouter();
   const {
     postId = "",
-    postPictureURL = "",
     title = "Title goes here",
     description = "Description goes here",
     budget = 99,
     locations = [],
     likeCount = 10,
     comments = [],
-    creator = {},
   } = postDetails;
   const [isLikedClicked, setIsLikedClicked] = useState(false);
   const [postLikeCount, setPostLikeCount] = useState(likeCount);
@@ -63,10 +61,6 @@ const Post = ({ postDetails }) => {
         text: comment.commentDetails,
       }))
     : [];
-
-  const toggleExpandComments = () => {
-    setExpandedComments(!expandedComments);
-  };
 
   const toggleExpandComment = (index) => {
     setExpandedCommentIndex(index === expandedCommentIndex ? -1 : index);
@@ -123,8 +117,8 @@ const Post = ({ postDetails }) => {
 
         <div
           style={{
-            width: "100%", // Set width to 100% to match parent div
-            height: "720px", // Set height as desired
+            width: "100%",
+            height: "720px",
             overflow: "hidden",
             position: "relative",
           }}

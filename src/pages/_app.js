@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import RootLayout from "./layout";
 import "./globals.css";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import axiosClient from "../others/network/axiosClient";
 
-import "bootstrap/dist/css/bootstrap.min.css"; // bootstrap stylesheet
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -13,8 +13,7 @@ export default function App({ Component, pageProps }) {
     // Add an interceptor to handle unauthorized sessions
     const requestInterceptor = axiosClient.interceptors.request.use(
       (config) => {
-        // Retrieve the JWT token from storage (e.g., localStorage, cookies)
-        const token = localStorage.getItem('jwt');
+        const token = localStorage.getItem("jwt");
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -28,12 +27,8 @@ export default function App({ Component, pageProps }) {
       (error) => {
         if (error.response.status === 401 && !error.config._retry) {
           error.config._retry = true;
-
-          // Clear the stored token
-          localStorage.removeItem('jwt');
-
-          // Redirect the user to the login page
-          router.push('/Login');
+          localStorage.removeItem("jwt");
+          router.push("/Login");
 
           return axiosClient(error.config);
         }
@@ -54,5 +49,5 @@ export default function App({ Component, pageProps }) {
     <RootLayout>
       <Component {...pageProps} />
     </RootLayout>
-  )
+  );
 }

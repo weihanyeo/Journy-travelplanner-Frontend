@@ -51,20 +51,17 @@ const CreateNewPost = () => {
   const handlePostKMLFile = async (postId) => {
     const token = localStorage.getItem("jwt");
     try {
-      await axiosClient
-        .post(
-          `/posts/${postId}/kml-file`,
-          { file: file },
-          {
-            headers: {
-              Authorization: `Bearer ${token} `,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        });
+      await axiosClient.post(
+        `/posts/${postId}/kml-file`,
+        { file: file },
+        {
+          headers: {
+            Authorization: `Bearer ${token} `,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       router.push("/Discover");
     } catch (e) {
       console.error(e);

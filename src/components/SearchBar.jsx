@@ -18,11 +18,6 @@ const SearchBar = () => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log("Search Term:", searchTerm);
-    console.log("Country Filter:", countryFilter);
-    console.log("Rating:", rating);
-    console.log("Budget:", budget);
-    console.log("Selected Tag:", selectedTag);
   };
 
   const handleBudgetChange = (name, value) => {
@@ -31,7 +26,6 @@ const SearchBar = () => {
 
   return (
     <div className={`container searchBarContainer`}>
-      {/* Search Bar */}
       <div className="searchBar">
         <form onSubmit={handleSearch} className="searchForm">
           <div className="searchInput">

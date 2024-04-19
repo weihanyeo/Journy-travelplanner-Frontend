@@ -1,7 +1,5 @@
-/* LandingPage.module.css */
-
 .heroSection {
-  background-color: #f8f0ca; /* Light color */
+  background-color: #f8f0ca;
   padding: 10%;
   margin: auto;
   justify-content: center;
@@ -9,7 +7,7 @@
 }
 
 .heroContent {
-  color: #141451; /* Dark color */
+  color: #141451;
 }
 
 .heroTitle {
@@ -27,17 +25,17 @@
 }
 
 .featuresSection {
-  color: #141451; /* Light color */
+  color: #141451;
   padding: 100px 10%;
 }
 
 .featureIcon {
-  color: #141451; /* Subdued color */
+  color: #141451;
 }
 
 .testimonialsSection {
-  background-color: transparent; /* Gray color */
-  color: #141451; /* Dank color */
+  background-color: transparent;
+  color: #141451;
   padding: 100px 10%;
 }
 
@@ -45,12 +43,12 @@
   margin-bottom: 30px;
   border-radius: 10px;
   padding: 5%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow */
-  transition: box-shadow 0.3s ease; /* Add transition */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
 .testimonial:hover {
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Change box shadow on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .author {
@@ -58,11 +56,11 @@
 }
 
 .ctaSection {
-  background-color: transparent; /* Primary color */
-  color: #f8f0ca; /* Light color */
+  background-color: transparent;
+  color: #f8f0ca;
   padding: 100px 10%;
 }
 
 .ctaButton {
-  background-color: #141451; /* Dark color */
+  background-color: #141451;
 }

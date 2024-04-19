@@ -107,7 +107,7 @@ const Index = () => {
       </h5>
       {errorMsgs.length > 0 && (
         <div
-          class="alert alert-warning alert-dismissible fade show"
+          className="alert alert-warning alert-dismissible fade show"
           role="alert"
         >
           <div>

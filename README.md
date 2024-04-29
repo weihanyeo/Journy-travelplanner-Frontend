@@ -18,7 +18,7 @@
   <strong>This is a Next.js project bootstrapped with <a href="https://nextjs.org/">create-next-app</a>.</strong>
 </p>
 
-This repository serves as the frontend for Journy, a travel web application designed to streamline the process of creating and sharing personalized travel itineraries. Powered by a robust backend, Journy enables users to view places and activities, collaborate seamlessly with friends and travel companions, and engage with a vibrant community of fellow travelers.
+This repository serves as the frontend for Journy, a travel web application designed to streamline the process of creating and sharing personalized travel itineraries. Powered by a [robust backend](https://github.com/YeoWeiHan123/Journy-travelplanner-Backend), Journy enables users to view places and activities, collaborate seamlessly with friends and travel companions, and engage with a vibrant community of fellow travelers.
 
 ## ✨ Features
 
@@ -27,6 +27,38 @@ This repository serves as the frontend for Journy, a travel web application desi
 - **Community Interaction:** Share experiences, discover new destinations, and exchange tips.
 - **Responsive Design:** Ensures optimal viewing experience across devices.
 
+## 🛠️ Tech Stack
+
+### Languages
+<div align="left">
+  <a href="https://github-readme-tech-stack.vercel.app">
+    ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+    ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+  </a>
+</div>
+
+### Frameworks
+<div align="left">
+  <a href="https://github-readme-tech-stack.vercel.app">
+    ![Next.js](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+    ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+    ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+  </a>
+</div>
+
+### Database
+<div align="left">
+  <a href="https://github-readme-tech-stack.vercel.app">
+    ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
+  </a>
+</div>
+
+### Authentication
+<div align="left">
+  <a href="https://github-readme-tech-stack.vercel.app">
+    ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+  </a>
+</div>
 
 ## Getting Started
 
@@ -36,15 +68,6 @@ First, run the development server:
 npm run dev
 
 ```
-
-Please note that if you run:
-
-```bash
-npm run build
-
-```
-
-any changes made will not be updated in localhost unless you run the above command again aka. re-build the app.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

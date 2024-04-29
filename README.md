@@ -38,27 +38,15 @@ This repository serves as the frontend for Journy, a travel web application desi
 </div>
 
 ### Frameworks
-<div align="left">
-  <a href="https://github-readme-tech-stack.vercel.app">
-    ![Next.js](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
-    ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-    ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
-  </a>
-</div>
+[![Next.js](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://github-readme-tech-stack.vercel.app)
+[![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)](https://github-readme-tech-stack.vercel.app)
+[![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)](https://github-readme-tech-stack.vercel.app)
 
 ### Database
-<div align="left">
-  <a href="https://github-readme-tech-stack.vercel.app">
-    ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
-  </a>
-</div>
+[![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)](https://github-readme-tech-stack.vercel.app)
 
 ### Authentication
-<div align="left">
-  <a href="https://github-readme-tech-stack.vercel.app">
-    ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
-  </a>
-</div>
+[![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)](https://github-readme-tech-stack.vercel.app)
 
 ## Getting Started
 

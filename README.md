@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+This repo is a frontend web page which is requires https://github.com/YeoWeiHan123/Journy-travelplanner-Backend as a backend. 
+
+This is a travel web application that streamlines the process of creating and sharing personalized travel itineraries. This platform enable users to view places and activities, whilst simultaneously enabling seamless collaboration with friends and travel companions. Additionally, the app boasts a dynamic social component, allowing users to exchange past trip experiences, and even replicate and customize existing itineraries, fostering a community-driven approach to travel planning and exploration.
+
+
+
 ## Getting Started
 
 First, run the development server:

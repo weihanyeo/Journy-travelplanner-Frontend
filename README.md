@@ -1,9 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">🌟 Welcome to Journy! 🌟</h1>
 
-This repo is a frontend web page which is requires https://github.com/YeoWeiHan123/Journy-travelplanner-Backend as a backend. 
+<p align="center">
+  <img src="https://github.com/YeoWeiHan123/Journy-travelplanner/blob/main/public/journy.png?raw=true" alt="Journy Image" width="200">
+  <img src="https://github.com/YeoWeiHan123/Journy-travelplanner/assets/36888332/382d3bf6-7bf2-45e8-9854-2b0d5a10683e" alt="OIG4 6Y Image" width="200">
+</p>
 
-This is a travel web application that streamlines the process of creating and sharing personalized travel itineraries. This platform enable users to view places and activities, whilst simultaneously enabling seamless collaboration with friends and travel companions. Additionally, the app boasts a dynamic social component, allowing users to exchange past trip experiences, and even replicate and customize existing itineraries, fostering a community-driven approach to travel planning and exploration.
+<p align="center">  
+  <a href="https://github.com/YeoWeiHan123/Journy-travelplanner">
+    <img src="https://img.shields.io/github/languages/count/YeoWeiHan123/Journy-travelplanner" alt="GitHub language count">
+  </a>
+  <a href="https://github.com/{username}/{repo-name}">
+    <img src="https://img.shields.io/github/languages/top/YeoWeiHan123/Journy-travelplanner?color=yellow" alt="GitHub top language">
+  </a>
+</p>
 
+<p align="center">
+  <strong>This is a Next.js project bootstrapped with <a href="https://nextjs.org/">create-next-app</a>.</strong>
+</p>
+
+This repository serves as the frontend for Journy, a travel web application designed to streamline the process of creating and sharing personalized travel itineraries. Powered by a robust backend, Journy enables users to view places and activities, collaborate seamlessly with friends and travel companions, and engage with a vibrant community of fellow travelers.
+
+## ✨ Features
+
+- **Dynamic Itinerary Creation:** Easily create and customize travel itineraries.
+- **Collaborative Planning:** Invite friends and travel companions to plan together.
+- **Community Interaction:** Share experiences, discover new destinations, and exchange tips.
+- **Responsive Design:** Ensures optimal viewing experience across devices.
 
 
 ## Getting Started

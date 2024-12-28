@@ -1,12 +1,13 @@
 {
-  "name": "is3106-travelplanner",
-  "version": "0.1.0",
+  "homepage": "https://<your-github-username>.github.io/<your-repo-name>",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "@cloudinary/react": "^1.13.0",
